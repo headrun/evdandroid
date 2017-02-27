@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundLight"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:id="@+id/profile_lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/user_pic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/circular"
+                android:elevation="3dp"
+                android:scaleType="centerCrop"
+                app:placeholderImage="@drawable/ic_nav_profile_active"
+                fresco:roundedCornerRadius="5dp" />
+
+            <TextView
+                android:id="@+id/txt_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_pic"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="Hi , Sujith"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/log_out"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/exit"
+            android:drawablePadding="23dp"
+            android:text="LogOut"
+            android:clickable="true"
+            android:textColor="@color/primaryText"
+            android:textSize="@dimen/text_large" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/login_txt_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="25dp"
+        android:background="@drawable/round_border"
+        android:gravity="left"
+        android:padding="10dp"
+        android:text="@string/login"
+        android:textColor="#FFF"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/profile_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/user_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular"
+            android:elevation="3dp"
+            android:scaleType="centerCrop"
+            fresco:roundedCornerRadius="5dp"
+            app:placeholderImage="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/txt_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_pic"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal"
+            android:text="Hi , Sujith"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
+</RelativeLayout>

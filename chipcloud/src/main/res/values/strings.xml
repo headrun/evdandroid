@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ChipCloud</string>
+    <string-array name="labels">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+    </string-array>
+</resources>

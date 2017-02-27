@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/evidyalogo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:padding="10dp"
+            android:text="Selected Center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/cener_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:padding="10dp"
+            android:text="center name"
+            android:textColor="@color/primaryText"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:padding="10dp"
+            android:text="Selecting Slots"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sel_slots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal|center"
+            android:padding="10dp"
+            android:textColor="@color/primaryText" />
+
+        <Button
+            android:id="@+id/confirm_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/teach_now"
+            android:fontFamily="sans-serif"
+            android:text="COnfirm Slots"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/cancel_dialog"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_margin="10dp"
+        android:src="@drawable/close_dialog" />
+
+</LinearLayout>

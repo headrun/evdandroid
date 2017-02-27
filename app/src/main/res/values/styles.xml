@@ -1,0 +1,111 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <item name="colorAccent">@color/colorBottomNavigationPrimary</item>
+    </style>
+
+    <style name="AppLoginTheme" parent="AppTheme.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
+        <item name="colorAccent">@color/colorBottomNavigationAccent</item>
+        <item name="colorControlNormal">@color/colorGrey600</item>
+    </style>
+
+    <style name="AppTheme1" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorBottomNavigationAccent</item>
+
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MovieItemText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+        <item name="android:lines">1</item>
+    </style>
+
+    <style name="school_sub_title">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/colorBottomNavigationAccent</item>
+
+    </style>
+
+    <style name="FavoriteButton" parent="Widget.AppCompat.Light.ActionButton">
+        <item name="android:layout_height">@dimen/abc_action_button_min_height_material</item>
+        <item name="android:layout_width">@dimen/abc_action_button_min_height_material</item>
+        <item name="android:src">@drawable/favorite_button_selector</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorGrey600</item>
+        <item name="colorControlActivated">@color/colorGolden</item>
+    </style>
+
+    <style name="cust_dialog" parent="@android:style/Theme.Dialog">
+        <!--<item name="android:windowTitleStyle">@style/dialog_title_style</item>-->
+    </style>
+
+    <!--<style name="dialog_title_style" parent="android:Widget.TextView">
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+    </style>-->
+    <style name="toolbar_size" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/colorWhite</item>
+
+    </style>
+
+    <style name="button_style">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@drawable/teach_round</item>
+        <item name="android:src">@drawable/favorite_button_selector</item>
+    </style>
+
+    <style name="tab_lay_apperance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="scheduled_alert_btn">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:layout_margin">5dp</item>
+
+    </style>
+</resources>

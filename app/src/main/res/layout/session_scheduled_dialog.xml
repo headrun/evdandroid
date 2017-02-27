@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/evidyalogo" />
+
+        <TextView
+            android:id="@+id/school_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal|center"
+            android:padding="10dp"
+            android:text="School name"
+            android:textColor="@color/primaryText"
+            android:textSize="@dimen/text_xlarge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:paddingTop="10dp"
+            android:text="Sience "
+            android:id="@+id/subject_txt"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_xlarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/topic_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:paddingBottom="10dp"
+            android:text="Social Science" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif"
+            android:text="FEB 13th,2016,3:30PM"
+            android:textColor="@color/primaryText"
+            android:textSize="18sp"
+            android:id="@+id/date_txt"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/started_btn"
+                style="@style/button_style"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/teach_now"
+                android:text="Teaching"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/completed_btn"
+                style="@style/button_style"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/completed"
+                android:text="Complted"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/cancelled_btn"
+                style="@style/button_style"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/cancelled"
+                android:text="Cancelled"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/cancel_dialog"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_margin="10dp"
+            android:src="@drawable/close_dialog" />
+
+    </LinearLayout>
+
+</LinearLayout>

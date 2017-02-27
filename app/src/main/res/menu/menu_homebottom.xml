@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/action_demands"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/demand"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_sessions"
+        android:enabled="true"
+        android:icon="@drawable/book"
+        android:title="@string/sessions"
+        app:showAsAction="always" />
+    app:showAsAction="always" />
+    -->
+    <!--<item
+        android:id="@+id/action_settings"
+        android:enabled="true"
+        android:icon="@drawable/avatar"
+        android:title="Profile"
+        app:showAsAction="always" />-->
+
+    <item
+        android:id="@+id/action_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_nav_profile_active"
+        android:title="@string/profile"
+        app:showAsAction="always" />
+
+</menu>

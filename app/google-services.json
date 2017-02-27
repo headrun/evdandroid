@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "1036396520342",
+    "firebase_url": "https://fir-evidyaloka.firebaseio.com",
+    "project_id": "firebase-evidyaloka",
+    "storage_bucket": "firebase-evidyaloka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036396520342:android:c47747d4e556f97e",
+        "android_client_info": {
+          "package_name": "com.headrun.evidyaloka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036396520342-h0gs843e8quhiuiarbmfgp1iva4mgmmn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.headrun.evidyaloka",
+            "certificate_hash": "1E0ECC2A63BA56012FAF1F0261AEF86C4D95715B"
+          }
+        },
+        {
+          "client_id": "1036396520342-d7bn00f3ske0on4cdpj55729i6f8ilec.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1036396520342-q0d2ovakj93jhiauh6bhqkrtv4cqe6fd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI1tA5E-W6-uLfAn35VX5nwu-xOG9Tobc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036396520342-d7bn00f3ske0on4cdpj55729i6f8ilec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

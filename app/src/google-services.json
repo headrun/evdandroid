@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "1036396520342",
+    "project_id": "firebase-evidyaloka"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036396520342:android:a01e202398ac463e",
+        "android_client_info": {
+          "package_name": "com.headrun.evd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036396520342-t5qih4j9fj71bnih6qt4roei2sqslto7.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1036396520342-uaqcadaffhqvsrbe30lbgkdgg6nvuoc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVqm9-Vzt9K1451_TRVsyIFtoufBq2qWs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

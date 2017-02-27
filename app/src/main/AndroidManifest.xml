@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.headrun.evidyaloka">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name="com.headrun.evidyaloka.EvdApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/evd_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FB_KEY" />
+
+        <activity
+            android:name="com.headrun.evidyaloka.activity.base.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppLoginTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name="com.headrun.evidyaloka.activity.login.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppLoginTheme" />
+
+
+        <activity
+            android:name="com.headrun.evidyaloka.activity.base.HomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name="com.headrun.evidyaloka.activity.demand_details.SchoolDetailsActivity"
+            android:label="School details"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <activity
+            android:name="com.headrun.evidyaloka.activity.demands.ListItemsactivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme1"></activity>
+
+        <activity
+            android:name="com.headrun.evidyaloka.activity.demand_slots.DemandSlotActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme1"></activity>
+
+        <activity
+            android:name="com.headrun.evidyaloka.core.RequestErrorActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme1"></activity>
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/SFB_KEY" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.headrun.evidyaloka.activity.fcm.EVDFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.headrun.evidyaloka.activity.fcm.EVDFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.headrun.evidyaloka.evdservices.ChangeSessionStatusService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+    </application>
+
+</manifest>

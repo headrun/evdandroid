@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="35dp">
+
+    <!-- Tab title -->
+    <!-- Tab divider -->
+    <View
+        android:id="@+id/tab_divider"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tab_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:drawablePadding="10dp"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textColor="?android:textColorSecondary" />
+
+
+</RelativeLayout>
