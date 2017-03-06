@@ -50,6 +50,8 @@ public interface ProfileUpdateView {
 
     public String get_ph_no();
 
+    public String get_Role();
+
     public String get_preofession();
 
     public String get_preferred_medium();

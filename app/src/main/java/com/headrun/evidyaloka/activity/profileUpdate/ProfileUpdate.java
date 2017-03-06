@@ -412,6 +412,11 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     }
 
     @Override
+    public String get_Role() {
+        return txt_role.getText().toString().trim();
+    }
+
+    @Override
     public String get_reference_channel() {
         return txt_reference_channel.getText().toString().trim();
     }
@@ -454,7 +459,8 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
             params.put("state", getState());
             params.put("city", getCity());
             params.put("short_notes", get_brief_intro());
-            params.put("roles", get_brief_intro());
+            params.put("roles", get_Role());
+
 
             new EVDNetowrkServices().saveProfileData(this, this, params);
             startService(new Intent(getApplicationContext(), UploadImageService.class)
