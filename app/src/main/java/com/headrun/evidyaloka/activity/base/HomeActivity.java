@@ -293,9 +293,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
        /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);*/
        /* drawer.closeDrawer(GravityCompat.START);*/
        /* if (!item.getTitle().toString().equals("logout"))*/
+
         setActivityTitle(item.getTitle().toString());
 
         return true;
+
     }
 
     @Override

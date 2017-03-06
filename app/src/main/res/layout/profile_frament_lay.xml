@@ -48,22 +48,41 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/log_out"
+            android:id="@+id/edit_profile"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:drawableLeft="@drawable/edit"
+            android:drawablePadding="23dp"
+            android:gravity="left|center"
+            android:text="@string/profile_edit"
+            android:textColor="@color/primaryText"
+            android:textSize="@dimen/text_large" />
+
+        <TextView
+            android:id="@+id/log_out"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
             android:drawableLeft="@drawable/exit"
             android:drawablePadding="23dp"
+            android:gravity="left|center"
             android:text="LogOut"
-            android:clickable="true"
             android:textColor="@color/primaryText"
             android:textSize="@dimen/text_large" />
 

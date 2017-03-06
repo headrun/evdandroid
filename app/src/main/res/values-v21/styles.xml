@@ -6,7 +6,12 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->
+    </style>
 
-
+    <style name="edit_login" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorBottomNavigationPrimary</item>
+        <item name="colorControlNormal">@color/colorGrey600</item>
     </style>
 </resources>

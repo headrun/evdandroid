@@ -93,11 +93,103 @@
         <item>Completed</item>
     </string-array>
 
+    <string-array name="gender_list">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="profession_list">
+        <item>Business and Financial Operations</item>
+        <item>Community and Social Service</item>
+        <item>Computer and Mathematical</item>
+        <item>Education, Training, and Library</item>
+        <item>Farming, Fishing, and Forestry</item>
+        <item>Healthcare Practitioners and Technical</item>
+        <item>Housewife</item>
+        <item>Legal</item>
+        <item>Life, Physical, and Social Science</item>
+        <item>Management</item>
+        <item>Military Specific</item>
+        <item>Office and Administrative Support</item>
+        <item>Others</item>
+        <item>Personal Care and Service</item>
+        <item>Production/Manufacturing</item>
+        <item>Retd. Professional</item>
+        <item>Sales and Related</item>
+        <item>Self-employed</item>
+    </string-array>
+
+    <string-array name="medium_list">
+        <item>Kannada</item>
+        <item>Assamese</item>
+        <item>Bengali</item>
+        <item>Gujarathi</item>
+        <item>Hindi</item>
+        <item>Malayalam</item>
+        <item>Marathi</item>
+        <item>Oriya</item>
+        <item>Punjabi</item>
+        <item>Tamil</item>
+        <item>Telugu</item>
+        <item>Urdu</item>
+    </string-array>
+
+    <string-array name="reference_channel">
+        <item>WhatsApp</item>
+        <item>Corporate - Aditya Birla Retail</item>
+        <item>Corporate - ANZ</item>
+        <item>Corporate - Apeejay Group</item>
+        <item>Corporate - Avvaya</item>
+        <item>Corporate - Brillio</item>
+        <item>Corporate - Cisco</item>
+        <item>Corporate - Cognizant - GGN</item>
+        <item>Corporate - Cognizant - Kolkata</item>
+        <item>Corporate - Cognizant - Mumbai</item>
+        <item>Corporate - Cognizant - Pune</item>
+        <item>Corporate - Cognizant CH</item>
+        <item>Corporate - DST</item>
+        <item>Corporate - Enzen</item>
+        <item>Corporate - FlipKart</item>
+        <item>Corporate - HP</item>
+        <item>Corporate - Infosys</item>
+        <item>Corporate - Joy of Reading</item>
+        <item>Corporate - Mantra</item>
+        <item>Corporate - Microsoft</item>
+        <item>Corporate - Mphasis</item>
+        <item>Corporate - Quess</item>
+        <item>Corporate - TE Connect</item>
+        <item>Corporate - Tech-Mahindra</item>
+        <item>Corporate - XLRI - Sigma</item>
+        <item>Emailer</item>
+        <item>Facebook</item>
+        <item>India Assoc - Nashville</item>
+        <item>Internet Search</item>
+        <item>Team-Everest</item>
+        <item>UN Volunteering</item>
+        <item>Word of Mouth</item>
+    </string-array>
+
+    <string-array name="role_list">
+        <item>Teacher</item>
+        <item>Center Admin</item>
+        <item>Content Developer</item>
+        <item>Well Wisher</item>
+        <item>Content Admin</item>
+    </string-array>
+
+    <string-array name="role_desc">
+        <item>Teach Online remotely, from wherever you are via Skype, for 2 hours a week, to the children of  Government Schools in rural villages in India</item>
+        <item>Be a Class coordinator remotely from wherever you are. Semi online. Typically 4 to 5 hours of  volunteering efforts per week.</item>
+        <item>Help search, identify, curate and review contents. Offline, at you own pace, from wherever you are.  Typically 2 to 3 hours a week of volunteering efforts.</item>
+        <item>Just be a well wisher by helping spread the word, follow our activities</item>
+        <item>Be a content development coordinator with 10 to 15 content volunteers, at your own pace and  rhythm, from where ever you are. Typically 3 to 4 hours in a week of volunteering efforts</item>
+    </string-array>
+
     <string name="login_error">Authentication error please check the login credentials</string>
     <string name="faceing_issue">It seems to be  an issue please try again later</string>
     <string name="pwd_match_error">Password doesn\'t match</string>
-    <string name="first_name">First name</string>
-    <string name="last_name">Last name</string>
+    <string name="first_name">First name * </string>
+    <string name="last_name">Last name * </string>
     <string name="mising_first_name">Missing first name</string>
     <string name="mising_last_name">Missing last name</string>
     <string name="enter_email">Enter email</string>
@@ -109,4 +201,28 @@
     <string name="release">Release slots</string>
     <string name="Confirm">Confirm slots</string>
     <string name="demand">Demands</string>
+    <string name="profile_edit">My profile</string>
+    <string name="gender">Gender  * </string>
+    <string name="sel_gender">select Gender</string>
+    <string name="age">Age * </string>
+    <string name="email">E-mail * </string>
+    <string name="alternate_email">Alternate Email</string>
+    <string name="profession">Profession</string>
+    <string name="skype_id">Skype ID</string>
+    <string name="ph_no">Phone No.</string>
+    <string name="preferred_medium">Preferred  Medium * </string>
+    <string name="reference_channel">Reference Channel</string>
+    <string name="referrer">Referrer</string>
+    <string name="country">Country</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="brief_intro">Brief_intro</string>
+    <string name="save">save</string>
+    <string name="selectCountry">Select Country</string>
+    <string name="cityError">Please select contry and state</string>
+    <string name="email_error">Please enter valid email id</string>
+    <string name="missing_fields">Please enter missing fileds</string>
+    <string name="role">Role</string>
+
+
 </resources>

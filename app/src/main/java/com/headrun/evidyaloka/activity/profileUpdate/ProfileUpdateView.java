@@ -1,4 +1,6 @@
-package com.headrun.evidyaloka.activity.login;
+package com.headrun.evidyaloka.activity.profileUpdate;
+
+import java.util.List;
 
 /**
  * Created by sujith on 1/3/17.
@@ -23,6 +25,8 @@ public interface ProfileUpdateView {
     public void setCity(String city);
 
     public void setState(String state);
+
+    public void setRole(List<String> roles);
 
     public String getCountry();
 

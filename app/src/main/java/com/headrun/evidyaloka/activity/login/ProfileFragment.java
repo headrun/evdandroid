@@ -20,20 +20,17 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.headrun.evidyaloka.EvdApplication;
 import com.headrun.evidyaloka.R;
-import com.headrun.evidyaloka.activity.base.HomeActivity;
 import com.headrun.evidyaloka.activity.demands.BaseEVDFragment;
+import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.config.ApiEndpoints;
 import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
-import com.headrun.evidyaloka.core.ResponseListener;
 import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.utils.ImageLoadingUtils;
 import com.headrun.evidyaloka.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.headrun.evidyaloka.R.id.profile_lay;
 
 /**
  * Created by sujith on 24/2/17.
@@ -43,7 +40,7 @@ public class ProfileFragment extends BaseEVDFragment {
 
     private String TAG = ProfileFragment.class.getSimpleName();
     private SimpleDraweeView user_pic;
-    private TextView logout, txt_user_name;
+    private TextView logout, txt_user_name, edit_profile;
     private Utils utils;
 
 
@@ -70,9 +67,18 @@ public class ProfileFragment extends BaseEVDFragment {
         user_pic = (SimpleDraweeView) view.findViewById(R.id.user_pic);
         logout = (TextView) view.findViewById(R.id.log_out);
         txt_user_name = (TextView) view.findViewById(R.id.txt_user_name);
+        edit_profile = (TextView) view.findViewById(R.id.edit_profile);
 
         utils = new Utils(getActivity());
+
+        if (utils.userSession.getIsLogin()) {
+            edit_profile.setVisibility(View.VISIBLE);
+        } else {
+            edit_profile.setVisibility(View.GONE);
+        }
+
         setProfile();
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +87,16 @@ public class ProfileFragment extends BaseEVDFragment {
                 logoutuser();
             }
         });
+
+        edit_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getActivity(), ProfileUpdate.class));
+
+            }
+        });
+
 
     }
 

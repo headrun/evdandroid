@@ -1,4 +1,4 @@
-package com.sketchproject.infogue.modules;
+package com.headrun.evidyaloka.core;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;

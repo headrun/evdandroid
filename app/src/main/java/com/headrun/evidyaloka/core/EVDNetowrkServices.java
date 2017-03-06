@@ -1,9 +1,11 @@
 package com.headrun.evidyaloka.core;
 
+import android.app.usage.ConfigurationStats;
 import android.content.Context;
 
 import com.google.gson.reflect.TypeToken;
 import com.headrun.evidyaloka.config.ApiEndpoints;
+import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.BaseService;
 import com.headrun.evidyaloka.core.ResponseListener;
 import com.headrun.evidyaloka.dto.ChangeSessionStatus;
@@ -14,6 +16,7 @@ import com.headrun.evidyaloka.dto.SchoolDetailResponse;
 import com.headrun.evidyaloka.dto.SessionResponse;
 import com.headrun.evidyaloka.event.SlotConfirmEvent;
 import com.headrun.evidyaloka.model.BlockReleaseDemand;
+import com.headrun.evidyaloka.model.LocData;
 import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.model.SchoolDetails;
 import com.headrun.evidyaloka.utils.UserSession;
@@ -111,6 +114,17 @@ public class EVDNetowrkServices extends BaseService {
         }, listener);
     }
 
+    public void imageUplaod(Context context, ResponseListener<ChangeSessionStatus> listener, String image) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("flle", image);
+        params.put(PLATFORM, ANDROID);
+        addCsrfparam(context, params);
+
+        executePostRequest(context, ApiEndpoints.UPLOAD_FILE, getSessionHeaders(context), params, new TypeToken<ChangeSessionStatus>() {
+        }, listener);
+    }
+
     public void intailHandShake(Context context, ResponseListener<IntialHandShakeResponse> listener) {
 
         executeGetRequest(context, ApiEndpoints.CSRFTOKEN, getSessionHeaders(context), null, new TypeToken<IntialHandShakeResponse>() {
@@ -150,7 +164,37 @@ public class EVDNetowrkServices extends BaseService {
         }, listener);
     }
 
-    public HashMap<String, String> getSessionHeaders(Context context) {
+    public void getLocationsData(Context context, ResponseListener<LocData> listener, String type, String id) {
+
+        HashMap<String, String> params = new HashMap<>();
+
+        if (type.contains(Constants.COUNTRY)) {
+            params.put("type", "getCountries");
+        } else if (type.contains(Constants.STATE)) {
+            params.put("type", "getStates");
+            params.put("countryId", id);
+        } else if (type.contains(Constants.CITY)) {
+            params.put("type", "getCities");
+            params.put("stateId", id);
+        }
+
+        executeGetRequest(context, ApiEndpoints.GETLOC_DATA, getSessionHeaders(context), params, new TypeToken<LocData>() {
+        }, listener);
+
+    }
+
+
+    public void saveProfileData(Context context, ResponseListener<ChangeSessionStatus> listener, HashMap<String, String> params) {
+
+        params.put("step", "base_profile");
+        params.put(PLATFORM, ANDROID);
+        addCsrfparam(context, params);
+        executeGetRequest(context, ApiEndpoints.SAVE_PROFILE, getSessionHeaders(context), params, new TypeToken<ChangeSessionStatus>() {
+        }, listener);
+
+    }
+
+    public static HashMap<String, String> getSessionHeaders(Context context) {
 
         String cookie = new UserSession(context).getCookie();
 

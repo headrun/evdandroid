@@ -63,11 +63,12 @@ public class BaseRequest<T> extends Request<T> {
         String jsonResponse = "";
         try {
 
-            new Utils().setHeaders(mContext, networkResponse);
+            if (!new Utils(mContext).userSession.getIsLogin())
+                new Utils().setHeaders(mContext, networkResponse);
             jsonResponse = new String(networkResponse.data,
                     HttpHeaderParser.parseCharset(networkResponse.headers));
 
-           // Log.i(TAG, "url is" + getUrl() + " repsonse is " + jsonResponse);
+            Log.i(TAG, "url is" + getUrl() + " repsonse is " + jsonResponse);
 
             if (jsonResponse.startsWith("[")) {
                 String data = jsonResponse.substring(1, jsonResponse.length() - 1);

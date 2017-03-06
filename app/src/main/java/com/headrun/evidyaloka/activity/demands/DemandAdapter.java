@@ -63,7 +63,8 @@ public class DemandAdapter extends RecyclerView.Adapter<DemandAdapter.DemandView
 
         try {
             // final DemandViewHolder demandViewHolder = (DemandViewHolder) holder;
-            ImageLoadingUtils.load(holder.schoolImage, mDemand.image);
+            if (mDemand.image != null)
+                ImageLoadingUtils.load(holder.schoolImage, mDemand.image);
 
             // Log.i(TAG, mDemand.title + " image is " + mDemand.image);
             holder.schoolTextView.setText(mDemand.title);
@@ -127,7 +128,7 @@ public class DemandAdapter extends RecyclerView.Adapter<DemandAdapter.DemandView
 
     public Demand getMapDeamnd(int pos) {
 
-            return (Demand) mFeedDemands.values().toArray()[pos];
+        return (Demand) mFeedDemands.values().toArray()[pos];
 
     }
 

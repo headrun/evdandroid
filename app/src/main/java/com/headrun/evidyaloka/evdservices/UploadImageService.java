@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
@@ -31,16 +32,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UploadImage extends Service implements ResponseListener<ChangeSessionStatus> {
+public class UploadImageService extends Service  {
 
-    public String TAG = UploadImage.class.getSimpleName();
+    public String TAG = UploadImageService.class.getSimpleName();
     Utils utils;
     private String uri = "uri", file_uri;
     Bitmap bitmap;
     String imageString;
     byte[] imageBytes;
 
-    public UploadImage() {
+    public UploadImageService() {
     }
 
     @Override
@@ -93,22 +94,13 @@ public class UploadImage extends Service implements ResponseListener<ChangeSessi
         return START_STICKY;
     }
 
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-
-    @Override
-    public void onResponse(ChangeSessionStatus response) {
-
-    }
 
     private void ServiceCall() {
 
         try {
             if (imageString != null && !imageString.isEmpty())
                 saveProfileAccount();
-            // new EVDNetowrkServices().imageUplaod(this, this, imageString);
+
         } catch (Exception e) {
             e.printStackTrace();
             onDestroy();
@@ -117,21 +109,13 @@ public class UploadImage extends Service implements ResponseListener<ChangeSessi
 
 
     private void saveProfileAccount() {
-        // loading or check internet connection or something...
-        // ... then
-        String url = "http://www.angga-ari.com/api/something/awesome";
+
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, ApiEndpoints.UPLOAD_FILE, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
-                try {
-                    JSONObject result = new JSONObject(resultResponse);
-                    String status = result.getString("status");
-                    String message = result.getString("message");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                if (resultResponse != null && !resultResponse.isEmpty() && resultResponse.toLowerCase().equals("ok"))
+                    Toast.makeText(getApplicationContext(), "profile upload Sucessfull", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -184,7 +168,8 @@ public class UploadImage extends Service implements ResponseListener<ChangeSessi
                 Map<String, DataPart> params = new HashMap<>();
                 // file name could found file base or direct access from real path
                 // for now just get bitmap data from ImageView
-                params.put("file", new DataPart("profile.jpg", imageBytes, "image/jpeg"));
+                if (imageBytes != null)
+                    params.put("file", new DataPart("file_avatar.jpg", imageBytes, "image/jpeg"));
                 //params.put("cover", new DataPart("file_cover.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), mCoverImage.getDrawable()), "image/jpeg"));
 
                 return params;

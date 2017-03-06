@@ -5,9 +5,9 @@ package com.headrun.evidyaloka.config;
  */
 
 public class ApiEndpoints {
-    public static final String BASE_URL = "http://www.evidyaloka.org/";
+    public static final String BASE_URL2 = "http://www.evidyaloka.org/";
     public static final String BASE_URL1 = "http://dev.evidyaloka.org:9090/";
-    public static final String BASE_URL2 = "http://dev.evidyaloka.org/";
+    public static final String BASE_URL = "http://dev.evidyaloka.org:1111/";
 
     public static final String GET_DEMANDS = BASE_URL + "get_demand/";
     public static final String GET_FILTERS = BASE_URL + "get_filters_api/";
@@ -22,4 +22,11 @@ public class ApiEndpoints {
     public static final String UPCOMING_SESSIONS1 = BASE_URL + "api/get_upcom_sess/";
     public static final String UPCOMING_SESSIONS = BASE_URL + "api/get_user_sessions/";
     public static final String CHANGE_SESSIONS = BASE_URL + "api/save_session_status/";
+    public static final String SAVE_PROFILE = BASE_URL + "save_base_profile/";
+    public static final String UPLOAD_FILE = BASE_URL + "save_profilepic/";
+
+
+    public static final String GETLOC_DATA = "http://lab.iamrohit.in/php_ajax_country_state_city_dropdown/apiv1.php";
+
+
 }

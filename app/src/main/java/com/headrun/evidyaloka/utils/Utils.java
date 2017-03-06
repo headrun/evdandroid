@@ -77,6 +77,7 @@ public class Utils {
             Map<String, String> responseHeaders = response.headers;
             UserSession userSession = new UserSession(mContext);
 
+
             if (responseHeaders.containsKey("Set-Cookie")) {
                 userSession.setCookie(responseHeaders.get("Set-Cookie"));
             }
