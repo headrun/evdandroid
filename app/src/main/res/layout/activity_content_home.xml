@@ -65,7 +65,8 @@
             </RelativeLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-API
+    API
+
     <include layout="@layout/content_home" />
 
     <android.support.design.widget.BottomNavigationView

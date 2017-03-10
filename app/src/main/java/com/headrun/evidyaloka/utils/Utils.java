@@ -3,7 +3,11 @@ package com.headrun.evidyaloka.utils;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
@@ -19,6 +23,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -110,6 +116,7 @@ public class Utils {
     }
 
     public void volleyError(VolleyError error, Context mContext) {
+
         if (error.networkResponse != null && error.networkResponse.data != null) {
             String data = new String(error.networkResponse.data);
             mContext.startActivity(new Intent(mContext, RequestErrorActivity.class).
@@ -156,7 +163,7 @@ public class Utils {
 
             HashMap<String, String> status_data1 = new HashMap<>();
             try {
-                String split_data = value.replaceAll("\\{|\\}|\\s", "");
+                String split_data = value.replaceAll("\\{|\\}|\"", "");
 
                 if (!split_data.trim().isEmpty()) {
                     String[] data1 = split_data.split(",");
@@ -164,12 +171,12 @@ public class Utils {
                     if (data1.length > 0) {
                         for (int i = 0; i < data1.length; i++) {
                             String[] data2 = data1[i].split("=");
-                            status_data1.put(data2[0].replaceAll("\\{|\\}|\\s", ""), data2[1]).replaceAll("\\{|\\}|\\s", "");
+                            status_data1.put(data2[0].replaceAll("\\{|\\}|\"", "").trim(), data2[1].replaceAll("\\{|\\}|\"", "").trim());
                         }
                     } else {
-                        String[] data2 = value.replaceAll("\\{|\\}|\\s", "").split("=");
+                        String[] data2 = value.replaceAll("\\{|\\}|\"", "").split("=");
                         if (data2.length > 0)
-                            status_data1.put(data2[0].replaceAll("\\{|\\}|\\s", ""), data2[1]).replaceAll("\\{|\\}|\\s", "");
+                            status_data1.put(data2[0].replaceAll("\\{|\\}|\"", "").trim(), data2[1].replaceAll("\\{|\\}|\"", "").trim());
                     }
                 }
             } catch (Exception e) {
@@ -180,4 +187,103 @@ public class Utils {
         return new HashMap<String, String>();
     }
 
+    public HashMap<String, String> stringToMap(String value) {
+
+        if (value != null && !value.isEmpty() && value.length() > 0) {
+
+            HashMap<String, String> status_data1 = new HashMap<>();
+            try {
+                String split_data = value.replaceAll("\\{|\\}|\"", "");
+
+                if (!split_data.trim().isEmpty()) {
+                    String[] data1 = split_data.split(",");
+
+                    if (data1.length > 0) {
+                        for (int i = 0; i < data1.length; i++) {
+                            String[] data2 = data1[i].split(":");
+                            status_data1.put(data2[0].replaceAll("\\{|\\}|\"", "").trim(), data2[1].replaceAll("\\{|\\}|\"", "").trim());
+                        }
+                    } else {
+                        String[] data2 = value.replaceAll("\\{|\\}|\"", "").split(":");
+                        if (data2.length > 0)
+                            status_data1.put(data2[0].replaceAll("\\{|\\}|\"", "").trim(), data2[1].replaceAll("\\{|\\}|\"", "").trim());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return status_data1;
+        }
+        return new HashMap<String, String>();
+    }
+
+    public HashMap<String, String> userRolesMap(HashMap<String, String>[] list) {
+
+        HashMap<String, String> map = new HashMap<>();
+        if (list != null)
+            for (HashMap<String, String> val : list)
+                for (Map.Entry<String, String> entry : val.entrySet())
+                    map.put(entry.getKey().replaceAll("\"", "").trim(), entry.getValue().replaceAll("\"", "").trim());
+
+        return map;
+    }
+
+    public HashMap<String, String> reverseMap(HashMap<String, String> list) {
+
+        HashMap<String, String> map = new HashMap<>();
+        if (list != null)
+            for (Map.Entry<String, String> entry : list.entrySet())
+                map.put(entry.getValue().replaceAll("\"", "").trim(), entry.getKey().replaceAll("\"", "").trim());
+        return map;
+    }
+
+    public HashMap<String, String>[] mapToArrayMap(HashMap<String, String> list) {
+
+        HashMap<String, String> map[] = new HashMap[list.size()];
+        if (list != null) {
+            int count = 0;
+            for (Map.Entry<String, String> entry : list.entrySet()) {
+                HashMap<String, String> val = new HashMap<>();
+                val.put(entry.getKey().trim(), entry.getValue().trim());
+                map[count] = val;
+                count++;
+            }
+        }
+        return map;
+    }
+
+    public List<String> hashmaptoList(List<HashMap<String, String>> list) {
+
+        List<String> data_list = new LinkedList<>();
+        if (list != null)
+            for (HashMap<String, String> val : list)
+                for (Map.Entry<String, String> entry : val.entrySet())
+                    data_list.add(entry.getValue().trim());
+
+        return data_list;
+    }
+
+    public int set_statusColor(String status) {
+
+        if (status.toLowerCase().contains("scheduled"))
+            return ContextCompat.getColor(mContext, R.color.teach_now);
+        else if (status.toLowerCase().contains("started") || status.contains("completed"))
+            return ContextCompat.getColor(mContext, R.color.button_color);
+        else if (status.toLowerCase().contains("cancelled"))
+            return ContextCompat.getColor(mContext, R.color.cancelled);
+
+        return ContextCompat.getColor(mContext, R.color.button_color);
+
+    }
+
+
+    public PackageInfo getPackageInfo() {
+        try {
+            return mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 }

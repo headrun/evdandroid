@@ -23,8 +23,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.headrun.evidyaloka.EvdApplication;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.demands.DemandFragment;
-import com.headrun.evidyaloka.activity.login.LoginActivity;
-import com.headrun.evidyaloka.activity.login.ProfileFragment;
+import com.headrun.evidyaloka.activity.auth.LoginActivity;
+import com.headrun.evidyaloka.activity.auth.ProfileFragment;
 import com.headrun.evidyaloka.activity.sessions.SessionsTabFragment;
 import com.headrun.evidyaloka.config.ApiEndpoints;
 import com.headrun.evidyaloka.config.Constants;
@@ -102,7 +102,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         //Log.i(TAG, "Demands  activity");
         getintentData();
-
+        Constants.ISNOTIFICATION = false;
         bottom_nav = (BottomNavigationView) findViewById(R.id.bottom_nav);
         NavMenu = bottom_nav.getMenu();
         Session_item = NavMenu.findItem(R.id.action_sessions);
@@ -314,6 +314,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             userSession.setLangFilter(Arrays.asList(response.languages).toString());
             userSession.setStateFilter(Arrays.asList(response.states).toString());
             userSession.setSessionTitles(Arrays.asList(response.sessions_filters).toString());
+            userSession.setUserRoles(utils.userRolesMap(response.user_roles));
+            userSession.getUserRoles();
         }
     }
 

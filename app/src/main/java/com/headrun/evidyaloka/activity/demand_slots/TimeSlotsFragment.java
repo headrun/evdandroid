@@ -22,23 +22,18 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.headrun.evidyaloka.R;
+import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.base.HomeActivity;
+import com.headrun.evidyaloka.activity.demands.BaseEVDFragment;
 import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
-import com.headrun.evidyaloka.R;
-import com.headrun.evidyaloka.activity.demands.BaseEVDFragment;
-import com.headrun.evidyaloka.activity.login.LoginActivity;
 import com.headrun.evidyaloka.core.ResponseListener;
 import com.headrun.evidyaloka.event.SlotConfirmEvent;
 import com.headrun.evidyaloka.model.BlockReleaseDemand;
 import com.headrun.evidyaloka.model.SchoolDetails;
 import com.headrun.evidyaloka.utils.SimpleDividerItemDecoration;
 import com.headrun.evidyaloka.utils.Utils;
-
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;

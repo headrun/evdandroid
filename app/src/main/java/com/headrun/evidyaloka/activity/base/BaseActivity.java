@@ -231,11 +231,9 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
 
     protected void googleSignIn() {
 
-
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

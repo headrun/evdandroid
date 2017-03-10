@@ -1,5 +1,6 @@
 package com.headrun.evidyaloka.activity.profileUpdate;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,7 +27,10 @@ public interface ProfileUpdateView {
 
     public void setState(String state);
 
-    public void setRole(List<String> roles);
+
+    public void setRole(List<String> changed_roles);
+
+    public void updateRoles(List<String> roles);
 
     public String getCountry();
 
@@ -50,7 +54,7 @@ public interface ProfileUpdateView {
 
     public String get_ph_no();
 
-    public String get_Role();
+    public List<String> get_Role();
 
     public String get_preofession();
 

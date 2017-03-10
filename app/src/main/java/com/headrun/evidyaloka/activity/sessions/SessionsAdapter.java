@@ -134,7 +134,7 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.Sessio
             @Override
             public void onClick(View v) {
 
-                if (mCallbacks != null) {
+                if (mCallbacks != null && !Session_type.toLowerCase().contains("prefered")) {
                     mCallbacks.onSessionClick(position, mSession);
                 }
             }

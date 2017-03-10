@@ -13,12 +13,14 @@ import com.headrun.evidyaloka.dto.DemandResponse;
 import com.headrun.evidyaloka.dto.FiltersDataResponse;
 import com.headrun.evidyaloka.dto.IntialHandShakeResponse;
 import com.headrun.evidyaloka.dto.SchoolDetailResponse;
+import com.headrun.evidyaloka.dto.SessionDetailsResponse;
 import com.headrun.evidyaloka.dto.SessionResponse;
 import com.headrun.evidyaloka.event.SlotConfirmEvent;
 import com.headrun.evidyaloka.model.BlockReleaseDemand;
 import com.headrun.evidyaloka.model.LocData;
 import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.model.SchoolDetails;
+import com.headrun.evidyaloka.model.SessionDetails;
 import com.headrun.evidyaloka.utils.UserSession;
 import com.headrun.evidyaloka.utils.Utils;
 
@@ -107,11 +109,15 @@ public class EVDNetowrkServices extends BaseService {
     public void fcmTokenRefresh(Context context, ResponseListener<ChangeSessionStatus> listener, String prev_toekn, String token) {
 
         Map<String, String> params = new HashMap<>();
-        params.put("key", prev_toekn);
+        params.put("old_key", prev_toekn);
         params.put("new_key", token);
 
-        executeGetRequest(context, ApiEndpoints.UPDATE_FCMTOKEN, getSessionHeaders(context), params, new TypeToken<ChangeSessionStatus>() {
+        params.put(PLATFORM, ANDROID);
+        addCsrfparam(context, params);
+
+        executePostRequest(context, ApiEndpoints.UPDATE_FCMTOKEN, getSessionHeaders(context), params, new TypeToken<ChangeSessionStatus>() {
         }, listener);
+
     }
 
     public void imageUplaod(Context context, ResponseListener<ChangeSessionStatus> listener, String image) {
@@ -183,13 +189,23 @@ public class EVDNetowrkServices extends BaseService {
 
     }
 
-
     public void saveProfileData(Context context, ResponseListener<ChangeSessionStatus> listener, HashMap<String, String> params) {
 
         params.put("step", "base_profile");
         params.put(PLATFORM, ANDROID);
         addCsrfparam(context, params);
-        executeGetRequest(context, ApiEndpoints.SAVE_PROFILE, getSessionHeaders(context), params, new TypeToken<ChangeSessionStatus>() {
+        executePostRequest(context, ApiEndpoints.SAVE_PROFILE, getSessionHeaders(context), params, new TypeToken<ChangeSessionStatus>() {
+        }, listener);
+
+    }
+
+    public void sessionDeatils(Context context, ResponseListener<SessionDetailsResponse> listener, String session_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", session_id);
+        params.put(PLATFORM, ANDROID);
+        addCsrfparam(context, params);
+        executeGetRequest(context, ApiEndpoints.SESSION_DETAILS, getSessionHeaders(context), params, new TypeToken<SessionDetailsResponse>() {
         }, listener);
 
     }

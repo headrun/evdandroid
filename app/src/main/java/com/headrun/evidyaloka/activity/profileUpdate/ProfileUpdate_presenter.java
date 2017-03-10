@@ -9,7 +9,6 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -48,7 +47,7 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
         this.mProfileUpdateView = mProfileUpdateView;
         this.mContext = mContext;
         utils = new Utils(mContext);
-        getLocationData(Constants.COUNTRY, "");
+        // getLocationData(Constants.COUNTRY, "");
     }
 
     public void getDialog(String required_type) {
@@ -69,7 +68,13 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
             list_data.addAll(Arrays.asList(mContext.getResources().getStringArray(R.array.reference_channel)));
             alertDialog(list_data, required_type);
 
-        } else if (required_type.contains(Constants.COUNTRY)) {
+        } else if (required_type.contains(Constants.ROLE)) {
+
+            list_data.addAll(utils.userSession.getUserRoles().values());
+
+            alertDialog(list_data, required_type);
+
+        }/* else if (required_type.contains(Constants.COUNTRY)) {
             if (Constants.COUNTRY_MAP.size() > 0)
                 alertDialog(new ArrayList<String>(Constants.COUNTRY_MAP.values()), Constants.COUNTRY);
             else
@@ -87,18 +92,7 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
             String state_id = getHasshKey(Constants.STATE_MAP, state);
             if (state_id != null) {
                 getLocationData(Constants.CITY, state_id);
-            }
-
-        } else if (required_type.contains(Constants.ROLE)) {
-
-            String data[] = mContext.getResources().getStringArray(R.array.role_list);
-
-            for (int i = 0; i < data.length; i++)
-                list_data.add(data[i]);
-
-            alertDialog(list_data, required_type);
-
-        }
+            }*/
 
     }
 
@@ -151,7 +145,11 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    mProfileUpdateView.setRole(sel_roles_list);
+                    if (sel_roles_list.size() > 0) {
+                        mProfileUpdateView.updateRoles(sel_roles_list);
+                        mProfileUpdateView.setRole(sel_roles_list);
+
+                    }
                 }
             });
 
@@ -159,15 +157,15 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    
+
                 }
             });
         }
 
-        LoginResponse data = utils.userSession.getUserData();
-        if (data.data.roles != null) {
-            for (int i = 0; i < data.data.roles.length; i++) {
-                String item = data.data.roles[i].replaceFirst("\\s", "");
+        List<String> data = mProfileUpdateView.get_Role();
+        if (data != null) {
+            for (int i = 0; i < data.size(); i++) {
+                String item = data.get(i).trim();
                 if (mList.indexOf(item) != -1)
                     dialog_list.setItemChecked(mList.indexOf(item), true);
             }
@@ -175,7 +173,6 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
 
         final AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
-
 
         dialog_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -319,13 +316,12 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
         String city = mProfileUpdateView.getCity();
         String brieff_intro = mProfileUpdateView.get_brief_intro();
 
-        if (fname.isEmpty() || lname.isEmpty() || gender.isEmpty() || age.isEmpty() || email.isEmpty() || preferred_medium.isEmpty() || country.isEmpty() || state.isEmpty() || city.isEmpty())
+        if (fname.isEmpty() || gender.isEmpty() || age.isEmpty() || email.isEmpty() || preferred_medium.isEmpty())
             mProfileUpdateView.showError(mContext.getResources().getString(R.string.missing_fields));
-        else if ((!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) || (!sec_email.isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(sec_email).matches()))
+        else if ((!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()))
             mProfileUpdateView.showError(mContext.getResources().getString(R.string.email_error));
         else
             mProfileUpdateView.submitUserPofile();
-
     }
 
 }

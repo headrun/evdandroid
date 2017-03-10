@@ -97,6 +97,7 @@ public class ChangeSessionStatusService extends Service implements ResponseListe
                 getSessionCall();
             } else if (SET_REQ_TYPE.contains(update_fcm)) {
                 Log.i(TAG, "updated fcm");
+
             }
     }
 

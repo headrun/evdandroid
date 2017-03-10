@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.android.volley.NetworkError;
 import com.android.volley.VolleyError;
+import com.headrun.evidyaloka.activity.sessionDetails.SessionDetails;
 import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
 import com.headrun.evidyaloka.R;
@@ -189,6 +190,7 @@ public class SessionTypeFrament extends BaseEVDFragment implements ResponseListe
         /*SessionResponse data = new Gson().fromJson(SampleResponseData.Sessions_data, SessionResponse.class);
         processionData(data);*/
 
+        utils.volleyError(error, getActivity());
         if (error instanceof NetworkError) {
             if (Constants.LIST_SESSIONS.get(mSessionType).size() == 0)
                 seterror_display(R.drawable.connection_error, "");
@@ -249,6 +251,9 @@ public class SessionTypeFrament extends BaseEVDFragment implements ResponseListe
     @Override
     public void onSessionClick(int pos, Sessions mSession) {
 
+        if (mSession.session_id != null && !mSession.session_id.isEmpty())
+            startActivity(new Intent(getActivity(), SessionDetails.class).
+                    putExtra("session_id", mSession.session_id));
 
     }
 

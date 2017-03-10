@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+
 /**
  * Created by sujith on 1/2/17.
  */
@@ -55,7 +57,7 @@ public class LoginResponse implements Parcelable {
         @SerializedName("status")
         public String status;
         @SerializedName("roles")
-        public String[] roles;
+        public HashMap<String, String>[] roles;
         @SerializedName("id")
         public String id;
         @SerializedName("username")
@@ -157,4 +159,6 @@ public class LoginResponse implements Parcelable {
 
 
     }
+
+
 }

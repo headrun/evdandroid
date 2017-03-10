@@ -88,8 +88,11 @@ public class DemandAdapter extends RecyclerView.Adapter<DemandAdapter.DemandView
                 @Override
                 public void onClick(View v) {
 
-                    if (mCallbacks != null) {
+                   /* if (mCallbacks != null) {
                         mCallbacks.onTeachClick(mDemand);
+                    }*/
+                    if (mCallbacks != null) {
+                        mCallbacks.onSchoolClick(mDemand);
                     }
                 }
             });

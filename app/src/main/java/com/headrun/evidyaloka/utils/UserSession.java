@@ -37,6 +37,7 @@ public class UserSession {
     public static final String CHANGE_SESSION_STATU = "change_session_status";
     public static final String SESSION_TITLES = "session_title";
     public static final String IS_LOIGN = "is_login";
+    public static final String USER_ROLES = "roles";
 
     public UserSession(Context context) {
         this._context = context;
@@ -47,7 +48,6 @@ public class UserSession {
 
     public UserSession() {
     }
-
 
     public void setUserData(LoginResponse user_data) {
         editor.putString(USER_DATA, new Gson().toJson(user_data));
@@ -62,6 +62,19 @@ public class UserSession {
             return null;
         else
             return new Gson().fromJson(data, LoginResponse.class);
+    }
+
+    public void setUserRoles(HashMap<String, String> user_roles) {
+        editor.putString(USER_ROLES, new Gson().toJson(user_roles));
+        editor.commit();
+    }
+
+    public HashMap<String, String> getUserRoles() {
+        String data = pref.getString(USER_ROLES, "");
+        if (!data.isEmpty())
+            return new Utils().stringToMap(data);
+        return null;
+
     }
 
     public void setSessionTitles(String session_titles) {

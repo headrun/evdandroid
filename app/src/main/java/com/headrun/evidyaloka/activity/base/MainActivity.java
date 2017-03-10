@@ -1,9 +1,12 @@
 package com.headrun.evidyaloka.activity.base;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.android.volley.NetworkError;
@@ -13,15 +16,26 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
+import com.headrun.evidyaloka.activity.sessionDetails.SessionDetails;
 import com.headrun.evidyaloka.config.ApiEndpoints;
+import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
 import com.headrun.evidyaloka.EvdApplication;
 import com.headrun.evidyaloka.R;
-import com.headrun.evidyaloka.activity.login.LoginActivity;
+import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.core.ResponseListener;
 import com.headrun.evidyaloka.dto.IntialHandShakeResponse;
 import com.headrun.evidyaloka.evdservices.ChangeSessionStatusService;
 import com.headrun.evidyaloka.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by sujith on 13/2/17.
@@ -38,19 +52,54 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         //Log.i(TAG, "Refreshed token: " + refreshedToken);
 
         utils = new Utils(this);
+
 
         if (!utils.getCookieValue(this, "sessionid").isEmpty())
             utils.userSession.setIsLoign(true);
         else
             utils.userSession.setIsLoign(false);
 
+
         Inteview();
 
+        // getData();
+    }
+
+    private void getData() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            if (utils.userSession.getIsLogin()) {
+                HashMap<String, String> key_map = new HashMap<>();
+                for (String key : bundle.keySet()) {
+                    Object value = bundle.get(key);
+                    key_map.put(key, value.toString());
+                    Log.d(TAG, "Key: " + key + " Value: " + value.toString());
+
+                }
+
+                if (key_map.containsKey("type")) {
+                    Constants.ISNOTIFICATION = true;
+                    if (key_map.get("type").toString().toLowerCase().equals("session")) {
+                        startActivity(new Intent(this, SessionDetails.class).putExtra("session_id", key_map.get("id").toString()));
+                    } else if (key_map.get("type").toString().toLowerCase().equals("profile")) {
+                        startActivity(new Intent(this, ProfileUpdate.class));
+                    } else {
+                        LoginChecking();
+                    }
+
+                } else {
+                    LoginChecking();
+                }
+            } else {
+                startActivity(new Intent(this, LoginActivity.class));
+            }
+        } else {
+            LoginChecking();
+        }
     }
 
     private void Inteview() {
@@ -60,8 +109,10 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
     @Override
     protected void onStart() {
         super.onStart();
+        splash();
+    }
 
-
+    private void splash() {
         Thread timerThread = new Thread() {
             public void run() {
                 try {
@@ -69,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    LoginChecking();
+                    getData();
                 }
             }
         };
@@ -78,12 +129,11 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
     private void LoginChecking() {
 
-        if (!isFinishing()) {
-            if (utils.getCookieValue(this, "sessionid").isEmpty())
-                getToken();
-            else
-                loginactivty();
-        }
+        if (utils.getCookieValue(this, "sessionid").isEmpty())
+            getToken();
+        else
+            loginactivty();
+
     }
 
     private void getToken() {
@@ -150,7 +200,9 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
     private void loginactivty() {
 
-        if (!utils.userSession.getIsLogin() && utils.userSession.getLoginFirst().equals("0")) {
+        PackageInfo pinfo = utils.getPackageInfo();
+
+        if (utils.userSession.getLoginFirst().equals("0")) {
             utils.userSession.setLogin_first("1");
             startActivity(new Intent(this, LoginActivity.class));
             getApplicationContext().startService(new Intent(getApplicationContext(), ChangeSessionStatusService.class)
@@ -161,6 +213,17 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
             finish();
         }
 
+    }
+
+    public boolean isInstallFromUpdate() {
+        try {
+            long firstInstallTime = this.getPackageManager().getPackageInfo(getPackageName(), 0).firstInstallTime;
+            long lastUpdateTime = this.getPackageManager().getPackageInfo(getPackageName(), 0).lastUpdateTime;
+            return firstInstallTime != lastUpdateTime;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 

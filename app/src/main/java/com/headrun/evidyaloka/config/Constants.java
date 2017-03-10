@@ -22,6 +22,8 @@ import java.util.Map;
 public class Constants {
 
 
+    public static final int LOGIN = 1;
+    public static final int SIGNUP = 2;
     public static String TYPE = "redirect_type";
     public static String ID = "id";
     public static String REDIRECT_TO = "redirect_to";
@@ -47,4 +49,5 @@ public class Constants {
     public static String MEDIUM = "medium";
     public static String CHANNEL = "channel";
     public static String ROLE = "role";
+    public static boolean ISNOTIFICATION = false;
 }

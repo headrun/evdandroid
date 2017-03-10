@@ -1,4 +1,4 @@
-package com.headrun.evidyaloka.activity.login;
+package com.headrun.evidyaloka.activity.auth;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -370,7 +370,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
 
         getApplicationContext().startService(new Intent(getApplicationContext(), ChangeSessionStatusService.class)
-                .putExtra("Request_type", "fcm"));
+                .putExtra("request_type", "fcm"));
 
     }
 
@@ -494,10 +494,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (REDIRECT_TO.contains("home_page")) {
+        if (REDIRECT_TO.contains("home_page") || Constants.ISNOTIFICATION) {
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
+
     }
 }
 

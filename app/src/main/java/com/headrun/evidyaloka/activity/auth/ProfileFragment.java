@@ -1,4 +1,4 @@
-package com.headrun.evidyaloka.activity.login;
+package com.headrun.evidyaloka.activity.auth;
 
 import android.content.Context;
 import android.content.Intent;
@@ -163,6 +163,7 @@ public class ProfileFragment extends BaseEVDFragment {
 
                 HashMap<String, String> params = new HashMap<>();
                 params.put("csrfmiddlewaretoken", utils.userSession.getCsrf());
+                params.put("fcm_key", utils.userSession.getNEWFCMToken());
                 return params;
             }
 

@@ -5,11 +5,14 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by sujith on 19/1/17.
  */
 
-public class FiltersDataResponse implements Parcelable {
+public class FiltersDataResponse {
 
     public static String TAG = "FiltersDataResponse";
 
@@ -19,32 +22,7 @@ public class FiltersDataResponse implements Parcelable {
     public String[] states;
     @SerializedName("sessions_filters")
     public String[] sessions_filters;
+    @SerializedName("roles")
+    public HashMap<String, String>[] user_roles;
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(this.languages);
-        dest.writeStringArray(this.states);
-    }
-
-    protected FiltersDataResponse(Parcel in) {
-        this.languages = in.createStringArray();
-        this.states = in.createStringArray();
-    }
-
-    public static final Creator<FiltersDataResponse> CREATOR = new Creator<FiltersDataResponse>() {
-        @Override
-        public FiltersDataResponse createFromParcel(Parcel source) {
-            return new FiltersDataResponse(source);
-        }
-
-        @Override
-        public FiltersDataResponse[] newArray(int size) {
-            return new FiltersDataResponse[size];
-        }
-    };
 }

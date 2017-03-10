@@ -52,8 +52,6 @@ public class EVDFirebaseInstanceIDService extends FirebaseInstanceIdService {
             getApplicationContext().startService(new Intent(getApplicationContext(), ChangeSessionStatusService.class)
                     .putExtra("request_type", "fcm"));
 
-        /*new EVDNetowrkServices().fcmTokenRefresh(getApplicationContext(), this, userSession.getFCMToken(), token);
-        userSession.setFCMToken(token);*/
     }
 
 

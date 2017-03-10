@@ -223,6 +223,18 @@
     <string name="email_error">Please enter valid email id</string>
     <string name="missing_fields">Please enter missing fileds</string>
     <string name="role">Role</string>
+    <string name="title_welcome">Welcome</string>
+    <string name="hint_email_address">Email Address</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_text_continue_learning">sign in</string>
+    <string name="btn_text_password_reset">Forgot password</string>
+    <string name="btn_text_switch_to_signup">or sign up</string>
+    <string name="btn_text_signin_with">sign in with</string>
+    <string name="hint_first_name">First name</string>
+    <string name="hint_last_name">Last name</string>
+    <string name="btn_text_signup">sign up</string>
+    <string name="btn_text_switch_to_signin">or sign in</string>
+    <string name="sel_role">Select role</string>
 
 
 </resources>

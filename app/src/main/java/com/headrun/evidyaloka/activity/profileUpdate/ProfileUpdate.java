@@ -1,28 +1,35 @@
 package com.headrun.evidyaloka.activity.profileUpdate;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputEditText;
-
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.facebook.drawee.components.DraweeEventTracker;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.base.BaseActivity;
+import com.headrun.evidyaloka.activity.base.HomeActivity;
 import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
 import com.headrun.evidyaloka.core.ResponseListener;
@@ -34,8 +41,8 @@ import com.headrun.evidyaloka.utils.NetworkUtils;
 import com.headrun.evidyaloka.utils.Utils;
 import com.headrun.evidyaloka.widgets.AppBarStateChangeListener;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -45,10 +52,13 @@ import java.util.List;
 public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, ResponseListener<ChangeSessionStatus> {
 
     public String TAG = ProfileUpdate.class.getSimpleName();
-    public TextInputEditText txt_first_name, txt_last_name, txt_age, txt_email, txt_alternate_email, txt_skype_id, txt_ph_no;
-    public TextInputEditText txt_referrer, txt_brief_intro;
-    TextView txt_role;
-    EditText txt_gender, txt_profession, txt_preferred_medium, txt_reference_channel, txt_Country, txt_state, txt_city;
+    //public TextInputEditText txt_first_name, txt_last_name, txt_age, txt_email, txt_alternate_email, txt_skype_id, txt_ph_no;
+    public TextInputEditText txt_first_name, txt_last_name, txt_age, txt_email, txt_skype_id, txt_ph_no;
+    //public TextInputEditText txt_referrer, txt_brief_intro;
+    //TextView txt_role;
+    //EditText txt_gender, txt_profession, txt_preferred_medium, txt_reference_channel, txt_Country, txt_state, txt_city;
+    EditText txt_gender, txt_profession, txt_preferred_medium, txt_reference_channel;
+    FrameLayout profile_pic_lay;
     public Toolbar toolbar;
     public AppBarLayout appbarLayout;
     public CollapsingToolbarLayout collapsing_toolbar;
@@ -56,10 +66,15 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     public LinearLayout role_lay;
     Utils utils;
     Uri uri = null;
+    eu.fiskur.chipcloud.ChipCloud txt_role;
+
+    List<String> user_roles = new LinkedList<>();
+    HashMap<String, String>[] map = null;
 
     ProfileUpdate_presenter mprofileUpdate_presenter;
 
     private static final int PICK_IMAGE = 1;
+    private static final int MY_PERMISSIONS_REQUEST_READ_MEDIA = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,24 +100,26 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
         txt_gender = (EditText) findViewById(R.id.txt_gender);
         txt_age = (TextInputEditText) findViewById(R.id.txt_age);
         txt_email = (TextInputEditText) findViewById(R.id.txt_email);
-        txt_alternate_email = (TextInputEditText) findViewById(R.id.txt_alternate_email);
+        //   txt_alternate_email = (TextInputEditText) findViewById(R.id.txt_alternate_email);
         txt_skype_id = (TextInputEditText) findViewById(R.id.txt_skype_id);
         txt_ph_no = (TextInputEditText) findViewById(R.id.txt_ph_no);
         txt_profession = (EditText) findViewById(R.id.txt_profession);
         txt_preferred_medium = (EditText) findViewById(R.id.txt_preferred_medium);
         txt_reference_channel = (EditText) findViewById(R.id.txt_reference_channel);
-        txt_referrer = (TextInputEditText) findViewById(R.id.txt_referrer);
-        txt_Country = (EditText) findViewById(R.id.txt_Country);
-        txt_state = (EditText) findViewById(R.id.txt_state);
-        txt_city = (EditText) findViewById(R.id.txt_city);
-        txt_brief_intro = (TextInputEditText) findViewById(R.id.txt_brief_intro);
+        //   txt_referrer = (TextInputEditText) findViewById(R.id.txt_referrer);
+        //  txt_Country = (EditText) findViewById(R.id.txt_Country);
+        //  txt_state = (EditText) findViewById(R.id.txt_state);
+        //  txt_city = (EditText) findViewById(R.id.txt_city);
+        // txt_brief_intro = (TextInputEditText) findViewById(R.id.txt_brief_intro);
         role_lay = (LinearLayout) findViewById(R.id.role_lay);
-        txt_role = (TextView) findViewById(R.id.txt_role);
+        txt_role = (eu.fiskur.chipcloud.ChipCloud) findViewById(R.id.txt_role);
+        profile_pic_lay = (FrameLayout) findViewById(R.id.profile_pic_lay);
 
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // setActivityTitle("Edit Profile");
         txt_first_name.requestFocus();
         txt_first_name.setSelection(txt_first_name.getText().length());
 
@@ -110,11 +127,13 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
             @Override
             public void onExpanded(AppBarLayout appBarLayout) {
                 collapsing_toolbar.setTitle(" ");
+
             }
 
             @Override
             public void onCollapsed(AppBarLayout appBarLayout) {
-                collapsing_toolbar.setTitle("Edit Profile");
+                collapsing_toolbar.setTitle("");
+                setActivityTitle("Edit Profile");
             }
 
             @Override
@@ -123,16 +142,21 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
             }
         });
 
-        user_pic.setOnClickListener(new View.OnClickListener() {
+
+        user_pic.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
 
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    int permissionCheck = ContextCompat.checkSelfPermission(ProfileUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
+                    if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(ProfileUpdate.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,}, MY_PERMISSIONS_REQUEST_READ_MEDIA);
+                    } else {
+                        readDataExternal();
+                    }
+                }
+                return false;
             }
         });
 
@@ -140,7 +164,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(ProfileUpdate.this, "get gender 1234", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ProfileUpdate.this, "get gender 1234", Toast.LENGTH_SHORT).show();
                 requiredDialog(Constants.GENDER);
             }
         });
@@ -166,7 +190,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
             }
         });
 
-        txt_Country.setOnClickListener(new View.OnClickListener() {
+        /*txt_Country.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requiredDialog(Constants.COUNTRY);
@@ -191,7 +215,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
                 else
                     txt_city.setError(getResources().getString(R.string.cityError));
             }
-        });
+        });*/
 
         role_lay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,22 +224,53 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
                 requiredDialog(Constants.ROLE);
             }
         });
+
+        txt_role.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                requiredDialog(Constants.ROLE);
+            }
+        });
+
     }
+
+    private void readDataExternal() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-
             if (data != null) {
                 uri = data.getData();
                 Log.i(TAG, "Uri: " + uri.toString());
                 showImage(uri);
 
             }
-        } else {
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_MEDIA:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    readDataExternal();
+                } else {
+                    Toast.makeText(this, "unable to access the external files", Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -245,6 +300,16 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Constants.ISNOTIFICATION) {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        }
+    }
+
     @Override
     public void setFieldsData() {
 
@@ -259,32 +324,34 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
         txt_age.setText(user_data.age);
 
         txt_email.setText(user_data.email);
-        txt_alternate_email.setText(user_data.secondary_email);
+        // txt_alternate_email.setText(user_data.secondary_email);
         txt_skype_id.setText(user_data.skype_id);
         txt_ph_no.setText(user_data.phone);
 
         txt_profession.setText(user_data.profession);
         txt_preferred_medium.setText(user_data.pref_medium);
         txt_reference_channel.setText(user_data.reference_channel);
-        txt_referrer.setText(user_data.referer);
+        //  txt_referrer.setText(user_data.referer);
 
-        txt_Country.setText(user_data.country);
-        txt_state.setText(user_data.state);
-        txt_city.setText(user_data.city);
-        txt_brief_intro.setText(user_data.short_notes);
+        //  txt_Country.setText(user_data.country);
+        //  txt_state.setText(user_data.state);
+        //  txt_city.setText(user_data.city);
+        //  txt_brief_intro.setText(user_data.short_notes);
 
         txt_gender.setFocusable(false);
         txt_profession.setFocusable(false);
         txt_preferred_medium.setFocusable(false);
         txt_reference_channel.setFocusable(false);
-        txt_Country.setFocusable(false);
-        txt_state.setFocusable(false);
-        txt_city.setFocusable(false);
+        //  txt_Country.setFocusable(false);
+        //  txt_state.setFocusable(false);
+        //  txt_city.setFocusable(false);
 
         if (user_data.roles != null) {
-            List<String> data = Arrays.asList(user_data.roles);
-            setRole(data);
+            user_roles.clear();
+            user_roles.addAll(utils.userRolesMap(user_data.roles).values());
+            setRole(user_roles);
         }
+
     }
 
     @Override
@@ -314,51 +381,63 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     @Override
     public void setReferenceChannel(String channel) {
         txt_reference_channel.setText(channel);
-        txt_referrer.requestFocus();
+        //  txt_referrer.requestFocus();
     }
 
     @Override
     public void setCounty(String county) {
-        txt_Country.setText(county);
+
         Constants.STATE_MAP.clear();
         Constants.CITY_MAP.clear();
+
+        /*txt_Country.setText(county);
         txt_city.setText("");
         txt_state.setText("");
-        txt_state.requestFocus();
+        txt_state.requestFocus();*/
     }
 
     @Override
     public void setCity(String city) {
-        txt_city.setText(city);
-        txt_brief_intro.requestFocus();
+        //  txt_city.setText(city);
+        //  txt_brief_intro.requestFocus();
     }
 
     @Override
     public void setState(String state) {
-        txt_state.setText(state);
-        txt_city.requestFocus();
+        /*txt_state.setText(state);
+        txt_city.requestFocus();*/
     }
 
     @Override
     public void setRole(List<String> roles) {
-        if (roles != null) {
-            txt_role.setText(roles.toString().replaceAll("\\[|\\]|\\s", ""));
+        if (roles.size() > 0) {
+            txt_role.removeAllViews();
+            txt_role.addChips(roles.toArray(new String[roles.size()]));
+        }
+    }
+
+    @Override
+    public void updateRoles(List<String> roles) {
+        if (roles.size() > 0) {
+            user_roles.clear();
+            user_roles.addAll(roles);
+
         }
     }
 
     @Override
     public String getCountry() {
-        return txt_Country.getText().toString().trim();
+        return "";//txt_Country.getText().toString().trim();
     }
 
     @Override
     public String getState() {
-        return txt_state.getText().toString().trim();
+        return "";//txt_state.getText().toString().trim();
     }
 
     @Override
     public String getCity() {
-        return txt_city.getText().toString().trim();
+        return "";//txt_city.getText().toString().trim();
     }
 
     @Override
@@ -388,7 +467,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
 
     @Override
     public String get_sec_email() {
-        return txt_alternate_email.getText().toString().trim();
+        return "";//txt_alternate_email.getText().toString().trim();
     }
 
     @Override
@@ -412,8 +491,9 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     }
 
     @Override
-    public String get_Role() {
-        return txt_role.getText().toString().trim();
+    public List<String> get_Role() {
+
+        return user_roles != null ? user_roles : new LinkedList<String>();
     }
 
     @Override
@@ -423,12 +503,12 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
 
     @Override
     public String get_referrer() {
-        return txt_referrer.getText().toString().trim();
+        return "";// txt_referrer.getText().toString().trim();
     }
 
     @Override
     public String get_brief_intro() {
-        return txt_brief_intro.getText().toString().trim();
+        return "";// txt_brief_intro.getText().toString().trim();
     }
 
     @Override
@@ -446,25 +526,51 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
             params.put("first_name", getFirst_name());
             params.put("last_name", getLast_name());
             params.put("email", get_email());
-            params.put("alt_email", get_sec_email());
+            //params.put("alt_email", "");
             params.put("skype_id", get_skype_id());
             params.put("age", get_age());
             params.put("phone", get_ph_no());
             params.put("gender", get_gender());
             params.put("profession", get_preofession());
             params.put("prefered_medium", get_preferred_medium());
-            params.put("reference_id", get_referrer());
+            // params.put("reference_id", "");
             params.put("reference_channel", get_reference_channel());
-            params.put("country", getCountry());
-            params.put("state", getState());
-            params.put("city", getCity());
-            params.put("short_notes", get_brief_intro());
-            params.put("roles", get_Role());
 
+            /* params.put("country", "");
+            params.put("state", "");
+            params.put("city", "");
+            params.put("short_notes", "");
+           */
+
+            HashMap<String, String> vals = new HashMap<>();
+            vals.putAll(utils.reverseMap(utils.userSession.getUserRoles()));
+
+            StringBuffer role_ids = new StringBuffer();
+            int role_count = get_Role().size();
+            map = null;
+            map = new HashMap[role_count];
+            int count = 0, map_count = 0;
+
+            if (role_count > 0)
+                for (String entry : get_Role()) {
+                    count++;
+                    if (vals.containsKey(entry)) {
+                        HashMap<String, String> val = new HashMap<>();
+                        val.put(vals.get(entry), entry);
+                        map[map_count] = val;
+                        map_count++;
+                        role_ids.append(vals.get(entry));
+                        if (role_count != count)
+                            role_ids.append(";");
+                    }
+                }
+
+            params.put("roles", role_ids.toString());
 
             new EVDNetowrkServices().saveProfileData(this, this, params);
-            startService(new Intent(getApplicationContext(), UploadImageService.class)
-                    .putExtra("uri", uri.toString()));
+            if (uri != null && !uri.toString().isEmpty())
+                startService(new Intent(getApplicationContext(), UploadImageService.class)
+                        .putExtra("uri", uri.toString()));
         }
 
     }
@@ -477,6 +583,41 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     @Override
     public void onResponse(ChangeSessionStatus response) {
         hideProgressDialog();
+
+        if (response != null)
+            if (response.status.equals("0")) {
+
+                LoginResponse data = utils.userSession.getUserData();
+                LoginResponse.userData user_Data = data.data;
+                if (user_Data != null) {
+
+                    user_Data.roles = map;
+
+                    user_Data.first_name = getFirst_name();
+                    user_Data.last_name = getLast_name();
+                    user_Data.gender = get_gender();
+                    user_Data.age = get_age();
+
+                    user_Data.email = get_email();
+                    user_Data.skype_id = get_skype_id();
+                    user_Data.phone = get_ph_no();
+                    user_Data.profession = get_preofession();
+                    user_Data.pref_medium = get_preferred_medium();
+                    user_Data.reference_channel = get_reference_channel();
+
+                    utils.userSession.setUserData(data);
+
+                    setFieldsData();
+
+                }
+
+            } else {
+                String message = "profile update faild";
+                if (!response.message.isEmpty())
+                    message = response.message;
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
+
 
     }
 }
