@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/evidyalogo" />
+
+
+        <TextView
+            android:id="@+id/teacher_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:drawableLeft="@drawable/person"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:textColor="@color/primaryText"
+            android:textSize="@dimen/text_large" />
+
+        <TextView
+            android:id="@+id/session_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/doc"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:textColor="@color/primaryText" />
+
+
+        <TextView
+            android:id="@+id/session_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/comment"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/primaryText" />
+
+        <LinearLayout
+            android:id="@+id/session_attend_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/session_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.3"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:textColor="@color/teach_now"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/session_present"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.3"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:textColor="@color/completed"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/session_abscent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.3"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:textColor="@color/cancelled" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/reason_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/session_cancel_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="please choose the reason : " />
+
+            <Spinner
+                android:id="@+id/cancel_reason"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/rounded_border" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+
+            <Button
+                android:id="@+id/completed_btn"
+                style="@style/button_style"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:background="@color/completed"
+                android:text="Complted"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/cancelled_btn"
+                style="@style/button_style"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:background="@color/cancelled"
+                android:text="Cancelled"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/cancel_dialog"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_margin="10dp"
+            android:src="@drawable/close_dialog" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -11,5 +11,11 @@ public interface SessionDetailsView {
 
     public void setSessionData(SessionDetails mSessionDeatils);
 
+    public void updateSessionDetialsCount(int count);
+
+    public void movetoSessionScreen();
+    public void showProcessingBar();
+    public void hideProcessingBar();
+
 
 }

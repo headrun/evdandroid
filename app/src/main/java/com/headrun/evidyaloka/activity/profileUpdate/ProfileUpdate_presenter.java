@@ -117,7 +117,6 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
         final ListView dialog_list = (ListView) dialogView.findViewById(R.id.dialog_list);
         ArrayAdapter<String> itemsAdapter = null;
 
-
         if (!type.contains(Constants.ROLE)) {
             if (mList != null)
                 itemsAdapter =
@@ -138,14 +137,24 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
         dialog_list.setAdapter(itemsAdapter);
         dialog_title.setText(type);
 
+        int user_role_size = 0;
+        try {
+            user_role_size = utils.userSession.getUserData().data.roles.length;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (type.contains(Constants.ROLE)) {
-            dialog_list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+            if (user_role_size > 1)
+                dialog_list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+            else
+                dialog_list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    if (sel_roles_list.size() > 0) {
+                    if (sel_roles_list.size() >= 0) {
                         mProfileUpdateView.updateRoles(sel_roles_list);
                         mProfileUpdateView.setRole(sel_roles_list);
 
@@ -315,13 +324,31 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
         String state = mProfileUpdateView.getState();
         String city = mProfileUpdateView.getCity();
         String brieff_intro = mProfileUpdateView.get_brief_intro();
+        List<String> role = mProfileUpdateView.get_Role();
 
-        if (fname.isEmpty() || gender.isEmpty() || age.isEmpty() || email.isEmpty() || preferred_medium.isEmpty())
+        /*if (fname.isEmpty() || gender.isEmpty() || age.isEmpty() || email.isEmpty() || preferred_medium.isEmpty())
             mProfileUpdateView.showError(mContext.getResources().getString(R.string.missing_fields));
         else if ((!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()))
             mProfileUpdateView.showError(mContext.getResources().getString(R.string.email_error));
         else
+            mProfileUpdateView.submitUserPofile();*/
+
+
+        if (fname.isEmpty())
+            mProfileUpdateView.showError(Constants.EDIT_FNAME, mContext.getResources().getString(R.string.missing_fields));
+        else if (gender.isEmpty())
+            mProfileUpdateView.showError(Constants.EDIT_GENDER, mContext.getResources().getString(R.string.missing_fields));
+        else if (email.isEmpty())
+            mProfileUpdateView.showError(Constants.EDIT_EMAIL, mContext.getResources().getString(R.string.missing_fields));
+        else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
+            mProfileUpdateView.showError(Constants.EDIT_EMAIL, mContext.getResources().getString(R.string.missing_fields));
+        else if (preferred_medium.isEmpty())
+            mProfileUpdateView.showError(Constants.EDIT_MEDIUM, mContext.getResources().getString(R.string.missing_fields));
+        else if (role.size() <= 0)
+            mProfileUpdateView.showError(Constants.EDIT_ROLE, mContext.getResources().getString(R.string.missing_fields));
+        else
             mProfileUpdateView.submitUserPofile();
+
     }
 
 }

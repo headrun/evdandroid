@@ -92,7 +92,7 @@
         <activity
             android:name=".activity.sessionDetails.SessionDetails"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/AppTheme1">
+            android:theme="@style/App.NoActionBar">
 
             <intent-filter>
                 <action android:name="com.headrun.evidyaloka.activity.sessionDetails.SessionDetails" />

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.inputmethodservice.Keyboard;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -56,6 +58,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     public TextInputEditText txt_first_name, txt_last_name, txt_age, txt_email, txt_skype_id, txt_ph_no;
     //public TextInputEditText txt_referrer, txt_brief_intro;
     //TextView txt_role;
+    TextView sel_txt_role;
     //EditText txt_gender, txt_profession, txt_preferred_medium, txt_reference_channel, txt_Country, txt_state, txt_city;
     EditText txt_gender, txt_profession, txt_preferred_medium, txt_reference_channel;
     FrameLayout profile_pic_lay;
@@ -113,8 +116,9 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
         // txt_brief_intro = (TextInputEditText) findViewById(R.id.txt_brief_intro);
         role_lay = (LinearLayout) findViewById(R.id.role_lay);
         txt_role = (eu.fiskur.chipcloud.ChipCloud) findViewById(R.id.txt_role);
+        sel_txt_role = (TextView) findViewById(R.id.sel_txt_role);
         profile_pic_lay = (FrameLayout) findViewById(R.id.profile_pic_lay);
-
+        sel_txt_role.setVisibility(View.GONE);
         //setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -300,7 +304,6 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -348,10 +351,17 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
 
         if (user_data.roles != null) {
             user_roles.clear();
-            user_roles.addAll(utils.userRolesMap(user_data.roles).values());
+            if (user_data.roles.length > 0) {
+                user_roles.addAll(utils.userRolesMap(user_data.roles).values());
+                sel_txt_role.setVisibility(View.GONE);
+            } else {
+                sel_txt_role.setVisibility(View.VISIBLE);
+            }
             setRole(user_roles);
-        }
 
+        } else {
+            sel_txt_role.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -410,15 +420,20 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
 
     @Override
     public void setRole(List<String> roles) {
-        if (roles.size() > 0) {
+        if (roles.size() >= 0) {
             txt_role.removeAllViews();
             txt_role.addChips(roles.toArray(new String[roles.size()]));
+            if (roles.size() == 0)
+                sel_txt_role.setVisibility(View.VISIBLE);
+            else
+                sel_txt_role.setVisibility(View.GONE);
+
         }
     }
 
     @Override
     public void updateRoles(List<String> roles) {
-        if (roles.size() > 0) {
+        if (roles.size() >= 0) {
             user_roles.clear();
             user_roles.addAll(roles);
 
@@ -512,7 +527,26 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     }
 
     @Override
-    public void showError(String msg) {
+    public void showError(int val, String msg) {
+
+        if (Constants.EDIT_FNAME == val)
+            txt_first_name.setError(msg);
+        else if (Constants.EDIT_GENDER == val)
+            txt_gender.setError(msg);
+        else if (Constants.EDIT_EMAIL == val)
+            txt_email.setError(msg);
+        else if (Constants.EDIT_MEDIUM == val)
+            txt_preferred_medium.setError(msg);
+        else if (Constants.EDIT_ROLE == val) {
+            sel_txt_role.setError(msg);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                sel_txt_role.setTextColor(getResources().getColor(R.color.error_color, this.getTheme()));
+            } else {
+                sel_txt_role.setTextColor(getResources().getColor(R.color.error_color));
+            }
+            sel_txt_role.requestFocus();
+            sel_txt_role.setVisibility(View.VISIBLE);
+        }
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -620,4 +654,5 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
 
 
     }
+
 }

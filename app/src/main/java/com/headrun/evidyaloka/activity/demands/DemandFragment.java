@@ -109,7 +109,6 @@ public class DemandFragment extends BaseEVDFragment implements ResponseListener<
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -369,7 +368,7 @@ public class DemandFragment extends BaseEVDFragment implements ResponseListener<
 
     private void setSnackBar() {
 
-        Toast.makeText(getActivity(),R.string.no_internet,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         /*Snackbar snackbar = Snackbar
                 .make(getCoordinatorLayout(), R.string.no_internet, Snackbar.LENGTH_INDEFINITE)
                 .setAction("RETRY", new View.OnClickListener() {

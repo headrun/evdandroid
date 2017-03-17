@@ -38,25 +38,22 @@
                     app:layout_collapseMode="parallax">
 
                     <RelativeLayout
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         >
 
                         <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/user_pic"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:clickable="true"
                             android:background="@drawable/circular"
+                            android:clickable="true"
                             android:scaleType="centerCrop"
                             app:placeholderImage="@drawable/ic_nav_profile_active"
                             fresco:roundedCornerRadius="5dp" />
 
 
                         <ImageView
-
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignRight="@id/user_pic"
@@ -123,14 +120,12 @@
                         chipcloud:deselectedFontColor="@color/deamnd_slot_text_color"
                         chipcloud:selectMode="none" />
 
-                    <!--<TextView
-                        android:id="@+id/txt_role"
+                    <TextView
+                        android:id="@+id/sel_txt_role"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/sel_role"
-                        android:textColor="@color/theme_primary_dark"
-                        android:textColorHint="@color/text_light_gray"
-                        android:textSize="@dimen/text_medium" />-->
+                        android:text="@string/plz_sel_role"
+                        android:textSize="@dimen/text_medium" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -211,7 +206,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
+                        android:layout_margin="10dp"
+                        android:visibility="gone">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/txt_age"
@@ -313,6 +309,31 @@
 
                     </android.support.design.widget.TextInputLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="@string/preferred_medium" />
+
+                        <EditText
+                            android:id="@+id/txt_preferred_medium"
+                            style="@style/EditText.Evd.EmailAuth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:editable="false"
+                            android:hint="@string/preferred_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:lines="1"
+                            android:maxLines="1" />
+
+                    </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -350,33 +371,6 @@
                             android:lines="1"
                             android:maxLines="1"
                             android:textSize="@dimen/text_large" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/preferred_medium" />
-
-                        <EditText
-                            android:id="@+id/txt_preferred_medium"
-                            style="@style/EditText.Evd.EmailAuth"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:editable="false"
-                            android:hint="@string/preferred_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1" />
 
                     </LinearLayout>
 

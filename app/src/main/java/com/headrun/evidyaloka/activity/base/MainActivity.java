@@ -57,12 +57,10 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
         utils = new Utils(this);
 
-
         if (!utils.getCookieValue(this, "sessionid").isEmpty())
             utils.userSession.setIsLoign(true);
         else
             utils.userSession.setIsLoign(false);
-
 
         Inteview();
 

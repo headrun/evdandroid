@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.demands.DemandFragment;
 import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.auth.ProfileFragment;
+import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.activity.sessions.SessionsTabFragment;
 import com.headrun.evidyaloka.config.ApiEndpoints;
 import com.headrun.evidyaloka.config.Constants;
@@ -52,10 +54,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private SimpleDraweeView user_pic;
     private LinearLayout profile_lay;
     private TextView login_txt_btn, txt_user_name;
-    Menu NavMenu;
+    Menu NavMenu, home_menu;
     MenuItem Log_out_item;
     MenuItem Session_item;
-
+    MenuItem act_volunteer;
+    TextView act_vol_txt;
     private boolean redirect_to = false;
     private String redirect_type;
 
@@ -272,15 +275,19 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id) {
             case R.id.action_demands:
+                enableVolunteer();
                 replaceFragment(new DemandFragment());
                 break;
             case R.id.action_sessions:
+                disableVolunteer();
                 if (redirect_type != null && redirect_type.equals("session_page"))
                     replaceFragment(new SessionsTabFragment().newInstance("prefered"));
                 else
                     replaceFragment(new SessionsTabFragment());
                 break;
             case R.id.action_profile:
+
+                disableVolunteer();
                 if (utils.userSession.getIsLogin())
                     replaceFragment(new ProfileFragment());
                 else
@@ -374,4 +381,58 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         EvdApplication.getInstance().addToRequestQueue(stringRequest);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        home_menu = menu;
+        try {
+            act_volunteer = home_menu.findItem(R.id.action_volunteer);
+            act_volunteer.setActionView(android.R.layout.simple_list_item_1);
+            act_vol_txt = (TextView) act_volunteer.getActionView().findViewById(android.R.id.text1);
+            act_vol_txt.setAllCaps(false);
+            act_vol_txt.setText(R.string.volunteer);
+            act_vol_txt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (utils.userSession.getIsLogin())
+                        startActivity(new Intent(HomeActivity.this, ProfileUpdate.class));
+                    else
+                        startActivity(new Intent(HomeActivity.this, LoginActivity.class)
+                                .putExtra(Constants.TYPE, true)
+                                .putExtra(Constants.REDIRECT_TO, Constants.PROFILE_TYPE));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.action_volunteer:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void enableVolunteer() {
+
+        if (act_vol_txt != null) {
+            act_vol_txt.setText(R.string.volunteer);
+            act_vol_txt.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void disableVolunteer() {
+
+        if (act_vol_txt != null) {
+            act_vol_txt.setVisibility(View.GONE);
+        }
+    }
 }

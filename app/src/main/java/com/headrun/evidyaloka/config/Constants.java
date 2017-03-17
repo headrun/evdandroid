@@ -24,12 +24,18 @@ public class Constants {
 
     public static final int LOGIN = 1;
     public static final int SIGNUP = 2;
+
+
     public static String TYPE = "redirect_type";
     public static String ID = "id";
     public static String REDIRECT_TO = "redirect_to";
     public static String SLOTS_TYPE = "slots";
     public static String HOME_TYPE = "home_page";
+    public static String PROFILE_TYPE = "profile";
     public static String GENDER = "gender";
+    public static final String COMPLETED ="Completed";
+    public static final String CANCELLED ="Cancelled";
+
     public static Parcelable DEMAND_SLOTS_STATE;
     public static boolean PAGE_REFRESH = false;
     public static LinkedHashMap<String, Demand> LIST_DEMANDS = new LinkedHashMap<>();
@@ -40,6 +46,7 @@ public class Constants {
     public static LinkedHashMap<String, String> COUNTRY_MAP = new LinkedHashMap<>();
     public static LinkedHashMap<String, String> STATE_MAP = new LinkedHashMap<>();
     public static LinkedHashMap<String, String> CITY_MAP = new LinkedHashMap<>();
+    public static List<String> ATTENDANCE_LIST = new ArrayList<>();
 
 
     public static String COUNTRY = "country";
@@ -50,4 +57,12 @@ public class Constants {
     public static String CHANNEL = "channel";
     public static String ROLE = "role";
     public static boolean ISNOTIFICATION = false;
+
+
+    public static final int EDIT_FNAME = 1;
+    public static final int EDIT_GENDER = 2;
+    public static final int EDIT_EMAIL = 3;
+    public static final int EDIT_MEDIUM = 4;
+    public static final int EDIT_ROLE = 5;
+
 }

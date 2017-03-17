@@ -15,7 +15,6 @@ import com.headrun.evidyaloka.activity.demands.BaseEVDFragment;
 public class SignupFragment extends BaseEVDFragment {
 
 
-
     public SignupFragment() {
     }
 

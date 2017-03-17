@@ -31,6 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.headrun.evidyaloka.activity.demand_slots.DemandSlotActivity;
+import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
 import com.headrun.evidyaloka.R;
@@ -365,6 +366,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             } else {
                 startActivity(new Intent(this, HomeActivity.class));
             }
+        } else if (REDIRECT_TO.equals(Constants.PROFILE_TYPE)) {
+            startActivity(new Intent(this, ProfileUpdate.class));
         } else if (REDIRECT_TO.equals(Constants.HOME_TYPE)) {
             startActivity(new Intent(this, HomeActivity.class));
         }

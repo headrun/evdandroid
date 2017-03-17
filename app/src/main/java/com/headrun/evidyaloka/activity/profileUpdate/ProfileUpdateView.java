@@ -66,7 +66,7 @@ public interface ProfileUpdateView {
 
     public String get_brief_intro();
 
-    public void showError(String msg);
+    public void showError(int val, String msg);
 
     public void submitUserPofile();
 }

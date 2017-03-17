@@ -4,6 +4,8 @@ import android.provider.CalendarContract;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 /**
@@ -43,6 +45,8 @@ public class SessionDetails {
     public String comments;
     @SerializedName("center_image")
     public String center_image;
+    @SerializedName("cancel_reasons")
+    public LinkedHashMap<String, String> cancel_reasons;
 
 
     public class Attandance {
@@ -54,6 +58,10 @@ public class SessionDetails {
         @SerializedName("id")
         public String id;
 
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
     public class Topic {

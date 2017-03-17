@@ -42,7 +42,7 @@ public class ListItemsactivity extends BaseActivity implements View.OnClickListe
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       // Log.i(TAG, "sample lsitview");
+        // Log.i(TAG, "sample lsitview");
         change_filer = false;
         list_view_list = (ListView) findViewById(R.id.list_view);
         image_view = (com.facebook.drawee.view.SimpleDraweeView) findViewById(R.id.image_view);
@@ -100,7 +100,7 @@ public class ListItemsactivity extends BaseActivity implements View.OnClickListe
         if (id == R.id.apply) {
             if (change_filer)
                 sel_filter();
-            Constants.PAGE_REFRESH=true;
+            Constants.PAGE_REFRESH = true;
             startActivity(new Intent(ListItemsactivity.this, HomeActivity.class));
         }
     }

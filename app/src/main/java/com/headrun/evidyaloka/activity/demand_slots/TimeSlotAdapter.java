@@ -77,7 +77,7 @@ public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.SlotVi
 
         final String keys = (String) key;
         final SchoolDetails.ClassTimings[] timings = mschool_timings.get(keys);
-       // boolean sel_center = sameCenter();
+        // boolean sel_center = sameCenter();
         holder.slot_day.setText(keys);
         final List<String> slot_lables = new ArrayList<>();
 

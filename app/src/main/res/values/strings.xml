@@ -136,6 +136,8 @@
 
     <string-array name="reference_channel">
         <item>WhatsApp</item>
+        <item>Facebook</item>
+        <item>Emailer</item>
         <item>Corporate - Aditya Birla Retail</item>
         <item>Corporate - ANZ</item>
         <item>Corporate - Apeejay Group</item>
@@ -160,8 +162,6 @@
         <item>Corporate - TE Connect</item>
         <item>Corporate - Tech-Mahindra</item>
         <item>Corporate - XLRI - Sigma</item>
-        <item>Emailer</item>
-        <item>Facebook</item>
         <item>India Assoc - Nashville</item>
         <item>Internet Search</item>
         <item>Team-Everest</item>
@@ -189,7 +189,7 @@
     <string name="faceing_issue">It seems to be  an issue please try again later</string>
     <string name="pwd_match_error">Password doesn\'t match</string>
     <string name="first_name">First name * </string>
-    <string name="last_name">Last name * </string>
+    <string name="last_name">Last name </string>
     <string name="mising_first_name">Missing first name</string>
     <string name="mising_last_name">Missing last name</string>
     <string name="enter_email">Enter email</string>
@@ -222,7 +222,7 @@
     <string name="cityError">Please select contry and state</string>
     <string name="email_error">Please enter valid email id</string>
     <string name="missing_fields">Please enter missing fileds</string>
-    <string name="role">Role</string>
+    <string name="role">Role * </string>
     <string name="title_welcome">Welcome</string>
     <string name="hint_email_address">Email Address</string>
     <string name="hint_password">Password</string>
@@ -235,6 +235,8 @@
     <string name="btn_text_signup">sign up</string>
     <string name="btn_text_switch_to_signin">or sign in</string>
     <string name="sel_role">Select role</string>
+    <string name="plz_sel_role">Select a role</string>
+    <string name="volunteer">volunteer</string>
 
 
 </resources>

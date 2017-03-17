@@ -22,10 +22,8 @@
     <color name="colorGrey500">#9e9e9e</color>
     <color name="colorGrey600">#757575</color>
 
-
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorOffWhite">#deffffff</color>
-
     <color name="colorMovieTitle">#9e9e9e</color>
     <color name="colorMovieGenre">#e0e0e0</color>
     <color name="edit_img_background">#ff878b94</color>
@@ -64,4 +62,5 @@
     <color name="text_light_gray">#ffafafaf</color>
     <color name="text_blue_gray">#ff7d97ad</color>
     <color name="divider_light_gray">#ffdbe2e8</color>
+    <color name="error_color">#c62a25</color>
 </resources>

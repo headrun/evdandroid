@@ -2,6 +2,7 @@ package com.headrun.evidyaloka.core;
 
 import android.app.usage.ConfigurationStats;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 import com.headrun.evidyaloka.config.ApiEndpoints;
@@ -35,6 +36,8 @@ public class EVDNetowrkServices extends BaseService {
 
     String PLATFORM = "platform";
     String ANDROID = "android";
+
+    private String TAG = EVDNetowrkServices.class.getSimpleName();
 
     public void getDeamnds(Context context, ResponseListener<DemandResponse> listener, Map<String, String> params) {
 
@@ -112,6 +115,8 @@ public class EVDNetowrkServices extends BaseService {
         params.put("old_key", prev_toekn);
         params.put("new_key", token);
 
+        Log.i(TAG, "fcm key is " + token);
+
         params.put(PLATFORM, ANDROID);
         addCsrfparam(context, params);
 
@@ -170,6 +175,13 @@ public class EVDNetowrkServices extends BaseService {
         }, listener);
     }
 
+    public void sessionStatusChange(Context context, ResponseListener<ChangeSessionStatus> listener, HashMap<String, String> params) {
+
+        addCsrfparam(context, params);
+        executePostRequest(context, ApiEndpoints.CHANGE_SESSIONS, getSessionHeaders(context), params, new TypeToken<ChangeSessionStatus>() {
+        }, listener);
+    }
+
     public void getLocationsData(Context context, ResponseListener<LocData> listener, String type, String id) {
 
         HashMap<String, String> params = new HashMap<>();
@@ -183,7 +195,6 @@ public class EVDNetowrkServices extends BaseService {
             params.put("type", "getCities");
             params.put("stateId", id);
         }
-
         executeGetRequest(context, ApiEndpoints.GETLOC_DATA, getSessionHeaders(context), params, new TypeToken<LocData>() {
         }, listener);
 

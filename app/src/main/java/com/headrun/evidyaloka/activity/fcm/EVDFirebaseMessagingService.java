@@ -71,14 +71,16 @@ public class EVDFirebaseMessagingService extends FirebaseMessagingService {
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(messageBody))
                 .setSound(defaultSoundUri)
-                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                .setVibrate(new long[]{Notification.DEFAULT_SOUND})
                 .setLights(Color.RED, 3000, 3000)
+                .setDefaults(Notification.PRIORITY_MAX)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+
     }
 }
 

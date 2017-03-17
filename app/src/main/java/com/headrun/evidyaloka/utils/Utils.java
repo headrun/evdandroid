@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
@@ -222,10 +224,33 @@ public class Utils {
         HashMap<String, String> map = new HashMap<>();
         if (list != null)
             for (HashMap<String, String> val : list)
-                for (Map.Entry<String, String> entry : val.entrySet())
-                    map.put(entry.getKey().replaceAll("\"", "").trim(), entry.getValue().replaceAll("\"", "").trim());
+                if (val != null)
+                    for (Map.Entry<String, String> entry : val.entrySet())
+                        if (entry != null)
+                            map.put(entry.getKey().replaceAll("\"", "").trim(), entry.getValue().replaceAll("\"", "").trim());
 
         return map;
+    }
+
+
+    public void setTextDrawable(TextView mTextview, int left, int top, int right, int bottom) {
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            mTextview.setCompoundDrawablesWithIntrinsicBounds(left != 0 ? mContext.getResources().getDrawable(left, mContext.getTheme()) : null,
+                    top != 0 ? mContext.getResources().getDrawable(top, mContext.getTheme()) : null,
+                    right != 0 ? mContext.getResources().getDrawable(right, mContext.getTheme()) : null,
+                    bottom != 0 ? mContext.getResources().getDrawable(bottom, mContext.getTheme()) : null
+            );
+        } else {
+            mTextview.setCompoundDrawablesWithIntrinsicBounds(left != 0 ? mContext.getResources().getDrawable(left) : null,
+                    top != 0 ? mContext.getResources().getDrawable(top) : null,
+                    right != 0 ? mContext.getResources().getDrawable(right) : null,
+                    bottom != 0 ? mContext.getResources().getDrawable(bottom) : null
+            );
+
+        }
     }
 
     public HashMap<String, String> reverseMap(HashMap<String, String> list) {
@@ -275,6 +300,8 @@ public class Utils {
         return ContextCompat.getColor(mContext, R.color.button_color);
 
     }
+
+
 
 
     public PackageInfo getPackageInfo() {

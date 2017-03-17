@@ -85,7 +85,6 @@ public class LoginFragment extends BaseEVDFragment implements AuthView, Fragment
         return view;
     }
 
-
     @Override
     public void setError(String msg) {
     }
