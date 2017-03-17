@@ -190,7 +190,7 @@ public class SessionTypeFrament extends BaseEVDFragment implements ResponseListe
         /*SessionResponse data = new Gson().fromJson(SampleResponseData.Sessions_data, SessionResponse.class);
         processionData(data);*/
 
-        utils.volleyError(error, getActivity());
+        //utils.volleyError(error, getActivity());
         if (error instanceof NetworkError) {
             if (Constants.LIST_SESSIONS.get(mSessionType).size() == 0)
                 seterror_display(R.drawable.connection_error, "");

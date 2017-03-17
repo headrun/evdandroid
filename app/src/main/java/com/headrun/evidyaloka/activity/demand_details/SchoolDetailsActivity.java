@@ -113,7 +113,7 @@ public class SchoolDetailsActivity extends AppCompatActivity implements Response
         center_admin_list = (RecyclerView) findViewById(R.id.center_admin_list);
         school_news_list = (RecyclerView) findViewById(R.id.school_news_list);
         teach_btn = (Button) findViewById(R.id.teach_btn);
-
+        teach_btn.setEnabled(false);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -256,6 +256,7 @@ public class SchoolDetailsActivity extends AppCompatActivity implements Response
 
     private void notifyData(SchoolDetails mSchoolDetails) {
 
+        teach_btn.setEnabled(true);
         txt_over_view.setText(mSchoolDetails.school_desc);
         teacher_adapter = new TeacharsPhotoAdapter(this, mSchoolDetails.current_teachers);
         admin_adapter = new TeacharsPhotoAdapter(this, mSchoolDetails.school_admin);

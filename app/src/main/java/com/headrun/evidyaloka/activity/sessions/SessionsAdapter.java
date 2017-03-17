@@ -140,10 +140,13 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.Sessio
             }
         });
 
+        holder.update_status_btn.setVisibility(View.GONE);
+/*
+
         if (Session_type.toLowerCase().contains("scheduled") || Session_type.toLowerCase().contains("teaching")) {
 
             // holder.session_status.setVisibility(View.GONE);
-            holder.update_status_btn.setVisibility(View.VISIBLE);
+            holder.update_status_btn.setVisibility(View.GONE);
             // holder.update_status_btn.setText(mSession.status);
             holder.update_status_btn.setBackgroundColor(set_statusColor(Session_type));
             holder.update_status_btn.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +161,7 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.Sessio
         } else {
             holder.update_status_btn.setVisibility(View.GONE);
         }
+*/
 
     }
 

@@ -236,7 +236,6 @@
     <string name="btn_text_switch_to_signin">or sign in</string>
     <string name="sel_role">Select role</string>
     <string name="plz_sel_role">Select a role</string>
-    <string name="volunteer">volunteer</string>
-
+    <string name="volunteer">Become Volunteer</string>
 
 </resources>

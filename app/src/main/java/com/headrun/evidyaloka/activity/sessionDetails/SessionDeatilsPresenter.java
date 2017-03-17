@@ -193,21 +193,23 @@ public class SessionDeatilsPresenter {
         public String id;
 
         public CallSessionData(String id) {
+            mSessionview.showProcessingBar();
             new EVDNetowrkServices().sessionDeatils(montext, this, id);
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
-
+            mSessionview.hideProcessingBar();
+            mSessionview.showNetworkError(error);
         }
 
         @Override
         public void onResponse(SessionDetailsResponse response) {
-
+            mSessionview.hideProcessingBar();
             if (response != null) {
 
                 if (response.status != null && response.status.equals("0")) {
-
+                    mSessionview.hideNetworkError();
                     mSessionview.setSessionData(response.data);
                 }
             }
@@ -215,7 +217,6 @@ public class SessionDeatilsPresenter {
     }
 
     public class SessionDataSubmit implements ResponseListener<ChangeSessionStatus> {
-
 
         public SessionDataSubmit(String session_id, String topic_id, String comment, List<String> data, String status, String reason) {
 

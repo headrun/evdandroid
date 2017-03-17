@@ -5,8 +5,8 @@ package com.headrun.evidyaloka.config;
  */
 
 public class ApiEndpoints {
-    public static final String BASE_URL1 = "http://www.evidyaloka.org/";
-    public static final String BASE_URL = "http://dev.evidyaloka.org:9090/";
+    public static final String BASE_URL = "http://www.evidyaloka.org/";
+    public static final String BASE_URL1 = "http://dev.evidyaloka.org/";
     public static final String BASE_URL2 = "http://dev.evidyaloka.org:2222/";
 
     public static final String GET_DEMANDS = BASE_URL + "get_demand/";

@@ -1,5 +1,6 @@
 package com.headrun.evidyaloka.activity.sessionDetails;
 
+import com.android.volley.VolleyError;
 import com.headrun.evidyaloka.model.*;
 import com.headrun.evidyaloka.model.SessionDetails;
 
@@ -16,6 +17,9 @@ public interface SessionDetailsView {
     public void movetoSessionScreen();
     public void showProcessingBar();
     public void hideProcessingBar();
+
+    public void showNetworkError(VolleyError error);
+    public void hideNetworkError();
 
 
 }

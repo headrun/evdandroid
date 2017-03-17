@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -26,9 +27,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.NetworkError;
+import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.base.BaseActivity;
@@ -46,14 +51,15 @@ public class SessionDetails extends BaseActivity implements SessionDetailsView, 
 
     public String TAG = SessionDetails.class.getSimpleName();
 
-    TextView session_teacher, session_topic, attendance_count, session_status, text_topic_title, text_attdencae_title, session_date;
-
+    TextView textView, session_teacher, session_topic, attendance_count, session_status, text_topic_title, text_attdencae_title, session_date;
     RecyclerView attendance_list;
     Toolbar toolbar;
     CardView topic_view, topic_content_view, attendance_view, attendance_content;
+    NestedScrollView nested_scroll;
     public AppBarLayout appbarLayout;
     public CollapsingToolbarLayout collapsing_toolbar;
-
+    public RelativeLayout no_result_lay;
+    ImageView error_img;
     Spinner topic_covered;
     EditText session_feedback;
     String sessin_id;
@@ -102,14 +108,12 @@ public class SessionDetails extends BaseActivity implements SessionDetailsView, 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         collapsing_toolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         appbarLayout = (AppBarLayout) findViewById(R.id.appbarLayout);
-        // session_grade = (TextView) findViewById(R.id.session_grade);
+
         session_teacher = (TextView) findViewById(R.id.session_teacher);
         attendance_count = (TextView) findViewById(R.id.attendance_count);
         text_topic_title = (TextView) findViewById(R.id.text_topic_title);
         text_attdencae_title = (TextView) findViewById(R.id.text_attdencae_title);
         session_topic = (TextView) findViewById(R.id.session_topic);
-        //  session_time = (TextView) findViewById(R.id.session_time);
-        //  session_mnth = (TextView) findViewById(R.id.session_mnth);
         session_date = (TextView) findViewById(R.id.session_date);
         session_status = (TextView) findViewById(R.id.session_status);
         session_feedback = (EditText) findViewById(R.id.session_feedback);
@@ -120,10 +124,12 @@ public class SessionDetails extends BaseActivity implements SessionDetailsView, 
         topic_content_view = (CardView) findViewById(R.id.topic_content_view);
         attendance_view = (CardView) findViewById(R.id.attendance_view);
         attendance_content = (CardView) findViewById(R.id.attendance_content);
-        //   session_centerimg = (SimpleDraweeView) findViewById(R.id.session_center_img);
-        // session_lay = (NestedScrollView) findViewById(R.id.session_lay);
+        no_result_lay = (RelativeLayout) findViewById(R.id.no_result_lay);
+        textView = (TextView) findViewById(R.id.textView);
+        error_img = (ImageView) findViewById(R.id.error_img);
+        nested_scroll = (NestedScrollView) findViewById(R.id.nested_scroll);
+
         topic_covered.setOnItemSelectedListener(this);
-        //session_lay.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -448,6 +454,33 @@ public class SessionDetails extends BaseActivity implements SessionDetailsView, 
     @Override
     public void hideProcessingBar() {
         hideProgressDialog();
+    }
+
+    @Override
+    public void showNetworkError(VolleyError error) {
+
+        if (error instanceof NetworkError) {
+            seterror_display(R.drawable.connection_error, getResources().getString(R.string.no_demands));
+            nested_scroll.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void hideNetworkError() {
+        no_result_lay.setVisibility(View.GONE);
+        nested_scroll.setVisibility(View.VISIBLE);
+    }
+
+    private void seterror_display(int img, String error) {
+
+        if (error.length() > 0)
+            textView.setText(error);
+        else
+            textView.setText("");
+
+        error_img.setImageResource(img);
+
+        no_result_lay.setVisibility(View.VISIBLE);
     }
 }
 

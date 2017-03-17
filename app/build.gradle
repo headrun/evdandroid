@@ -38,13 +38,13 @@ android {
     productFlavors {
 
         beta {
-            versionCode 8
-            versionName "1.3.0.8"
-            1
+            versionCode 10
+            versionName "1.10"
+
         }
         prod {
-            versionCode 8
-            versionName "1.8"
+            versionCode 10
+            versionName "1.10"
         }
     }
 }
