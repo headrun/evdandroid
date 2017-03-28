@@ -57,13 +57,15 @@ public class LoginResponse implements Parcelable {
         @SerializedName("status")
         public String status;
         @SerializedName("roles")
-        public HashMap<String, String>[] roles;
+        public Role[] roles;
         @SerializedName("id")
         public String id;
         @SerializedName("username")
         public String username;
         @SerializedName("profile_complete_status")
         public String profile_complete_status;
+        @SerializedName("profile_completion_status")
+        public Boolean profile_completion_status;
         @SerializedName("picture")
         public String picture;
 
@@ -92,7 +94,7 @@ public class LoginResponse implements Parcelable {
         @SerializedName("headset")
         public String headset;
         @SerializedName("evd_rep")
-        public String evd_rep;
+        public Boolean evd_rep;
         @SerializedName("pref_slots")
         public String pref_slots;
         @SerializedName("is_active")
@@ -157,6 +159,18 @@ public class LoginResponse implements Parcelable {
         @SerializedName("short_notes")
         public String short_notes;
 
+    }
+
+
+    public class Role {
+        @SerializedName("self_eval_status")
+        public Boolean self_eval_status;
+        @SerializedName("tsd_status")
+        public Boolean tsd_status;
+        @SerializedName("role")
+        public String role;
+        @SerializedName("role_id")
+        public int role_id;
 
     }
 

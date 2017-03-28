@@ -28,7 +28,7 @@ public class ChangeSessionStatusService extends Service implements ResponseListe
     private String request_type = "request_type";
     private String session_type = "session_status";
     private String update_fcm = "fcm";
-
+    private String ORIENTATION = "orientation";
     private String SET_REQ_TYPE = "";
 
     @Nullable
@@ -60,12 +60,18 @@ public class ChangeSessionStatusService extends Service implements ResponseListe
                         getSessionCall();
                     } else if (SET_REQ_TYPE.contains(update_fcm)) {
                         fcmServiceCall();
+                    } else if (SET_REQ_TYPE.contains(ORIENTATION)) {
+                        onBoardingCall();
                     }
             }
 
         }
 
         return START_STICKY;
+    }
+
+    private void onBoardingCall() {
+        new EVDNetowrkServices().orientationStatus(this, this);
     }
 
     @Override
@@ -97,6 +103,9 @@ public class ChangeSessionStatusService extends Service implements ResponseListe
                 getSessionCall();
             } else if (SET_REQ_TYPE.contains(update_fcm)) {
                 Log.i(TAG, "updated fcm");
+
+            } else if (SET_REQ_TYPE.contains(ORIENTATION)) {
+                Log.i(TAG, "orientation updated");
 
             }
     }

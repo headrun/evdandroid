@@ -26,6 +26,4 @@ public class FiltersData {
     public String[] sessions_filters;
     @SerializedName("roles")
     public List<HashMap<String, String>> user_roles;
-
-
 }

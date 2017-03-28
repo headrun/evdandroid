@@ -63,4 +63,5 @@
     <color name="text_blue_gray">#ff7d97ad</color>
     <color name="divider_light_gray">#ffdbe2e8</color>
     <color name="error_color">#c62a25</color>
+    <color name="magenta">#FF004D</color>
 </resources>

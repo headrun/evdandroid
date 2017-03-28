@@ -39,8 +39,7 @@
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        >
+                        android:layout_height="wrap_content">
 
                         <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/user_pic"
@@ -83,460 +82,472 @@
         android:layout_margin="6dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="6dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/role_lay"
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="6dp">
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/role_lay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
-                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
-                        android:text="@string/role" />
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
 
-                    <eu.fiskur.chipcloud.ChipCloud
-                        android:id="@+id/txt_role"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="2dp"
-                        android:padding="2dp"
-                        chipcloud:deselectedColor="@color/colorWhite"
-                        chipcloud:deselectedFontColor="@color/deamnd_slot_text_color"
-                        chipcloud:selectMode="none" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
+                            android:text="@string/role" />
 
-                    <TextView
-                        android:id="@+id/sel_txt_role"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/plz_sel_role"
-                        android:textSize="@dimen/text_medium" />
+                        <eu.fiskur.chipcloud.ChipCloud
+                            android:id="@+id/txt_role"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="2dp"
+                            android:padding="2dp"
+                            chipcloud:deselectedColor="@color/colorWhite"
+                            chipcloud:deselectedFontColor="@color/deamnd_slot_text_color"
+                            chipcloud:selectMode="none" />
 
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                        <TextView
+                            android:id="@+id/sel_txt_role"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/plz_sel_role"
+                            android:textSize="@dimen/text_medium" />
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="6dp">
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:padding="6dp">
 
-                    <android.support.design.widget.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/txt_first_name"
-                            style="@style/EditText.Evd.EmailAuth"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="fonts/Roboto-Light.ttf"
-                            android:hint="@string/first_name"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:selectAllOnFocus="true" />
+                            android:layout_margin="10dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/txt_first_name"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="fonts/Roboto-Light.ttf"
+                                android:hint="@string/first_name"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:selectAllOnFocus="true" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/txt_last_name"
-                            style="@style/EditText.Evd.EmailAuth"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/last_name"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1" />
+                            android:layout_margin="10dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/txt_last_name"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/last_name"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_gender_lay"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:text="@string/gender" />
+
+                            <EditText
+                                android:id="@+id/txt_gender"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/sel_gender"
+                                android:imeOptions="actionNext"
+                                android:inputType="none"
+                                android:lines="1"
+                                android:maxLines="1" />
+                        </LinearLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:visibility="gone">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/txt_age"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/age"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:maxLines="1" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/txt_gender_lay"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/gender" />
+                            android:layout_margin="10dp">
 
-                        <EditText
-                            android:id="@+id/txt_gender"
-                            style="@style/EditText.Evd.EmailAuth"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/sel_gender"
-                            android:imeOptions="actionNext"
-                            android:inputType="none"
-                            android:lines="1"
-                            android:maxLines="1" />
-                    </LinearLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/txt_email"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/email"
+                                android:imeOptions="actionNext"
+                                android:inputType="textEmailAddress"
+                                android:lines="1"
+                                android:maxLines="1" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:visibility="gone">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/txt_age"
-                            style="@style/EditText.Evd.EmailAuth"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/age"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:lines="1"
-                            android:maxLines="1" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/txt_email"
-                            style="@style/EditText.Evd.EmailAuth"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/email"
-                            android:imeOptions="actionNext"
-                            android:inputType="textEmailAddress"
-                            android:lines="1"
-                            android:maxLines="1" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-                    <!-- <android.support.design.widget.TextInputLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="10dp">
-
-                         <android.support.design.widget.TextInputEditText
-                             android:id="@+id/txt_alternate_email"
+                        <!-- <android.support.design.widget.TextInputLayout
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
-                             android:hint="@string/alternate_email"
-                             android:imeOptions="actionNext"
-                             android:inputType="textEmailAddress"
-                             android:lines="1"
-                             android:maxLines="1"
-                             android:textColorHint="@color/md_material_blue_600"
-                             android:textSize="@dimen/text_large"
-                             android:textStyle="bold" />
+                             android:layout_margin="10dp">
 
-                     </android.support.design.widget.TextInputLayout>-->
+                             <android.support.design.widget.TextInputEditText
+                                 android:id="@+id/txt_alternate_email"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:hint="@string/alternate_email"
+                                 android:imeOptions="actionNext"
+                                 android:inputType="textEmailAddress"
+                                 android:lines="1"
+                                 android:maxLines="1"
+                                 android:textColorHint="@color/md_material_blue_600"
+                                 android:textSize="@dimen/text_large"
+                                 android:textStyle="bold" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
+                         </android.support.design.widget.TextInputLayout>-->
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/txt_skype_id"
-                            style="@style/EditText.Evd.EmailAuth"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/skype_id"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1" />
+                            android:layout_margin="10dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/txt_skype_id"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/skype_id"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/txt_ph_no"
-                            style="@style/EditText.Evd.EmailAuth"
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/ph_no"
-                            android:imeOptions="actionNext"
-                            android:inputType="phone"
-                            android:lines="1"
-                            android:maxLines="1" />
+                            android:layout_margin="10dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/txt_ph_no"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/ph_no"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:lines="1"
+                                android:maxLines="1" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/preferred_medium" />
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/txt_preferred_medium"
-                            style="@style/EditText.Evd.EmailAuth"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:editable="false"
-                            android:hint="@string/preferred_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:text="@string/preferred_medium" />
 
+                            <EditText
+                                android:id="@+id/txt_preferred_medium"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:editable="false"
+                                android:hint="@string/preferred_medium"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/profession" />
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/txt_profession"
-                            style="@style/EditText.Evd.EmailAuth"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:text="@string/profession" />
+
+                            <EditText
+                                android:id="@+id/txt_profession"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:editable="false"
+                                android:hint="@string/profession"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="@dimen/text_large" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:editable="false"
-                            android:hint="@string/profession"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:textSize="@dimen/text_large" />
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
 
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:text="@string/reference_channel" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
+                            <EditText
+                                android:id="@+id/txt_reference_channel"
+                                style="@style/EditText.Evd.EmailAuth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:editable="false"
+                                android:hint="@string/reference_channel"
+                                android:imeOptions="actionDone"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/reference_channel" />
+                        </LinearLayout>
 
-                        <EditText
-                            android:id="@+id/txt_reference_channel"
-                            style="@style/EditText.Evd.EmailAuth"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:editable="false"
-                            android:hint="@string/reference_channel"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1" />
-
-                    </LinearLayout>
-
-                    <!-- <android.support.design.widget.TextInputLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="10dp">
-
-                         <android.support.design.widget.TextInputEditText
-                             android:id="@+id/txt_referrer"
+                        <!-- <android.support.design.widget.TextInputLayout
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
-                             android:hint="@string/referrer"
-                             android:imeOptions="actionNext"
-                             android:inputType="text"
-                             android:lines="1"
-                             android:maxLines="1"
-                             android:textSize="@dimen/text_large"
-                             android:textStyle="bold" />
+                             android:layout_margin="10dp">
 
-                     </android.support.design.widget.TextInputLayout>-->
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                             <android.support.design.widget.TextInputEditText
+                                 android:id="@+id/txt_referrer"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:hint="@string/referrer"
+                                 android:imeOptions="actionNext"
+                                 android:inputType="text"
+                                 android:lines="1"
+                                 android:maxLines="1"
+                                 android:textSize="@dimen/text_large"
+                                 android:textStyle="bold" />
 
-            <!--<android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
+                         </android.support.design.widget.TextInputLayout>-->
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                <LinearLayout
+                <!--<android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/country" />
-
-                        <EditText
-                            android:id="@+id/txt_Country"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:editable="false"
-                            android:hint="@string/country"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:textSize="@dimen/text_large"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:orientation="vertical">
 
-                        <TextView
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/state" />
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/txt_state"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:text="@string/country" />
+
+                            <EditText
+                                android:id="@+id/txt_Country"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:editable="false"
+                                android:hint="@string/country"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="@dimen/text_large"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:editable="false"
-                            android:hint="@string/state"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:textSize="@dimen/text_large"
-                            android:textStyle="bold" />
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:text="@string/state" />
+
+                            <EditText
+                                android:id="@+id/txt_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:editable="false"
+                                android:hint="@string/state"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="@dimen/text_large"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:text="@string/city" />
+
+                            <EditText
+                                android:id="@+id/txt_city"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:editable="false"
+                                android:hint="@string/city"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textColorHint="@color/md_material_blue_600"
+                                android:textSize="@dimen/text_large"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/txt_brief_intro"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/brief_intro"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="5"
+                                android:minLines="3"
+                                android:textColorHint="@color/md_material_blue_600"
+                                android:textSize="@dimen/text_large"
+                                android:textStyle="bold" />
+
+                        </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
+                </android.support.v7.widget.CardView>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
+            </LinearLayout>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/city" />
-
-                        <EditText
-                            android:id="@+id/txt_city"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:editable="false"
-                            android:hint="@string/city"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:textColorHint="@color/md_material_blue_600"
-                            android:textSize="@dimen/text_large"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/txt_brief_intro"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/brief_intro"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:maxLines="5"
-                            android:minLines="3"
-                            android:textColorHint="@color/md_material_blue_600"
-                            android:textSize="@dimen/text_large"
-                            android:textStyle="bold" />
-
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>-->
-
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
+        </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

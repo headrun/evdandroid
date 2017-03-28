@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ import java.util.HashMap;
  * Created by sujith on 8/3/17.
  */
 
-public class GoogleAPI extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener, ResponseListener<LoginResponse> {
+public class GoogleAPI extends Activity implements GoogleApiClient.OnConnectionFailedListener {
 
     protected GoogleSignInOptions gso;
     protected GoogleApiClient mGoogleApiClient;
@@ -39,13 +40,10 @@ public class GoogleAPI extends FragmentActivity implements GoogleApiClient.OnCon
 
     public GoogleAPI(Context mContext) {
         this.mContext = mContext;
-
+        googleConfig();
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void googleConfig() {
         if (mGoogleApiClient != null) {
             mGoogleApiClient.disconnect();
         }
@@ -58,12 +56,11 @@ public class GoogleAPI extends FragmentActivity implements GoogleApiClient.OnCon
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
-                .enableAutoManage(this, this)
+                .enableAutoManage((FragmentActivity) mContext, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         googleSignIn();
-
     }
 
     protected void googleSignIn() {
@@ -85,6 +82,8 @@ public class GoogleAPI extends FragmentActivity implements GoogleApiClient.OnCon
         if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             googleSignInResult(result);
+        } else {
+
         }
     }
 
@@ -94,22 +93,13 @@ public class GoogleAPI extends FragmentActivity implements GoogleApiClient.OnCon
             GoogleSignInAccount acct = result.getSignInAccount();
             //utils.userSession.setSelLoginType("google");
             HashMap<String, String> params = new HashMap<>();
-            params.put("backend", "facebook");
+            params.put("backend", "google");
             params.put("access_token", acct.getIdToken());
-            new AuthNetworkCall(mContext, params, Constants.LOGIN);
+            new AuthPresenter.AuthNetworkCall(mContext, params, Constants.LOGIN);
         } else {
             Toast.makeText(this, " google token is fail", Toast.LENGTH_LONG).show();
 
         }
     }
 
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
-
-    @Override
-    public void onResponse(LoginResponse response) {
-
-    }
 }

@@ -36,7 +36,9 @@ public abstract class AppBarStateChangeListener implements AppBarLayout.OnOffset
     }
 
     public abstract void onExpanded(AppBarLayout appBarLayout);
+
     public abstract void onCollapsed(AppBarLayout appBarLayout);
+
     public abstract void onIdle(AppBarLayout appBarLayout);
 
 }

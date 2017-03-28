@@ -221,11 +221,13 @@ public class DemandFragment extends BaseEVDFragment implements ResponseListener<
             if (sel_lang_data.length() > 0) {
                 String lang_items = sel_lang_data.replaceAll("\\s", "");
                 params.put("sel_langs", lang_items);
+
             }
             if (sel_state_data.length() > 0) {
                 String states_items = sel_state_data.replaceAll("\\s", "");
                 params.put("sel_states", states_items);
             }
+
             Constants.DEMAND_SLOTS_STATE = null;
             new EVDNetowrkServices().getDeamnds(getActivity(), this, params);
             if (demand_refresh_layout.isRefreshing() == false)

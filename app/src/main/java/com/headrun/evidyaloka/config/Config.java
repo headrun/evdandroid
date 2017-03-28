@@ -5,6 +5,6 @@ package com.headrun.evidyaloka.config;
  */
 public class Config {
 
-   // public static final String Google_Key = "AIzaSyCUXOiFGNCO1QOzLIpj3nZaJ8zyTkpERlc";
+    // public static final String Google_Key = "AIzaSyCUXOiFGNCO1QOzLIpj3nZaJ8zyTkpERlc";
 
 }

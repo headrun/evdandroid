@@ -15,19 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "1036396520342-h0gs843e8quhiuiarbmfgp1iva4mgmmn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.headrun.evidyaloka",
-            "certificate_hash": "1E0ECC2A63BA56012FAF1F0261AEF86C4D95715B"
-          }
-        },
-        {
-          "client_id": "1036396520342-d7bn00f3ske0on4cdpj55729i6f8ilec.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "1036396520342-q0d2ovakj93jhiauh6bhqkrtv4cqe6fd.apps.googleusercontent.com",
+          "client_id": "1036396520342-62324jl78fm9kc7p5cudcht3vla6kbc5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -44,7 +32,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1036396520342-d7bn00f3ske0on4cdpj55729i6f8ilec.apps.googleusercontent.com",
+              "client_id": "1036396520342-62324jl78fm9kc7p5cudcht3vla6kbc5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

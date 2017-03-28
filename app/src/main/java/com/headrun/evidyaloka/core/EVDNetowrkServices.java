@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate_presenter;
 import com.headrun.evidyaloka.config.ApiEndpoints;
 import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.BaseService;
@@ -16,11 +17,13 @@ import com.headrun.evidyaloka.dto.IntialHandShakeResponse;
 import com.headrun.evidyaloka.dto.SchoolDetailResponse;
 import com.headrun.evidyaloka.dto.SessionDetailsResponse;
 import com.headrun.evidyaloka.dto.SessionResponse;
+import com.headrun.evidyaloka.evdservices.ChangeSessionStatusService;
 import com.headrun.evidyaloka.event.SlotConfirmEvent;
 import com.headrun.evidyaloka.model.BlockReleaseDemand;
 import com.headrun.evidyaloka.model.LocData;
 import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.model.SchoolDetails;
+import com.headrun.evidyaloka.model.SelfEval;
 import com.headrun.evidyaloka.model.SessionDetails;
 import com.headrun.evidyaloka.utils.UserSession;
 import com.headrun.evidyaloka.utils.Utils;
@@ -125,6 +128,16 @@ public class EVDNetowrkServices extends BaseService {
 
     }
 
+    public void orientationStatus(Context context, ResponseListener<ChangeSessionStatus> listener) {
+        Map<String, String> params = new HashMap<>();
+        params.put(PLATFORM, ANDROID);
+        params.put("step_name", "Orientation");
+        addCsrfparam(context, params);
+
+        executePostRequest(context, ApiEndpoints.ORIENTAITON_STATUS, getSessionHeaders(context), params, new TypeToken<ChangeSessionStatus>() {
+        }, listener);
+    }
+
     public void imageUplaod(Context context, ResponseListener<ChangeSessionStatus> listener, String image) {
 
         Map<String, String> params = new HashMap<>();
@@ -182,6 +195,12 @@ public class EVDNetowrkServices extends BaseService {
         }, listener);
     }
 
+    public void selfEvalCall(Context context, HashMap<String, String> params, ResponseListener<SelfEval> listener) {
+        addCsrfparam(context, params);
+        executePostRequest(context, ApiEndpoints.SELF_EVAL, getSessionHeaders(context), params, new TypeToken<SelfEval>() {
+        }, listener);
+    }
+
     public void getLocationsData(Context context, ResponseListener<LocData> listener, String type, String id) {
 
         HashMap<String, String> params = new HashMap<>();
@@ -217,6 +236,16 @@ public class EVDNetowrkServices extends BaseService {
         params.put(PLATFORM, ANDROID);
         addCsrfparam(context, params);
         executeGetRequest(context, ApiEndpoints.SESSION_DETAILS, getSessionHeaders(context), params, new TypeToken<SessionDetailsResponse>() {
+        }, listener);
+
+    }
+
+    public void getUserData(Context mContext, ResponseListener<LoginResponse> listener) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put(PLATFORM, ANDROID);
+        addCsrfparam(mContext, params);
+        executePostRequest(mContext, ApiEndpoints.GET_USER_DATA, getSessionHeaders(mContext), params, new TypeToken<LoginResponse>() {
         }, listener);
 
     }
@@ -261,4 +290,6 @@ public class EVDNetowrkServices extends BaseService {
             params.put("csrfmiddlewaretoken", csrf_token);
 
     }
+
+
 }

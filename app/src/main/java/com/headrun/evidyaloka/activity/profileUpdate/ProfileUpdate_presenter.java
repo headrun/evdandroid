@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.headrun.evidyaloka.R;
@@ -47,7 +48,12 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
         this.mProfileUpdateView = mProfileUpdateView;
         this.mContext = mContext;
         utils = new Utils(mContext);
+        CallUserData();
         // getLocationData(Constants.COUNTRY, "");
+    }
+
+    public void CallUserData() {
+        new GetUserData();
     }
 
     public void getDialog(String required_type) {
@@ -351,4 +357,32 @@ public class ProfileUpdate_presenter implements ResponseListener<LocData> {
 
     }
 
+    public class GetUserData implements ResponseListener<LoginResponse> {
+
+        public GetUserData() {
+            mProfileUpdateView.showProgressBar();
+            new EVDNetowrkServices().getUserData(mContext, this);
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            mProfileUpdateView.hideProgressBar();
+            Toast.makeText(mContext, "Seems to be an issue getting the user data", Toast.LENGTH_LONG).show();
+            mProfileUpdateView.setFieldsData();
+        }
+
+        @Override
+        public void onResponse(LoginResponse response) {
+            mProfileUpdateView.hideProgressBar();
+            if (response != null) {
+                Log.i(TAG, "login sucess");
+                if (response.status == 0) {
+                    utils.userSession.setUserData(response);
+                    mProfileUpdateView.setFieldsData();
+                } else {
+                    utils.showAlertDialog(response.message);
+                }
+            }
+        }
+    }
 }

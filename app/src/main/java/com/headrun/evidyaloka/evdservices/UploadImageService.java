@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UploadImageService extends Service  {
+public class UploadImageService extends Service {
 
     public String TAG = UploadImageService.class.getSimpleName();
     Utils utils;

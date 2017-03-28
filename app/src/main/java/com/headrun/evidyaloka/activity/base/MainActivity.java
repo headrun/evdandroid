@@ -16,9 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.headrun.evidyaloka.activity.auth.AuthActivity;
+import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.activity.sessionDetails.SessionDetails;
 import com.headrun.evidyaloka.config.ApiEndpoints;
@@ -26,14 +25,10 @@ import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
 import com.headrun.evidyaloka.EvdApplication;
 import com.headrun.evidyaloka.R;
-import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.core.ResponseListener;
 import com.headrun.evidyaloka.dto.IntialHandShakeResponse;
 import com.headrun.evidyaloka.evdservices.ChangeSessionStatusService;
 import com.headrun.evidyaloka.utils.Utils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -93,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
                     LoginChecking();
                 }
             } else {
-                startActivity(new Intent(this, LoginActivity.class));
+                startActivity(new Intent(this, AuthActivity.class));
             }
         } else {
             LoginChecking();
@@ -131,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
             getToken();
         else
             loginactivty();
-
     }
 
     private void getToken() {
@@ -198,11 +192,11 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
     private void loginactivty() {
 
-        PackageInfo pinfo = utils.getPackageInfo();
+        // PackageInfo pinfo = utils.getPackageInfo();
 
-        if (utils.userSession.getLoginFirst().equals("0")) {
+        if (utils.userSession.getIsLogin() == false && utils.userSession.getLoginFirst().equals("0")) {
             utils.userSession.setLogin_first("1");
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, AuthActivity.class));
             getApplicationContext().startService(new Intent(getApplicationContext(), ChangeSessionStatusService.class)
                     .putExtra("request_type", "fcm"));
             finish();

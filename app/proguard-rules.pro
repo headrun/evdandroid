@@ -27,6 +27,7 @@
 }
 
 -keepattributes *Annotation*
+-keepattributes Signature
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }

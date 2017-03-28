@@ -15,10 +15,13 @@ public interface SessionDetailsView {
     public void updateSessionDetialsCount(int count);
 
     public void movetoSessionScreen();
+
     public void showProcessingBar();
+
     public void hideProcessingBar();
 
     public void showNetworkError(VolleyError error);
+
     public void hideNetworkError();
 
 

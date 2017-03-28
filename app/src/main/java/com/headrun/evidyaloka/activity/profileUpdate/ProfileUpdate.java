@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ import com.headrun.evidyaloka.utils.Utils;
 import com.headrun.evidyaloka.widgets.AppBarStateChangeListener;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     public AppBarLayout appbarLayout;
     public CollapsingToolbarLayout collapsing_toolbar;
     public SimpleDraweeView user_pic;
+    public ProgressBar progress_bar;
     public LinearLayout role_lay;
     Utils utils;
     Uri uri = null;
@@ -73,6 +76,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
 
     List<String> user_roles = new LinkedList<>();
     HashMap<String, String>[] map = null;
+    LinkedHashMap<Integer, String> roles_list = new LinkedHashMap<>();
 
     ProfileUpdate_presenter mprofileUpdate_presenter;
 
@@ -85,11 +89,8 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
         setContentView(R.layout.edit_profile_activity);
 
         utils = new Utils(this);
-        mprofileUpdate_presenter = new ProfileUpdate_presenter(this, this);
-
         initviews();
-        setFieldsData();
-
+        mprofileUpdate_presenter = new ProfileUpdate_presenter(this, this);
     }
 
     private void initviews() {
@@ -97,35 +98,30 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
         collapsing_toolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         appbarLayout = (AppBarLayout) findViewById(R.id.appbarLayout);
         user_pic = (SimpleDraweeView) findViewById(R.id.user_pic);
+        progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
 
         txt_first_name = (TextInputEditText) findViewById(R.id.txt_first_name);
         txt_last_name = (TextInputEditText) findViewById(R.id.txt_last_name);
         txt_gender = (EditText) findViewById(R.id.txt_gender);
         txt_age = (TextInputEditText) findViewById(R.id.txt_age);
         txt_email = (TextInputEditText) findViewById(R.id.txt_email);
-        //   txt_alternate_email = (TextInputEditText) findViewById(R.id.txt_alternate_email);
+
         txt_skype_id = (TextInputEditText) findViewById(R.id.txt_skype_id);
         txt_ph_no = (TextInputEditText) findViewById(R.id.txt_ph_no);
         txt_profession = (EditText) findViewById(R.id.txt_profession);
         txt_preferred_medium = (EditText) findViewById(R.id.txt_preferred_medium);
         txt_reference_channel = (EditText) findViewById(R.id.txt_reference_channel);
-        //   txt_referrer = (TextInputEditText) findViewById(R.id.txt_referrer);
-        //  txt_Country = (EditText) findViewById(R.id.txt_Country);
-        //  txt_state = (EditText) findViewById(R.id.txt_state);
-        //  txt_city = (EditText) findViewById(R.id.txt_city);
-        // txt_brief_intro = (TextInputEditText) findViewById(R.id.txt_brief_intro);
+
         role_lay = (LinearLayout) findViewById(R.id.role_lay);
         txt_role = (eu.fiskur.chipcloud.ChipCloud) findViewById(R.id.txt_role);
         sel_txt_role = (TextView) findViewById(R.id.sel_txt_role);
         profile_pic_lay = (FrameLayout) findViewById(R.id.profile_pic_lay);
         sel_txt_role.setVisibility(View.GONE);
-        //setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // setActivityTitle("Edit Profile");
         txt_first_name.requestFocus();
-        txt_first_name.setSelection(txt_first_name.getText().length());
 
         appbarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
@@ -193,33 +189,6 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
                 requiredDialog(Constants.CHANNEL);
             }
         });
-
-        /*txt_Country.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requiredDialog(Constants.COUNTRY);
-            }
-        });
-
-        txt_state.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!getCountry().isEmpty())
-                    requiredDialog(Constants.STATE);
-                else
-                    txt_state.setError(getResources().getString(R.string.selectCountry));
-            }
-        });
-
-        txt_city.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!getCountry().isEmpty() && !getState().isEmpty())
-                    requiredDialog(Constants.CITY);
-                else
-                    txt_city.setError(getResources().getString(R.string.cityError));
-            }
-        });*/
 
         role_lay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -314,53 +283,58 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     }
 
     @Override
+    public void showProgressBar() {
+        progress_bar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progress_bar.setVisibility(View.GONE);
+    }
+
+    @Override
     public void setFieldsData() {
 
-        LoginResponse.userData user_data = utils.userSession.getUserData().data;
+        try {
+            LoginResponse.userData user_data = utils.userSession.getUserData().data;
+            roles_list = utils.getUserRolesList();
 
-        if (user_data.picture != null && !user_data.picture.isEmpty())
-            ImageLoadingUtils.load(user_pic, user_data.picture);
+            if (user_data.picture != null && !user_data.picture.isEmpty())
+                ImageLoadingUtils.load(user_pic, user_data.picture);
 
-        txt_first_name.setText(user_data.first_name);
-        txt_last_name.setText(user_data.last_name);
-        txt_gender.setText(user_data.gender);
-        txt_age.setText(user_data.age);
+            txt_first_name.setText(user_data.first_name);
+            txt_last_name.setText(user_data.last_name);
+            txt_gender.setText(user_data.gender);
+            txt_age.setText(user_data.age);
 
-        txt_email.setText(user_data.email);
-        // txt_alternate_email.setText(user_data.secondary_email);
-        txt_skype_id.setText(user_data.skype_id);
-        txt_ph_no.setText(user_data.phone);
+            txt_email.setText(user_data.email);
+            txt_skype_id.setText(user_data.skype_id);
+            txt_ph_no.setText(user_data.phone);
 
-        txt_profession.setText(user_data.profession);
-        txt_preferred_medium.setText(user_data.pref_medium);
-        txt_reference_channel.setText(user_data.reference_channel);
-        //  txt_referrer.setText(user_data.referer);
+            txt_profession.setText(user_data.profession);
+            txt_preferred_medium.setText(user_data.pref_medium);
+            txt_reference_channel.setText(user_data.reference_channel);
 
-        //  txt_Country.setText(user_data.country);
-        //  txt_state.setText(user_data.state);
-        //  txt_city.setText(user_data.city);
-        //  txt_brief_intro.setText(user_data.short_notes);
+            txt_gender.setFocusable(false);
+            txt_profession.setFocusable(false);
+            txt_preferred_medium.setFocusable(false);
+            txt_reference_channel.setFocusable(false);
 
-        txt_gender.setFocusable(false);
-        txt_profession.setFocusable(false);
-        txt_preferred_medium.setFocusable(false);
-        txt_reference_channel.setFocusable(false);
-        //  txt_Country.setFocusable(false);
-        //  txt_state.setFocusable(false);
-        //  txt_city.setFocusable(false);
+            if (user_data.roles != null) {
+                user_roles.clear();
+                if (user_data.roles.length > 0) {
+                    user_roles.addAll(roles_list.values());
+                    sel_txt_role.setVisibility(View.GONE);
+                } else {
+                    sel_txt_role.setVisibility(View.VISIBLE);
+                }
+                setRole(user_roles);
 
-        if (user_data.roles != null) {
-            user_roles.clear();
-            if (user_data.roles.length > 0) {
-                user_roles.addAll(utils.userRolesMap(user_data.roles).values());
-                sel_txt_role.setVisibility(View.GONE);
             } else {
                 sel_txt_role.setVisibility(View.VISIBLE);
             }
-            setRole(user_roles);
-
-        } else {
-            sel_txt_role.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -621,29 +595,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
         if (response != null)
             if (response.status.equals("0")) {
 
-                LoginResponse data = utils.userSession.getUserData();
-                LoginResponse.userData user_Data = data.data;
-                if (user_Data != null) {
-
-                    user_Data.roles = map;
-
-                    user_Data.first_name = getFirst_name();
-                    user_Data.last_name = getLast_name();
-                    user_Data.gender = get_gender();
-                    user_Data.age = get_age();
-
-                    user_Data.email = get_email();
-                    user_Data.skype_id = get_skype_id();
-                    user_Data.phone = get_ph_no();
-                    user_Data.profession = get_preofession();
-                    user_Data.pref_medium = get_preferred_medium();
-                    user_Data.reference_channel = get_reference_channel();
-
-                    utils.userSession.setUserData(data);
-
-                    setFieldsData();
-
-                }
+                mprofileUpdate_presenter.CallUserData();
 
             } else {
                 String message = "profile update faild";

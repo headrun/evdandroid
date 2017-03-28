@@ -237,5 +237,89 @@
     <string name="sel_role">Select role</string>
     <string name="plz_sel_role">Select a role</string>
     <string name="volunteer">Become Volunteer</string>
+    <string name="fluent_sel_native_lang">Can you Read and Write fluently on the selected Native Language? *</string>
+    <string name="radio_yes">Yes</string>
+    <string name="radio_no">No</string>
+    <string name="fluent_sel_other_lang">Are you fluent to Speak, Read and Write in any other listed language? *</string>
+    <string name="plz_sel_other_lang">please select Langauage</string>
+    <string name="provide_2hours">Online classes happen during school hours. i.e 10am to 4pm IST. Mon to Friday. To Teach online, It is required to provide two 1-hr slots, which can be any two different days and any two slots in this window. Do you think you can commit for the same? *</string>
+    <string name="motivate">What motivates you to come on a platform like this and contribute your time? *</string>
+    <string name="scenario_one">Sushmita, a volunteer teacher, has taught Fractions to a class of 20 children from Grade 6 for the last 4 sessions. On the 5th day, except for Seetha and Ramu all the other 18 children were clueless about what she had taught so far. What should be the next best course of action for Sushmita ?</string>
+    <string name="scenario_two">She is now fully prepared for her next class. However on the day of her session, came an unavoidable personal/professional commitment for her few hours prior to the class. * What will you do if you were in her situation at that moment ?</string>
+    <string name="scenario_three">As Sushmita comes for the next class, the children were trying to avoid and sought a break from the class requesting to cancel. * Your choice of action would be ?</string>
+    <string name="scenario_four">What is best option to Inspire the child to learn ? *</string>
+    <string name="scenario_five">What will be your approach of delivering Fractions to the children now ? *</string>
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+    <string name="type_here">Type here .........</string>
+    <string name="self_evaluation">Self Evaluation</string>
+
+    <string name="content_se_1">Please tick the language from the list below that you can read and write : </string>
+    <string name="content_se_2">Can you translate a given English document into one of the local languages for eV schools ? </string>
+    <string name="content_se_3">Please tick the subject for which you wish to prepare content :  </string>
+    <string name="content_se_4">Are you comfortable to search for videos, images on internet ?</string>
+    <string name="content_se_5">Are you comfortable to prepare worksheets and assessments based on textbook material ?</string>
+    <string name="content_se_6">Can you transliterate the list of important terms for the topics ?</string>
+    <string name="content_se_7">How many hours a week can you contribute towards contentresearch ? </string>
+
+
+    <string-array name="scenario_one_opt">
+        <item>Plan to spend 2 more sessions to teach again.</item>
+        <item>Report this to coordinator and ask for help.</item>
+        <item>Look for other approaches to teach the topic again.</item>
+        <item>Ask Seetha and Ramu for their help to overcome the situation.</item>
+        <item>Move on to next topic and park the topic to be revisted later.</item>
+    </string-array>
+
+    <string-array name="scenario_two_opt">
+        <item>Will make it a point to inform at end of the day to the Coordinator for the absence, with reasons.</item>
+        <item>Pick up the phone/sms/watsapp to inform the Coordinator and ask for help.</item>
+        <item>Will re-adjust your personal/professional commitment to make to the class, as children are already struggling.</item>
+        <item>Will reason out to the Children in the next class and make up for the loss.</item>
+    </string-array>
+
+    <string-array name="scenario_three_opt">
+        <item>Let the children go and have fun.</item>
+        <item>You will reason out, why it is important for them stay for the class and continue with the class.</item>
+        <item>You will ask the interested children to stay on and let others go.</item>
+        <item>You will try to do something that could motivate the children to stay on.</item>
+    </string-array>
+
+    <string-array name="scenario_four_opt">
+        <item>Offer goodies for consistently participating in the class.</item>
+        <item>Challenge the child to do something, which he/she thought was not possible to do.</item>
+        <item>Share motiviational stories of yours or others.</item>
+        <item>Give periodic motivational talks.</item>
+    </string-array>
+
+    <string-array name="content_sub">
+        <item>Maths</item>
+        <item>Science</item>
+        <item>English</item>
+    </string-array>
+
+    <string-array name="content_search_internet">
+        <item>Very Comfortable </item>
+        <item>Can Manage</item>
+        <item>Need Guidance</item>
+        <item>Not Comfortable</item>
+    </string-array>
+
+    <string-array name="content_comfortable">
+        <item>Yes</item>
+        <item>Need Assistance </item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="yes_no">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="content_contribute_hours">
+        <item>2-3 hours</item>
+        <item> 5-6 hours</item>
+        <item>8-10 hours</item>
+    </string-array>
 
 </resources>

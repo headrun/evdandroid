@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface ProfileUpdateView {
 
+    public void showProgressBar();
+
+    public void hideProgressBar();
+
     public void setFieldsData();
 
     public void requiredDialog(String required_type);

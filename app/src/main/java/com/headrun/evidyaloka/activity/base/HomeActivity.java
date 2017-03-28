@@ -1,101 +1,176 @@
 package com.headrun.evidyaloka.activity.base;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.headrun.evidyaloka.EvdApplication;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.headrun.evidyaloka.R;
-import com.headrun.evidyaloka.activity.demands.DemandFragment;
+import com.headrun.evidyaloka.activity.auth.AuthActivity;
 import com.headrun.evidyaloka.activity.auth.LoginActivity;
+import com.headrun.evidyaloka.activity.demands.DemandFragment;
 import com.headrun.evidyaloka.activity.auth.ProfileFragment;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
+import com.headrun.evidyaloka.activity.self_evaluation.SelfEvaluationActivity;
 import com.headrun.evidyaloka.activity.sessions.SessionsTabFragment;
-import com.headrun.evidyaloka.config.ApiEndpoints;
 import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
 import com.headrun.evidyaloka.core.ResponseListener;
 import com.headrun.evidyaloka.dto.FiltersDataResponse;
+import com.headrun.evidyaloka.evdservices.ChangeSessionStatusService;
 import com.headrun.evidyaloka.model.FiltersData;
-import com.headrun.evidyaloka.utils.Utils;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, ResponseListener<FiltersDataResponse>, BottomNavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter.NavigatePage, ViewPager.OnPageChangeListener, ResponseListener<FiltersDataResponse>, BottomNavigationView.OnNavigationItemSelectedListener {
 
     public String TAG = HomeActivity.class.getSimpleName();
-    private final String TAG_SORT = "sort";
 
-    private boolean mTwoPane;
+    private static final int REQ_START_STANDALONE_PLAYER = 1;
+    private static final int REQ_RESOLVE_SERVICE_MISSING = 2;
+
 
     private BottomNavigationView bottom_nav;
-    // private DrawerLayout drawer;
-    // private ActionBarDrawerToggle toggle;
-    // private NavigationView navigationView;
-    private SimpleDraweeView user_pic;
-    private LinearLayout profile_lay;
-    private TextView login_txt_btn, txt_user_name;
+    ViewPager view_pager;
+
     Menu NavMenu, home_menu;
-    MenuItem Log_out_item;
-    MenuItem Session_item;
     MenuItem act_volunteer;
     TextView act_vol_txt;
+
     private boolean redirect_to = false;
     private String redirect_type;
+    private LinearLayout mDotsLayout;
+    private ImageAdapter mAdapter;
+    private int mDotsCount;
+    static TextView mDotsText[];
+    private int mPosition = 0;
 
-    // private TabLayout tabLayout;
-    //private ViewPager mViewPager;
-    // private HomePageAdapter mHomePageAdapter;
+    HomePresenter mHomePresenter;
 
     @Override
     protected void onStart() {
         super.onStart();
+        Log.i(TAG, "start");
     }
 
     @Override
     protected void onDestroy() {
 
         super.onDestroy();
+        Log.i(TAG, "destory");
 
-        //Log.i(TAG, "on destory");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        enableSession();
-        /*if (drawer != null)*/
-        /*    drawer.closeDrawers();*/
-    }                              /**/
+        if (mHomePresenter == null)
+            mHomePresenter = new HomePresenter(this, this);
+        mHomePresenter.setSession();
 
-    private void enableSession() {
+    }
 
-        if (utils != null && NavMenu != null)
-            if (utils.userSession.getIsLogin())
-                NavMenu.findItem(R.id.action_sessions).setEnabled(true);
-            else
-                NavMenu.findItem(R.id.action_sessions).setEnabled(false);
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "restart");
+    }
 
+    @Override
+    public void enableSession() {
+
+        if (NavMenu != null)
+            NavMenu.findItem(R.id.action_sessions).setEnabled(true);
+
+
+    }
+
+    @Override
+    public void disableSession() {
+        if (NavMenu != null)
+            NavMenu.findItem(R.id.action_sessions).setEnabled(false);
+    }
+
+    @Override
+    public void setGalleryImages() {
+
+        LinkedHashMap<String, Drawable> gallery_img = mHomePresenter.setGalleryImages();
+
+        mDotsCount = gallery_img.size();
+        if (mDotsCount > 0) {
+            mAdapter = new ImageAdapter(getApplicationContext(), 1);
+
+            mDotsText = new TextView[mDotsCount];
+
+            mDotsLayout.removeAllViews();
+            for (int i = 0; i < mDotsCount; i++) {
+                mDotsText[i] = new TextView(getApplicationContext());
+                mDotsText[i].setText(".");
+                mDotsText[i].setTextSize(45);
+                mDotsText[i].setTypeface(null, Typeface.BOLD);
+                mDotsText[i].setTextColor(android.graphics.Color.GRAY);
+                mDotsLayout.addView(mDotsText[i]);
+            }
+
+            mAdapter.setList(gallery_img);
+            view_pager.setAdapter(mAdapter);
+            mAdapter.setonclick(this);
+
+            setSelectedDotColor(mPosition);
+            Timer timer = new Timer();
+            timer.schedule(new UpdateTimeTask(), 10000, 10000);
+            showGallery();
+        } else {
+            hideGallery();
+        }
+    }
+
+    @Override
+    public void setDemands() {
+
+    }
+
+    @Override
+    public void LoginCheck() {
+
+    }
+
+    @Override
+    public void showGallery() {
+        view_pager.setVisibility(View.VISIBLE);
+        mDotsLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideGallery() {
+        view_pager.setVisibility(View.GONE);
+        mDotsLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void navigateToPage(String value) {
+        mHomePresenter.navigateGallery(value);
     }
 
     @Override
@@ -103,65 +178,26 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Log.i(TAG, "Demands  activity");
+        mHomePresenter = new HomePresenter(this, this);
+
         getintentData();
-        Constants.ISNOTIFICATION = false;
-        bottom_nav = (BottomNavigationView) findViewById(R.id.bottom_nav);
-        NavMenu = bottom_nav.getMenu();
-        Session_item = NavMenu.findItem(R.id.action_sessions);
-
-        //enableSession();
-        //    drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //   toggle = new ActionBarDrawerToggle(                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //navigationView = (NavigationView) findViewById(R.id.nav_view);
-        // View headerview = navigationView.getHeaderView(0);
-
-        //login_txt_btn = (TextView) headerview.findViewById(R.id.login_txt_btn);
-        //user_pic = (SimpleDraweeView) headerview.findViewById(R.id.user_pic);
-        //txt_user_name = (TextView) headerview.findViewById(R.id.txt_user_name);
-        //profile_lay = (LinearLayout) headerview.findViewById(R.id.profile_lay);
-
-        //setProfile();
-
-        /*try {*/
-        /*    NavMenu = navigationView.getMenu();*/
-        /*    Log_out_item = NavMenu.findItem(R.id.action_logout);*/
-        /*    Session_item = NavMenu.findItem(R.id.action_sessions);*/
-        /*    Session_item.setVisible(false);*/
-/*
-*/
-
-        /*} catch (Exception e) {*/
-        /*    e.printStackTrace();*/
-        /*}*/
-/*
-*/
-
-        // enableLogin();
-
-        // tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        //  mViewPager = (ViewPager) findViewById(R.id.viewpager);
-
+        initview();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        // drawer.addDrawerListener(toggle);
-        //toggle.syncState();
-
-        // navigationView.setNavigationItemSelectedListener(this);
         bottom_nav.setOnNavigationItemSelectedListener(this);
 
-       /* login_txt_btn.setOnClickListener(new View.OnClickListener() {*/
-       /*     @Override*/
-       /*     public void onClick(View v) {*/
-       /*         startActivity(new Intent(HomeActivity.this, LoginActivity.class));*/
-       /*     }*/
-       /* });*/
+        Constants.ISNOTIFICATION = false;
 
-        //setupTabLayout();
-        //showMoviesFragment();
 
         getFilerData();
         showFavoriteMoviesFragment();
+    }
+
+    private void initview() {
+        bottom_nav = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        view_pager = (ViewPager) findViewById(R.id.view_pager);
+        mDotsLayout = (LinearLayout) findViewById(R.id.image_count);
+        NavMenu = bottom_nav.getMenu();
+        view_pager.addOnPageChangeListener(this);
 
     }
 
@@ -174,65 +210,21 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    /*private void setProfile() {
-        try {
-            LoginResponse user_data = userSession.getUserData();
-            if (user_data != null) {
-                profile_lay.setVisibility(View.VISIBLE);
-
-                if (user_data.data.picture != null && !user_data.data.picture.isEmpty()) {
-                    ImageLoadingUtils.load(user_pic, userSession.getUserData().data.picture);
-                    RoundingParams roundingParams = RoundingParams.fromCornersRadius(7f);
-                    user_pic.getHierarchy().setRoundingParams(roundingParams);
-                } else {
-                    RoundingParams roundingParams = RoundingParams.fromCornersRadius(7f);
-                    user_pic.getHierarchy().setRoundingParams(roundingParams);
-                }
-
-                if (user_data.data.username != null && !user_data.data.username.isEmpty()) {
-                    txt_user_name.setText("Hi " + user_data.data.username);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void setSelectedDotColor(int position) {
+        for (int i = 0; i < mDotsCount; i++) {
+            mDotsText[i].setTextColor(getApplicationContext().getResources().getColor(
+                    R.color.dark_grey));
         }
-    }*/
-
-   /* private void enableLogin() {
-        if (isLogin()) {
-            profile_lay.setVisibility(View.VISIBLE);
-            login_txt_btn.setVisibility(View.GONE);
-            Log_out_item.setVisible(true);
-
-            if (userSession.getUserData() != null && userSession.getUserData().data != null) {
-                if (userSession.getUserData().data.is_superuser) {
-                    Session_item.setVisible(true);
-                } else if (userSession.getUserData().data.roles.length > 0) {
-                    List<String> roles_list = Arrays.asList(userSession.getUserData().data.roles);
-                    if (roles_list.contains("Teacher") || roles_list.contains("Center Admin") || roles_list.contains("Class Assistant"))
-                        Session_item.setVisible(true);
-                }
-            }
-
-        } else {
-            profile_lay.setVisibility(View.GONE);
-            login_txt_btn.setText(R.string.login);
-            login_txt_btn.setVisibility(View.VISIBLE);
-            Log_out_item.setVisible(false);
-            Session_item.setVisible(false);
-        }
-    }*/
+        mDotsText[position].setTextColor(getApplicationContext().getResources().getColor(
+                R.color.magenta));
+    }
 
     private void showFavoriteMoviesFragment() {
 
         if (redirect_to) {
             onNavigationItemSelected(bottom_nav.getMenu().getItem(1).setChecked(true));
-            /*replaceFragment(new SessionsTabFragment().newInstance("prefered"));
-            setActivityTitle("Sessions");*/
         } else {
             onNavigationItemSelected(bottom_nav.getMenu().getItem(0).setChecked(true));
-            /*replaceFragment(new DemandFragment());
-            setActivityTitle("Demands");*/
         }
     }
 
@@ -275,10 +267,13 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id) {
             case R.id.action_demands:
+                mHomePresenter.setGallery();
+
                 enableVolunteer();
                 replaceFragment(new DemandFragment());
                 break;
             case R.id.action_sessions:
+                hideGallery();
                 disableVolunteer();
                 if (redirect_type != null && redirect_type.equals("session_page"))
                     replaceFragment(new SessionsTabFragment().newInstance("prefered"));
@@ -286,20 +281,16 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                     replaceFragment(new SessionsTabFragment());
                 break;
             case R.id.action_profile:
-
+                hideGallery();
                 disableVolunteer();
                 if (utils.userSession.getIsLogin())
                     replaceFragment(new ProfileFragment());
                 else
-                    startActivity(new Intent(this, LoginActivity.class)
+                    startActivity(new Intent(this, AuthActivity.class)
                             .putExtra(Constants.TYPE, true)
                             .putExtra(Constants.REDIRECT_TO, "home_page"));
                 break;
         }
-
-       /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);*/
-       /* drawer.closeDrawer(GravityCompat.START);*/
-       /* if (!item.getTitle().toString().equals("logout"))*/
 
         setActivityTitle(item.getTitle().toString());
 
@@ -332,55 +323,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             new EVDNetowrkServices().getFiltersData(this, this);
     }
 
-    private void logoutuser() {
-
-        showProgressDialog();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ApiEndpoints.SIGNOUT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        //logoutUser();
-                        //  enableLogin();
-                        hideProgressDialog();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hideProgressDialog();
-                // utils.showProgressBar(false, progress_bar);
-                if (error instanceof NetworkError) {
-                    utils.showAlertDialog(getResources().getString(R.string.no_internet));
-                } else {
-                    utils.showAlertDialog(getResources().getString(R.string.faceing_issue));
-                }
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("csrfmiddlewaretoken", utils.userSession.getCsrf());
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return new EVDNetowrkServices().getSessionHeaders(HomeActivity.this);
-            }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                new Utils().setHeaders(HomeActivity.this, response);
-                return super.parseNetworkResponse(response);
-            }
-        };
-        stringRequest.setTag(TAG);
-
-        EvdApplication.getInstance().addToRequestQueue(stringRequest);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
@@ -398,11 +340,14 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                     if (utils.userSession.getIsLogin())
                         startActivity(new Intent(HomeActivity.this, ProfileUpdate.class));
                     else
-                        startActivity(new Intent(HomeActivity.this, LoginActivity.class)
+                        startActivity(new Intent(HomeActivity.this, AuthActivity.class)
                                 .putExtra(Constants.TYPE, true)
                                 .putExtra(Constants.REDIRECT_TO, Constants.PROFILE_TYPE));
                 }
             });
+
+            act_volunteer.setVisible(false);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -433,6 +378,99 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         if (act_vol_txt != null) {
             act_vol_txt.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mPosition = position;
+
+        setSelectedDotColor(position);
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void navigateToPage(int position) {
+
+        if (position == 0) {
+            startActivity(new Intent(this, ProfileUpdate.class));
+        } else if (position == 1) {
+            startActivity(new Intent(this, SelfEvaluationActivity.class));
+        } else if (position == 2) {
+            //startActivity(new Intent(this, SelfEvaluationActivity.class));
+        }
+
+    }
+
+    @Override
+    public void inflateVideoPlayer(String videoKey) {
+
+        int startTimeMillis = 0;
+        boolean autoplay = true;
+        boolean lightboxMode = false;
+
+        Intent intent = YouTubeStandalonePlayer.createVideoIntent(
+                this, "AIzaSyAI1tA5E-W6-uLfAn35VX5nwu-xOG9Tobc", videoKey, startTimeMillis, autoplay, lightboxMode);
+
+        if (intent != null) {
+            if (canResolveIntent(intent)) {
+                startActivityForResult(intent, REQ_START_STANDALONE_PLAYER);
+                startService(new Intent(getApplicationContext(), ChangeSessionStatusService.class)
+                        .putExtra("request_type", "orientation"));
+
+            } else {
+                // Could not resolve the intent - must need to install or update the YouTube API service.
+                YouTubeInitializationResult.SERVICE_MISSING
+                        .getErrorDialog(this, REQ_RESOLVE_SERVICE_MISSING).show();
+            }
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_START_STANDALONE_PLAYER && resultCode != Activity.RESULT_OK) {
+            YouTubeInitializationResult errorReason =
+                    YouTubeStandalonePlayer.getReturnedInitializationResult(data);
+            if (errorReason.isUserRecoverableError()) {
+                errorReason.getErrorDialog(this, 0).show();
+            } else {
+                String errorMessage = getResources().getString(R.string.player_error) + errorReason.toString();
+                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private boolean canResolveIntent(Intent intent) {
+        List<ResolveInfo> resolveInfo = this.getPackageManager().queryIntentActivities(intent, 0);
+        return resolveInfo != null && !resolveInfo.isEmpty();
+    }
+
+    class UpdateTimeTask extends TimerTask {
+        public void run() {
+            view_pager.post(new Runnable() {
+                public void run() {
+
+                    if (view_pager.getCurrentItem() < mAdapter
+                            .getCount() - 1) {
+                        view_pager.setCurrentItem(
+                                view_pager.getCurrentItem() + 1, true);
+
+                    } else {
+                        view_pager.setCurrentItem(0, true);
+
+                    }
+                }
+            });
         }
     }
 }

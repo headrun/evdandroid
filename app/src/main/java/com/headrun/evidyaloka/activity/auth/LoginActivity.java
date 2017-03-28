@@ -3,6 +3,7 @@ package com.headrun.evidyaloka.activity.auth;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -26,10 +27,19 @@ import com.facebook.FacebookException;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.headrun.evidyaloka.activity.demand_slots.DemandSlotActivity;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.config.Constants;
@@ -67,23 +77,45 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private Button loginButton;
     private com.google.android.gms.common.SignInButton google_login_button;
     private Toolbar toolbar;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_login);
-
+        mAuth = FirebaseAuth.getInstance();
         try {
-            intitView();
-            getData();
+
 
             //getToken();
+
+
+            mAuthListener = new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    if (user != null) {
+                        // User is signed in
+                        Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    } else {
+                        // User is signed out
+                        Log.d(TAG, "onAuthStateChanged:signed_out");
+                    }
+
+                }
+            };
+
+            intitView();
+            getData();
 
         } catch (Exception e) {
             Log.i(TAG, "login exception");
             e.printStackTrace();
         }
     }
+
 
     private void getData() {
         Intent intent = getIntent();
@@ -131,10 +163,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         signup_lay1 = (LinearLayout) findViewById(R.id.signup_lay1);
         google_login_button = (com.google.android.gms.common.SignInButton) findViewById(R.id.google_login_button);
         google_login_button.setSize(SignInButton.SIZE_STANDARD);
-        google_login_button.setVisibility(View.GONE);
+        //google_login_button.setVisibility(View.GONE);
         setActivityTitle("");
         setSupportActionBar(toolbar);
-        // getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -380,6 +412,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onStart() {
         super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
 
     }
 
@@ -436,7 +469,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         dialog.show();
     }
 
-    protected void googleSignInResult(GoogleSignInResult result) {
+    /*protected void googleSignInResult(GoogleSignInResult result) {
         // Log.d(TAG, "googleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
@@ -449,7 +482,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             Log.i(TAG, "g login fail");
             Toast.makeText(this, " google token is fail", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -460,7 +493,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            googleSignInResult(result);
+            //googleSignInResult(result);
+            GoogleSignInAccount account = result.getSignInAccount();
+            firebaseAuthWithGoogle(account);
+
         }
     }
 
@@ -501,7 +537,37 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // ...
+                    }
+                });
     }
 }
 

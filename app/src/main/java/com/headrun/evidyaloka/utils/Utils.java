@@ -20,11 +20,15 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.core.RequestErrorActivity;
+import com.headrun.evidyaloka.model.LoginResponse;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +161,26 @@ public class Utils {
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+    }
+
+    public List<LoginResponse.Role> getUserRoles() {
+        if (userSession.getIsLogin() && userSession.getUserData() != null && userSession.getUserData().data != null && userSession.getUserData().data.roles != null)
+            return Arrays.asList(userSession.getUserData().data.roles);
+        else return new ArrayList<>();
+
+    }
+
+    public LinkedHashMap<Integer, String> getUserRolesList() {
+        LinkedHashMap<Integer, String> roles = new LinkedHashMap<Integer, String>();
+        if (userSession.getIsLogin() && userSession.getUserData() != null && userSession.getUserData().data != null && userSession.getUserData().data.roles != null) {
+            LoginResponse.Role[] roles_data = userSession.getUserData().data.roles;
+
+            for (LoginResponse.Role entry : roles_data) {
+                roles.put(entry.role_id, entry.role);
+            }
+        }
+
+        return roles;
     }
 
     public HashMap<String, String> HashMapToString(String value) {
@@ -302,8 +326,6 @@ public class Utils {
     }
 
 
-
-
     public PackageInfo getPackageInfo() {
         try {
             return mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
@@ -312,5 +334,15 @@ public class Utils {
             return null;
         }
 
+
+    }
+
+    public List<String> LinkedListTOArrayList(LinkedList<String> list) {
+
+        List<String> value_list = new ArrayList<>();
+        for (String item : list) {
+            value_list.add(item);
+        }
+        return value_list;
     }
 }

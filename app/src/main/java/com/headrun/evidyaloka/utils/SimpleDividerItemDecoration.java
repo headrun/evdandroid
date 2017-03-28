@@ -12,7 +12,7 @@ import com.headrun.evidyaloka.R;
  * Created by sujith on 24/1/17.
  */
 
-public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration{
+public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private Drawable mDivider;
 

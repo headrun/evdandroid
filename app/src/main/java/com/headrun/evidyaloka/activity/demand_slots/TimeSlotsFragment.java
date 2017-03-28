@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.headrun.evidyaloka.R;
+import com.headrun.evidyaloka.activity.auth.AuthActivity;
 import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.base.HomeActivity;
 import com.headrun.evidyaloka.activity.demands.BaseEVDFragment;
@@ -175,7 +176,7 @@ public class TimeSlotsFragment extends BaseEVDFragment implements TimeSlotAdapte
                 slotReleaseDialog();
             }
         } else {
-            startActivity(new Intent(getActivity(), LoginActivity.class)
+            startActivity(new Intent(getActivity(), AuthActivity.class)
                     .putExtra(Constants.TYPE, true)
                     .putExtra(Constants.ID, mSchoolDeatils.school_id)
                     .putExtra(Constants.REDIRECT_TO, Constants.SLOTS_TYPE));
@@ -315,7 +316,7 @@ public class TimeSlotsFragment extends BaseEVDFragment implements TimeSlotAdapte
                 slotReleaseDialog();
             }
         } else {
-            startActivity(new Intent(getActivity(), LoginActivity.class)
+            startActivity(new Intent(getActivity(), AuthActivity.class)
                     .putExtra(Constants.TYPE, true)
                     .putExtra(Constants.ID, mSchoolDeatils.school_id)
                     .putExtra(Constants.REDIRECT_TO, Constants.SLOTS_TYPE));
