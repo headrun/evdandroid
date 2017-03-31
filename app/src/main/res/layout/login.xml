@@ -53,7 +53,7 @@
                         android:layout_marginBottom="22dp"
                         android:layout_marginTop="40dp"
                         android:fontFamily="fonts/Roboto-Light.ttf"
-                        android:hint="@string/hint_email_address"
+                        android:hint="@string/hint_email_username"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:selectAllOnFocus="true" />
@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="fonts/Roboto-Light.ttf"
                         android:hint="@string/hint_password"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:selectAllOnFocus="true" />
                 </android.support.design.widget.TextInputLayout>
@@ -95,7 +95,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="@color/white"
                         android:clickable="true"
                         android:focusable="true"
                         android:text="@string/btn_text_switch_to_signup"
@@ -112,7 +111,8 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:text="@string/btn_text_password_reset"
-                        android:textColor="@color/text_blue_gray" />
+                        android:textColor="@color/text_blue_gray"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </LinearLayout>

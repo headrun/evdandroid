@@ -30,7 +30,12 @@ import com.headrun.evidyaloka.dto.IntialHandShakeResponse;
 import com.headrun.evidyaloka.evdservices.ChangeSessionStatusService;
 import com.headrun.evidyaloka.utils.Utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by sujith on 13/2/17.
@@ -80,6 +85,15 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
                         startActivity(new Intent(this, SessionDetails.class).putExtra("session_id", key_map.get("id").toString()));
                     } else if (key_map.get("type").toString().toLowerCase().equals("profile")) {
                         startActivity(new Intent(this, ProfileUpdate.class));
+                    } else if (key_map.get("type").toString().toLowerCase().equals("latest_demands")) {
+
+                        String medium = utils.userSession.getUserData().data.pref_medium;
+
+                        if (medium != null && !medium.trim().isEmpty()) {
+                            utils.userSession.setSelLangFilter(Arrays.asList(medium.trim()).toString());
+                            utils.userSession.setSelStateFilter(Arrays.asList("").toString());
+                        }
+                        startActivity(new Intent(this, HomeActivity.class));
                     } else {
                         LoginChecking();
                     }
@@ -217,6 +231,8 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
             return false;
         }
     }
+
+
 
 
 }

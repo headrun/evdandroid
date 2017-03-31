@@ -89,7 +89,6 @@ public class AuthPresenter {
         new FacebookAPI(mContext);
     }
 
-
     public static class AuthNetworkCall implements ResponseListener<LoginResponse> {
 
         public AuthNetworkCall(Context mcontaxt, HashMap<String, String> params, int type) {

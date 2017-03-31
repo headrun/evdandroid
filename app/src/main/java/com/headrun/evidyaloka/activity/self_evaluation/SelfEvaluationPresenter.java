@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.headrun.evidyaloka.R;
@@ -12,10 +14,17 @@ import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
 import com.headrun.evidyaloka.core.ResponseListener;
 import com.headrun.evidyaloka.model.SelfEval;
+import com.headrun.evidyaloka.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import static com.headrun.evidyaloka.utils.EndlessRecyclerView.TAG;
 
 /**
  * Created by sujith on 20/3/17.
@@ -25,11 +34,13 @@ public class SelfEvaluationPresenter {
 
     SelfEvaluationView mSelfEvaluationView;
     Context mContext;
+    Utils utils;
 
 
     public SelfEvaluationPresenter(SelfEvaluationView SE_VIEW, Context mContext) {
         mSelfEvaluationView = SE_VIEW;
         this.mContext = mContext;
+        utils = new Utils(mContext);
     }
 
     public void sEServerCall(LinkedHashMap<String, String> params) {
@@ -37,6 +48,7 @@ public class SelfEvaluationPresenter {
         mSelfEvaluationView.showProgressBar();
 
         HashMap<String, String> finalParams = new HashMap<>();
+        HashMap<String, String> final_Params = new HashMap<>();
 
         if (params.containsKey(Constants.NATIVE_LANG_FLUENT))
             finalParams.put(mContext.getString(R.string.fluent_sel_native_lang).trim(), params.get(Constants.NATIVE_LANG_FLUENT));
@@ -57,24 +69,40 @@ public class SelfEvaluationPresenter {
         if (params.containsKey(Constants.SCENARIO_SIX))
             finalParams.put(mContext.getString(R.string.scenario_five).trim(), params.get(Constants.SCENARIO_SIX));
 
-        finalParams.put("role", Constants.SELF_VAL_ONBOARD.get(Constants.SE).toString().replaceAll("\\[|\\]|\\s", ""));
 
-        new CallServer(finalParams);
+        final_Params.put("roles", getRoleIds(Constants.SELF_VAL_ONBOARD.get(Constants.SE), false).toString().replaceAll("\\[|\\]|\\s", ""));
+        final_Params.put("form_dump", Arrays.asList(finalParams).toString());
+
+        new CallServer(final_Params);
+    }
+
+    private List<Integer> getRoleIds(LinkedList<String> user_role_list, boolean content_dev) {
+        List<Integer> roles_list = new ArrayList<>();
+        for (Map.Entry<Integer, String> entry : utils.getUserRolesList().entrySet()) {
+
+            if (content_dev == false && !entry.getValue().equals("Content Developer") && user_role_list.contains(entry.getValue())) {
+                roles_list.add(entry.getKey());
+            } else if (content_dev && entry.getValue().equals("Content Developer")) {
+                roles_list.add(entry.getKey());
+            }
+        }
+        return roles_list;
     }
 
     public void contentDevSelf_eval(LinkedHashMap<String, String> params) {
 
+        HashMap<String, String> final_Params = new HashMap<>();
 
-        params.put("role", "Content Developer");
-
+        final_Params.put("roles", getRoleIds(Constants.SELF_VAL_ONBOARD.get(Constants.SE), true).toString().replaceAll("\\[|\\]|\\s", ""));
+        final_Params.put("form_dump", Arrays.asList(final_Params).toString());
         new CallServer(params);
     }
-
 
     public class CallServer implements ResponseListener<SelfEval> {
 
         public CallServer(HashMap<String, String> params) {
             mSelfEvaluationView.showProgressBar();
+            Log.i(TAG, "self eval is " + params);
             new EVDNetowrkServices().selfEvalCall(mContext, params, this);
         }
 
@@ -90,6 +118,8 @@ public class SelfEvaluationPresenter {
             if (response.status == 0) {
                 mContext.startActivity(new Intent(mContext, HomeActivity.class));
                 ((Activity) mContext).finish();
+            } else {
+                Toast.makeText(mContext, response.message, Toast.LENGTH_SHORT).show();
             }
 
         }

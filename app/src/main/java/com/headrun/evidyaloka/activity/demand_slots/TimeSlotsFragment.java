@@ -307,10 +307,13 @@ public class TimeSlotsFragment extends BaseEVDFragment implements TimeSlotAdapte
 
         if (!utils.getCookieValue(getActivity(), "sessionid").isEmpty()) {
             if (checkSlotDetails()) {
-                if (slot_ids.size() == 2) {
+                if (slot_ids.size() < 2) {
                     if (!isRelease()) {
                         menuCOnfirmDisable();
                     }
+                } else if (slot_ids.size() == 2) {
+                    menuConfirmEnable();
+
                 }
             } else {
                 slotReleaseDialog();

@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="fonts/Roboto-Light.ttf"
                         android:hint="@string/hint_password"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -119,7 +119,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="@color/white"
                         android:clickable="true"
                         android:focusable="true"
                         android:text="@string/btn_text_switch_to_signin"
@@ -132,11 +131,11 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_margin="10dp"
-                        android:background="@color/white"
                         android:clickable="true"
                         android:focusable="true"
                         android:text="@string/btn_text_password_reset"
-                        android:textColor="@color/text_blue_gray" />
+                        android:textColor="@color/text_blue_gray"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -144,7 +143,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/divider_light_gray" />
 

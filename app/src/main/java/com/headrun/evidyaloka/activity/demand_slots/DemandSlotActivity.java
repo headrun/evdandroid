@@ -100,6 +100,7 @@ public class DemandSlotActivity extends BaseActivity implements ResponseListener
         list_courses.addOnTabSelectedListener(this);
 
         try {
+
             confirm_item = menu_confirm.findItem(R.id.action_confirm);
 
            /* if (isRelease()) {

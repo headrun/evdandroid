@@ -250,13 +250,15 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Intent.ACTION_MAIN);
+        /*Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
-        System.exit(0);
+        System.exit(0);*/
 
+        android.os.Process.killProcess(android.os.Process.myPid());
+        super.onDestroy();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

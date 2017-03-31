@@ -25,8 +25,10 @@ public class ApiEndpoints {
     public static final String UPLOAD_FILE = BASE_URL + "save_profilepic/";
     public static final String SESSION_DETAILS = BASE_URL + "get_session_details/";
     public static final String GET_USER_DATA = BASE_URL + "api/get_user_meta/";
-    public static final String SELF_EVAL = BASE_URL + "selfeval_response/";
+    public static final String SELF_EVAL = BASE_URL + "api/save_selfevalinfo/";
     public static final String ORIENTAITON_STATUS = BASE_URL + "save_step/";
+    public static final String GET_AVAILABLE_TSD_SLOTS = BASE_URL + "api/get_avalilable_tsd_slots/";
+    public static final String BOOK_RELASE_TSD_SLOTS = BASE_URL + "book_or_release_sd_slot/";
 
     public static final String GETLOC_DATA = "http://lab.iamrohit.in/php_ajax_country_state_city_dropdown/apiv1.php";
 

@@ -23,6 +23,7 @@ import com.headrun.evidyaloka.model.BlockReleaseDemand;
 import com.headrun.evidyaloka.model.LocData;
 import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.model.SchoolDetails;
+import com.headrun.evidyaloka.model.SelectDiscussionData;
 import com.headrun.evidyaloka.model.SelfEval;
 import com.headrun.evidyaloka.model.SessionDetails;
 import com.headrun.evidyaloka.utils.UserSession;
@@ -164,6 +165,26 @@ public class EVDNetowrkServices extends BaseService {
         //params.put("max_results", "10");
         addCsrfparam(context, params);
         executePostRequest(context, ApiEndpoints.UPCOMING_SESSIONS, getSessionHeaders(context), params, new TypeToken<SessionResponse>() {
+        }, listener);
+    }
+
+    public void get_avalilable_tsd_slots(Context context, ResponseListener<SelectDiscussionData> listener, String mnth, String year) {
+
+        HashMap<String, String> params = new HashMap<>();
+
+        params.put("month", mnth);
+        params.put("year", year);
+        params.put(PLATFORM, ANDROID);
+        addCsrfparam(context, params);
+        executeGetRequest(context, ApiEndpoints.GET_AVAILABLE_TSD_SLOTS, getSessionHeaders(context), params, new TypeToken<SelectDiscussionData>() {
+        }, listener);
+    }
+
+    public void book_Releasee_tsd_slots(Context context, ResponseListener<SelectDiscussionData> listener, HashMap<String, String> params) {
+
+        params.put(PLATFORM, ANDROID);
+        addCsrfparam(context, params);
+        executeGetRequest(context, ApiEndpoints.BOOK_RELASE_TSD_SLOTS, getSessionHeaders(context), params, new TypeToken<SelectDiscussionData>() {
         }, listener);
     }
 

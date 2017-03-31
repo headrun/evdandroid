@@ -11,6 +11,5 @@ public class SelfEval {
     public int status;
     @SerializedName("message")
     public String message;
-    @SerializedName("data")
-    public String data;
+
 }

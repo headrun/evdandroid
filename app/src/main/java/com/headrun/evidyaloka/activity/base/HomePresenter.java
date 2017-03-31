@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.headrun.evidyaloka.R;
+import com.headrun.evidyaloka.activity.SelectionDiscussion.SelectionDiscussionActivity;
 import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.activity.self_evaluation.SelfEvaluationActivity;
@@ -114,23 +115,23 @@ public class HomePresenter {
 
         if (utils.userSession.getIsLogin()) {
             if (Constants.PROFILE_UPDATE.toLowerCase().equals(value)) {
-                mContext.startActivity(new Intent((Activity) mContext, ProfileUpdate.class));
+                mContext.startActivity(new Intent(mContext, ProfileUpdate.class));
                 ((Activity) mContext).finish();
             } else if (Constants.ORIENTAION.toLowerCase().equals(value)) {
                 mHomeView.inflateVideoPlayer("DhmVpNCEWOo");
             } else if (Constants.SE.toLowerCase().equals(value)) {
                 List<String> list = utils.LinkedListTOArrayList(Constants.SELF_VAL_ONBOARD.get(Constants.SE));
-                mContext.startActivity(new Intent((Activity) mContext, SelfEvaluationActivity.class).
+                mContext.startActivity(new Intent(mContext, SelfEvaluationActivity.class).
                         putStringArrayListExtra("role_type", (ArrayList<String>) list));
 
                 ((Activity) mContext).finish();
             } else if (Constants.TSD.toLowerCase().equals(value)) {
-
+                mContext.startActivity(new Intent(mContext, SelectionDiscussionActivity.class));
             }
 
         } else {
 
-            mContext.startActivity(new Intent((Activity) mContext, LoginActivity.class));
+            mContext.startActivity(new Intent(mContext, LoginActivity.class));
             ((Activity) mContext).finish();
         }
     }
