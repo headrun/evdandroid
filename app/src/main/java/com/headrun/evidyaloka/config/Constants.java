@@ -39,6 +39,7 @@ public class Constants {
 
     public static Parcelable DEMAND_SLOTS_STATE;
     public static boolean PAGE_REFRESH = false;
+    public static SchoolDetails mSchoolDetails;
     public static LinkedHashMap<String, Demand> LIST_DEMANDS = new LinkedHashMap<>();
     public static LinkedHashMap<String, List<Sessions>> LIST_SESSIONS = new LinkedHashMap<>();
     public static FiltersDataResponse FILTERDATA;
@@ -47,8 +48,9 @@ public class Constants {
     public static LinkedHashMap<String, String> COUNTRY_MAP = new LinkedHashMap<>();
     public static LinkedHashMap<String, String> STATE_MAP = new LinkedHashMap<>();
     public static LinkedHashMap<String, String> CITY_MAP = new LinkedHashMap<>();
-    public static List<String> ATTENDANCE_LIST = new ArrayList<>();
 
+    public static List<String> ATTENDANCE_LIST = new ArrayList<>();
+    public static List<String> BOOKED_SLOTS_ROLES = new ArrayList<>();
     public static LinkedHashMap<String, String> SELF_EVAL_DATA = new LinkedHashMap<>();
     public static LinkedHashMap<String, LinkedList<String>> SELF_VAL_ONBOARD = new LinkedHashMap<String, LinkedList<String>>();
 

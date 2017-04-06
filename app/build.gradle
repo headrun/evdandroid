@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.butterknife'
+
 
 
 android {
@@ -45,8 +45,8 @@ android {
 
         }
         prod {
-            versionCode 10
-            versionName "1.10"
+            versionCode 11
+            versionName "1.11"
         }
     }
 }
@@ -70,17 +70,15 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.10.0'
     compile 'com.afollestad.material-dialogs:core:0.8.5.9'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
-    compile 'com.facebook.android:facebook-android-sdk:4+'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 
     compile 'com.google.firebase:firebase-core:10.2.0'
     compile 'com.google.firebase:firebase-messaging:10.2.0'
+    compile 'com.google.firebase:firebase-crash:10.2.0'
 
     //compile 'com.google.firebase:firebase-auth:10.2.0'
     //compile 'com.google.firebase:firebase-auth:10.2.0'
-
 
     compile 'com.google.android.gms:play-services-auth:10.2.0'
     compile 'com.github.sundeepk:compact-calendar-view:1.9.2-beta'

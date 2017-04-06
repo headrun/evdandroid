@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -72,8 +76,10 @@ public class DemandSlotActivity extends BaseActivity implements ResponseListener
         Intent intent = getIntent();
         if (intent != null) {
             Bundle data = intent.getExtras();
-            demand = (Demand) intent.getExtras().getParcelable(Demand.TAG_DEMAND);
-            mSchoolDetails = (SchoolDetails) intent.getExtras().getParcelable(SchoolDetails.TAG_SCHOOLDEATILS);
+            demand = intent.getExtras().getParcelable(Demand.TAG_DEMAND);
+            mSchoolDetails = Constants.mSchoolDetails;
+            Constants.mSchoolDetails = null;
+            //mSchoolDetails = intent.getExtras().getParcelable(SchoolDetails.TAG_SCHOOLDEATILS);
             redirect_type = intent.getExtras().getBoolean(Constants.TYPE);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -121,26 +127,49 @@ public class DemandSlotActivity extends BaseActivity implements ResponseListener
         menu_confirm = menu;
         try {
             confirm_item = menu_confirm.findItem(R.id.action_confirm);
+
+
+            MenuItemCompat.setActionView(confirm_item, R.layout.menu_item_background);
+            RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(confirm_item);
+            TextView tv = (TextView) notifCount.findViewById(R.id.txt_menu_item);
+            tv.setText("Confirm");
+
+            notifCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent("confirmSlot");
+                /*if (isRelease())
+                    intent.putExtra("type", "release");
+                else*/
+                    intent.putExtra("type", "confirm");
+
+                    LocalBroadcastManager.getInstance(DemandSlotActivity.this).sendBroadcast(intent);
+
+
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_confirm:
+            /*case R.id.action_confirm:
 
                 Intent intent = new Intent("confirmSlot");
-                /*if (isRelease())
+                *//*if (isRelease())
                     intent.putExtra("type", "release");
-                else*/
+                else*//*
                 intent.putExtra("type", "confirm");
 
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
-                break;
+                break;*/
             case android.R.id.home:
                 if (redirect_type) {
                     startActivity(new Intent(this, HomeActivity.class));

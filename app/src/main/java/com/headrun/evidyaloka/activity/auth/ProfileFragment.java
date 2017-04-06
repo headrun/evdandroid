@@ -140,7 +140,7 @@ public class ProfileFragment extends BaseEVDFragment {
                         hideProgressDialog();
                         setProfile();
                         removeData();
-                        startActivity(new Intent(getActivity(), AuthActivity.class)
+                        startActivity(new Intent(getActivity(), LoginActivity.class)
                                 .putExtra(Constants.TYPE, true)
                                 .putExtra(Constants.REDIRECT_TO, "home_page"));
 

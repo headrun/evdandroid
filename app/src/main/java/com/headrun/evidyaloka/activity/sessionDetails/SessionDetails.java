@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -290,8 +291,20 @@ public class SessionDetails extends BaseActivity implements SessionDetailsView, 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.session_details_menu, menu);
         sessionsMenu = menu;
-
         sessionsMenuItem = menu.findItem(R.id.session_done);
+        MenuItemCompat.setActionView(sessionsMenuItem, R.layout.menu_item_background);
+        RelativeLayout sessionsMenuItem_lay = (RelativeLayout) MenuItemCompat.getActionView(sessionsMenuItem);
+        TextView tv = (TextView) sessionsMenuItem_lay.findViewById(R.id.txt_menu_item);
+        tv.setText("Update");
+
+        sessionsMenuItem_lay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String feedback = session_feedback.getText().toString() != null ? session_feedback.getText().toString().trim() : "";
+                mSessionPresenter.submitSessionAlert(mSessionDeatils, Constants.ATTENDANCE_LIST, sessin_id, sel_topic, feedback);
+
+            }
+        });
         return true;
     }
 
@@ -299,10 +312,6 @@ public class SessionDetails extends BaseActivity implements SessionDetailsView, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.session_done:
-                String feedback = session_feedback.getText().toString() != null ? session_feedback.getText().toString().trim() : "";
-                mSessionPresenter.submitSessionAlert(mSessionDeatils, Constants.ATTENDANCE_LIST, sessin_id, sel_topic, feedback);
-                break;
             case android.R.id.home:
                 onBackPressed();
                 break;

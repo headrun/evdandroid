@@ -97,7 +97,7 @@ public class SignupFragment extends BaseEVDFragment implements View.OnClickListe
                 break;
 
             case R.id.btn_sign_in_with_facebook:
-                mAuthPresenter.signFacebook();
+                mAuthPresenter.signFacebook(getActivity());
                 break;
         }
     }

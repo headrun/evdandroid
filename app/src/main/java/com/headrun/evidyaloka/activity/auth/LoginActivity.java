@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private TextView title_question, title_type, title_txt, error_status;
     private TextInputLayout txt_confirm_pass;
     private LinearLayout signup_lay1;
+
     private String demand_id = "";
     private TextInputEditText input_username, input_pass, input_confirm_pass, input_firtst_name, input_last_name;
     private Button login_btn;
@@ -68,7 +70,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private String REDIRECT_TO = "";
     Menu menu_confirm;
 
-    private Button loginButton;
+    private RelativeLayout loginButton;
     private com.google.android.gms.common.SignInButton google_login_button;
     private Toolbar toolbar;
 
@@ -89,11 +91,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         Intent intent = getIntent();
         if (intent != null) {
             Bundle data = intent.getExtras();
-            if (data != null)
+            if (data != null) {
                 Skip_enable = data.getBoolean(Constants.TYPE);
-            REDIRECT_TO = data.getString(Constants.REDIRECT_TO);
-            demand_id = data.getString(Constants.ID);
-            hideSkip();
+                REDIRECT_TO = data.getString(Constants.REDIRECT_TO);
+                demand_id = data.getString(Constants.ID);
+                hideSkip();
+            }
         }
     }
 
@@ -104,13 +107,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void hideSkip() {
-        if (Skip_enable) {
+        /*if (Skip_enable) {
             menu_confirm.findItem(R.id.action_skip)
                     .setEnabled(true);
         } else {
             menu_confirm.findItem(R.id.action_skip)
                     .setEnabled(false);
-        }
+        }*/
     }
 
     private void intitView() {
@@ -127,7 +130,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         input_confirm_pass = (TextInputEditText) findViewById(R.id.input_confirm_pass);
         txt_confirm_pass = (TextInputLayout) findViewById(R.id.txt_confirm_pass);
         login_btn = (Button) findViewById(R.id.login_btn);
-        loginButton = (Button) findViewById(R.id.fb_login_button);
+        loginButton = (RelativeLayout) findViewById(R.id.fb_login_button);
         signup_lay1 = (LinearLayout) findViewById(R.id.signup_lay1);
         google_login_button = (com.google.android.gms.common.SignInButton) findViewById(R.id.google_login_button);
         google_login_button.setSize(SignInButton.SIZE_STANDARD);
@@ -514,7 +517,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
 
     }

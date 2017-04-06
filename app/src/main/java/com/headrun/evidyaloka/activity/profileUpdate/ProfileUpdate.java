@@ -14,6 +14,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -254,7 +256,23 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.profile_update, menu);
-        return true;
+
+        MenuItem item = menu.findItem(R.id.profile_save);
+        MenuItemCompat.setActionView(item, R.layout.menu_item_background);
+        RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
+        TextView tv = (TextView) notifCount.findViewById(R.id.txt_menu_item);
+        tv.setText("Update");
+
+        notifCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mprofileUpdate_presenter.validatecheck();
+
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
@@ -264,10 +282,11 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
             case android.R.id.home:
                 onBackPressed();
                 break;
+/*
             case R.id.profile_save:
-                mprofileUpdate_presenter.validatecheck();
 
                 break;
+*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -594,7 +613,7 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
 
         if (response != null)
             if (response.status.equals("0")) {
-
+                Toast.makeText(this, "profile update Sucessfully", Toast.LENGTH_SHORT).show();
                 mprofileUpdate_presenter.CallUserData();
 
             } else {

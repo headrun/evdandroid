@@ -160,12 +160,11 @@ public class SchoolDetailsActivity extends AppCompatActivity implements Response
             teach_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Constants.mSchoolDetails = mSchoolDetails;
                     startActivity(new Intent(SchoolDetailsActivity.this, DemandSlotActivity.class).
                             putExtra(Demand.TAG_DEMAND, mdemands).
-                            putExtra(SchoolDetails.TAG_SCHOOLDEATILS, mSchoolDetails).
                             putExtra(Constants.TYPE, is_network));
-
+                    //putExtra(SchoolDetails.TAG_SCHOOLDEATILS, mSchoolDetails).
                 }
             });
         } catch (Exception e) {

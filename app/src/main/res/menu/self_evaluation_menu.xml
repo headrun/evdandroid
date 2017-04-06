@@ -4,12 +4,14 @@
 
     <item
         android:id="@+id/action_next"
+        android:actionLayout="@layout/menu_item_background"
         android:orderInCategory="100"
         android:title="@string/next"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_submit"
+        android:actionLayout="@layout/menu_item_background"
         android:orderInCategory="100"
         android:title="@string/submit"
         app:showAsAction="always" />

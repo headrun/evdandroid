@@ -7,6 +7,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.base.HomeActivity;
 import com.headrun.evidyaloka.activity.demand_slots.DemandSlotActivity;
@@ -20,6 +27,7 @@ import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.model.SchoolDetails;
 import com.headrun.evidyaloka.utils.Utils;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
@@ -36,7 +44,7 @@ public class AuthPresenter {
     static Utils utils;
     static String REDIRECT_TO = "";
     static String demand_id = "";
-
+    CallbackManager callbackManager;
 
     public AuthPresenter(Context mContext, String REDIRECT_TO, String demand_id) {
         this.REDIRECT_TO = REDIRECT_TO;
@@ -85,8 +93,9 @@ public class AuthPresenter {
         new GoogleAPI(mContext);
     }
 
-    public void signFacebook() {
-        new FacebookAPI(mContext);
+    public void signFacebook(Activity activity) {
+        //fbLoginRegister(activity);
+        new FacebookAPI(activity);
     }
 
     public static class AuthNetworkCall implements ResponseListener<LoginResponse> {
@@ -154,6 +163,47 @@ public class AuthPresenter {
         mContext.getApplicationContext().startService(new Intent(getApplicationContext(), ChangeSessionStatusService.class)
                 .putExtra("request_type", "fcm"));
 
+    }
+
+    public void fbLoginRegister(Activity activty) {
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                if (loginResult != null && !loginResult.getAccessToken().getToken().isEmpty()) {
+                    Log.i(TAG, "acces token is" + loginResult.getAccessToken());
+
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+                Log.i(TAG, "cancel the sign in");
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                exception.printStackTrace();
+                // Log.i(TAG, "login result is " + exception);
+            }
+        });
+
+        if (AccessToken.getCurrentAccessToken() == null && Profile.getCurrentProfile() == null) {
+
+            LoginManager.getInstance().logInWithReadPermissions(activty, Arrays.asList("email", "user_status", "user_about_me", "user_birthday",
+                    "user_videos", "user_events", "public_profile"));
+            // LoginManager.getInstance().logInWithPublishPermissions(LoginActivity.this, Arrays.asList("rsvp_event", "publish_actions"));
+
+        } else {
+            Log.i(TAG, "  alredy got acess token");
+                /*LoginManager.getInstance().logOut();*/
+
+        }
     }
 
 }

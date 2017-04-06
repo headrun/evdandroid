@@ -134,14 +134,16 @@ public class ListItemsactivity extends BaseActivity implements View.OnClickListe
 
             //Log.i(TAG, "language filter size" + items.size() + "val are " + items.toString());
             //list_items = Arrays.asList(getResources().getStringArray(R.array.languages));
-            list_items = Arrays.asList(lang.substring(1, lang.length() - 1).replaceAll("\\[|\\]|\\s", "").split(","));
+            list_items = Arrays.asList(lang.substring(1, lang.length() - 1).replaceAll("\\[|\\]", "").split(","));
+            utils.trimListItems(list_items);
             adapter = new ArrayAdapter<String>(ListItemsactivity.this,
                     android.R.layout.simple_list_item_multiple_choice, list_items);
             list_view_list.setAdapter(adapter);
 
             String sel_lang = userSession.getSelLangFilter();
             if (sel_lang.length() > 0) {
-                List<String> items = Arrays.asList(userSession.getSelLangFilter().substring(1, userSession.getSelLangFilter().length() - 1).replaceAll("\\[|\\]|\\s", "").split(","));
+                List<String> items = Arrays.asList(userSession.getSelLangFilter().substring(1, userSession.getSelLangFilter().length() - 1).replaceAll("\\[|\\]", "").split(","));
+                utils.trimListItems(items);
                 checkSelectedItems(items);
             }
 
@@ -150,14 +152,16 @@ public class ListItemsactivity extends BaseActivity implements View.OnClickListe
 
             String states = userSession.getStateFilter();
             //Log.i(TAG, "states filter " + states);
-            list_items = Arrays.asList(states.substring(1, states.length() - 1).replaceAll("\\[|\\]|\\s", "").split(","));
+            list_items = Arrays.asList(states.substring(1, states.length() - 1).replaceAll("\\[|\\]", "").split(","));
+            utils.trimListItems(list_items);
             adapter = new ArrayAdapter<String>(ListItemsactivity.this,
                     android.R.layout.simple_list_item_multiple_choice, list_items);
             list_view_list.setAdapter(adapter);
 
             String sel_states = userSession.getSelStateFilter();
             if (sel_states.length() > 0) {
-                List<String> items = Arrays.asList(sel_states.substring(1, sel_states.length() - 1).replaceAll("\\[|\\]|\\s", "").split(","));
+                List<String> items = Arrays.asList(sel_states.substring(1, sel_states.length() - 1).replaceAll("\\[|\\]", "").split(","));
+                utils.trimListItems(items);
                 checkSelectedItems(items);
             }
         }
@@ -173,6 +177,8 @@ public class ListItemsactivity extends BaseActivity implements View.OnClickListe
                 Log.i(TAG, "list item not exist");
         }
     }
+
+
 }
 
 

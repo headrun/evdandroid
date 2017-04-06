@@ -8,7 +8,7 @@
         android:id="@+id/subtabLayout"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_below="@+id/evd_gallery"
+
         android:background="@color/colorWhite"
         android:elevation="5dp"
         app:tabIndicatorHeight="0dp"
@@ -24,7 +24,7 @@
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
+
             android:text="@string/location" />
 
     </android.support.design.widget.TabLayout>
@@ -55,65 +55,5 @@
         </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
 
-    <!--
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/image_pager"
-                android:layout_width="match_parent"
-                android:layout_height="300px"
-                app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlways" />
-            <android.support.design.widget.TabLayout
-                android:id="@+id/subtabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/image_pager"
-                android:background="@color/colorWhite"
-                app:tabMode="fixed">
-
-                <android.support.design.widget.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/languages" />
-
-                <android.support.design.widget.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
-                    android:text="@string/subjects" />
-
-            </android.support.design.widget.TabLayout>
-
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/scroll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <include
-                    android:id="@+id/layout_no_favorite"
-                    layout="@layout/layout_no_favorite" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="8dp" />
-            </RelativeLayout>
-        </android.support.v4.widget.NestedScrollView>-->
 </RelativeLayout>

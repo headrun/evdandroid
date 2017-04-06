@@ -43,7 +43,7 @@ public class SelfEvaluationPresenter {
         utils = new Utils(mContext);
     }
 
-    public void sEServerCall(LinkedHashMap<String, String> params) {
+    public void sEServerCall(LinkedHashMap<String, String> params, String role_sel) {
 
         mSelfEvaluationView.showProgressBar();
 
@@ -70,10 +70,14 @@ public class SelfEvaluationPresenter {
             finalParams.put(mContext.getString(R.string.scenario_five).trim(), params.get(Constants.SCENARIO_SIX));
 
 
-        final_Params.put("roles", getRoleIds(Constants.SELF_VAL_ONBOARD.get(Constants.SE), false).toString().replaceAll("\\[|\\]|\\s", ""));
-        final_Params.put("form_dump", Arrays.asList(finalParams).toString());
-
-        new CallServer(final_Params);
+        int role_id = getRoleIds(role_sel);
+        if (role_id != -1) {
+            final_Params.put("roles", String.valueOf(role_id));
+            final_Params.put("form_dump", Arrays.asList(finalParams).toString());
+            new CallServer(final_Params);
+        } else {
+            Toast.makeText(mContext, "it seems an getting error", Toast.LENGTH_LONG).show();
+        }
     }
 
     private List<Integer> getRoleIds(LinkedList<String> user_role_list, boolean content_dev) {
@@ -89,13 +93,30 @@ public class SelfEvaluationPresenter {
         return roles_list;
     }
 
-    public void contentDevSelf_eval(LinkedHashMap<String, String> params) {
+    private Integer getRoleIds(String role) {
+
+        for (Map.Entry<Integer, String> entry : utils.getUserRolesList().entrySet()) {
+
+            if (entry.getValue().trim().equals(role)) {
+                return entry.getKey();
+            }
+        }
+        return -1;
+    }
+
+    public void contentDevSelf_eval(LinkedHashMap<String, String> params, String role_sel) {
 
         HashMap<String, String> final_Params = new HashMap<>();
 
-        final_Params.put("roles", getRoleIds(Constants.SELF_VAL_ONBOARD.get(Constants.SE), true).toString().replaceAll("\\[|\\]|\\s", ""));
-        final_Params.put("form_dump", Arrays.asList(final_Params).toString());
-        new CallServer(params);
+
+        int role_id = getRoleIds(role_sel);
+        if (role_id != -1) {
+            final_Params.put("roles", String.valueOf(role_id));
+            final_Params.put("form_dump", Arrays.asList(final_Params).toString());
+            new CallServer(params);
+        } else {
+            Toast.makeText(mContext, "it seems an getting error", Toast.LENGTH_LONG).show();
+        }
     }
 
     public class CallServer implements ResponseListener<SelfEval> {

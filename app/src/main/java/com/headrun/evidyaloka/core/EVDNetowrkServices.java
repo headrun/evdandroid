@@ -20,6 +20,7 @@ import com.headrun.evidyaloka.dto.SessionResponse;
 import com.headrun.evidyaloka.evdservices.ChangeSessionStatusService;
 import com.headrun.evidyaloka.event.SlotConfirmEvent;
 import com.headrun.evidyaloka.model.BlockReleaseDemand;
+import com.headrun.evidyaloka.model.Book_Relase_Tsd;
 import com.headrun.evidyaloka.model.LocData;
 import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.model.SchoolDetails;
@@ -40,6 +41,7 @@ public class EVDNetowrkServices extends BaseService {
 
     String PLATFORM = "platform";
     String ANDROID = "android";
+    String MOBILE = "mobile";
 
     private String TAG = EVDNetowrkServices.class.getSimpleName();
 
@@ -180,11 +182,11 @@ public class EVDNetowrkServices extends BaseService {
         }, listener);
     }
 
-    public void book_Releasee_tsd_slots(Context context, ResponseListener<SelectDiscussionData> listener, HashMap<String, String> params) {
+    public void book_Releasee_tsd_slots(Context context, ResponseListener<Book_Relase_Tsd> listener, HashMap<String, String> params) {
 
-        params.put(PLATFORM, ANDROID);
+        params.put(PLATFORM, MOBILE);
         addCsrfparam(context, params);
-        executeGetRequest(context, ApiEndpoints.BOOK_RELASE_TSD_SLOTS, getSessionHeaders(context), params, new TypeToken<SelectDiscussionData>() {
+        executeGetRequest(context, ApiEndpoints.BOOK_RELASE_TSD_SLOTS, getSessionHeaders(context), params, new TypeToken<Book_Relase_Tsd>() {
         }, listener);
     }
 
@@ -270,6 +272,7 @@ public class EVDNetowrkServices extends BaseService {
         }, listener);
 
     }
+
 
     public static HashMap<String, String> getSessionHeaders(Context context) {
 

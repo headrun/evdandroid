@@ -83,6 +83,12 @@ public class Utils {
         return convert_time;
     }
 
+    public void trimListItems(List<String> items) {
+        for (int i = 0; i < items.size(); i++) {
+            items.set(i, items.get(i).trim());
+        }
+    }
+
     public void setHeaders(Context mContext, NetworkResponse response) {
 
         try {

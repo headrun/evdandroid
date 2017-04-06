@@ -11,6 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.base.HomeActivity;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
@@ -51,6 +56,7 @@ public class AuthActivity extends AppCompatActivity implements FragmentChanged {
                 .commit();
 
     }
+
 
     private void getData() {
         Intent intent = getIntent();

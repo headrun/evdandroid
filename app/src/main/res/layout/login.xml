@@ -77,7 +77,7 @@
 
                 <Button
                     android:id="@+id/btn_login"
-                    style="@style/Button.Udacity.Blue"
+                    style="@style/Button.evd.Blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
@@ -120,8 +120,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_margin="16dp"
                 android:background="@color/divider_light_gray" />
 
             <include layout="@layout/include_social_auth" />

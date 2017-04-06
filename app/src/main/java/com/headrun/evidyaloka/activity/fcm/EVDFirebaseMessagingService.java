@@ -16,13 +16,18 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.android.volley.VolleyError;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.base.HomeActivity;
 import com.headrun.evidyaloka.activity.base.MainActivity;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
+import com.headrun.evidyaloka.core.EVDNetowrkServices;
+import com.headrun.evidyaloka.core.ResponseListener;
+import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.model.SessionDetails;
+import com.headrun.evidyaloka.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,9 +48,12 @@ public class EVDFirebaseMessagingService extends FirebaseMessagingService {
 
             Map<String, String> data = remoteMessage.getData();
 
-            Log.i(TAG, "Message Notification Body: " + notify + " " + data);
+            Log.i(TAG, "Message Notification and data : " + notify + " " + data);
             Log.i(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), data);
+            new GetUserData(this, remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getData());
+
+        } else {
+            Log.i(TAG, "Message Notification remoteMessage.getNotification() getting null");
         }
 
     }
@@ -53,9 +61,20 @@ public class EVDFirebaseMessagingService extends FirebaseMessagingService {
     public void sendNotification(String title, String messageBody, Map<String, String> data) {
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (data != null) {
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                intent.putExtra(entry.getKey(), entry.getValue());
+                Log.i(TAG, "notify key is " + entry.getKey() + "get value is " + entry.getValue());
+            }
+        } else {
+            Log.i(TAG, "notify data is null " + data);
+        }
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -81,6 +100,34 @@ public class EVDFirebaseMessagingService extends FirebaseMessagingService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
 
+    }
+
+    public class GetUserData implements ResponseListener<LoginResponse> {
+        String title, messagebody;
+        Context mContext;
+        Map<String, String> data;
+
+        public GetUserData(Context mContext, String title, String messagebody, Map<String, String> data) {
+            this.title = title;
+            this.messagebody = messagebody;
+            this.mContext = mContext;
+            this.data = data;
+            new EVDNetowrkServices().getUserData(mContext, this);
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            sendNotification(title, messagebody, data);
+        }
+
+        @Override
+        public void onResponse(LoginResponse response) {
+
+            if (response.status == 0) {
+                new Utils(mContext).userSession.setUserData(response);
+                sendNotification(title, messagebody, data);
+            }
+        }
     }
 }
 

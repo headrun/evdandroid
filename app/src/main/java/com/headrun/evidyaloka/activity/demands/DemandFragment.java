@@ -147,14 +147,14 @@ public class DemandFragment extends BaseEVDFragment implements ResponseListener<
 
             if (tab.getText().toString().contains("All Languages")) {
                 tabTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.lang, 0, 0, 0);
-                String text_title = userSession.getSelLangFilter().toString().replaceAll("\\[|\\]|\\s", "");
+                String text_title = userSession.getSelLangFilter().toString().replaceAll("\\[|\\]", "");
                 if (!text_title.isEmpty())
                     tabTextView.setText(text_title);
                 else
                     tabTextView.setText(tab.getText());
             } else {
                 tabTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.loc, 0, 0, 0);
-                String text_title = userSession.getSelStateFilter().toString().replaceAll("\\[|\\]|\\s", "");
+                String text_title = userSession.getSelStateFilter().toString().replaceAll("\\[|\\]", "");
                 if (!text_title.isEmpty())
                     tabTextView.setText(text_title);
                 else
@@ -219,12 +219,12 @@ public class DemandFragment extends BaseEVDFragment implements ResponseListener<
             String sel_state_data = sel_states.substring(1, sel_states.length() - 1).replaceAll("\\[|\\]", "");
 
             if (sel_lang_data.length() > 0) {
-                String lang_items = sel_lang_data.replaceAll("\\s", "");
+                String lang_items = sel_lang_data.trim();
                 params.put("sel_langs", lang_items);
 
             }
             if (sel_state_data.length() > 0) {
-                String states_items = sel_state_data.replaceAll("\\s", "");
+                String states_items = sel_state_data.trim();
                 params.put("sel_states", states_items);
             }
 

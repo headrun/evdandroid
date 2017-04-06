@@ -264,8 +264,8 @@ public class SchoolDetails implements Parcelable {
         public String end_time;
         @SerializedName("day")
         public String day;
-        @SerializedName("day_id")
-        public String day_id;
+        /*@SerializedName("day_id")
+        public String day_id;*/
 
         @Override
         public int describeContents() {
@@ -277,7 +277,7 @@ public class SchoolDetails implements Parcelable {
             dest.writeString(this.start_time);
             dest.writeString(this.end_time);
             dest.writeString(this.day);
-            dest.writeString(this.day_id);
+           // dest.writeString(this.day_id);
         }
 
         public SlotsData() {
@@ -287,7 +287,7 @@ public class SchoolDetails implements Parcelable {
             this.start_time = in.readString();
             this.end_time = in.readString();
             this.day = in.readString();
-            this.day_id = in.readString();
+           // this.day_id = in.readString();
         }
 
         public static final Creator<SlotsData> CREATOR = new Creator<SlotsData>() {

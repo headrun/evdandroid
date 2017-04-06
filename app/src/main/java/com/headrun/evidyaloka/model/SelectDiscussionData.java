@@ -24,15 +24,25 @@ public class SelectDiscussionData {
        public LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedList<Selection_Slot_Data>[]>>> slots_data;
    */
 
-    public class Selection_Slot_Data {
-        @SerializedName("current_slot")
-        public LinkedHashMap<String, String> current_slot;
+    public static class Selection_Slot_Data {
+        @SerializedName("booked_slots")
+        public LinkedHashMap<String, Booked_slots> booked_slots;
         @SerializedName("available_slots")
         public LinkedHashMap<String, LinkedHashMap<String, String>> available_slots;
         @SerializedName("month")
         public int month;
         @SerializedName("year")
         public int year;
+    }
+
+    public static class Booked_slots {
+
+        @SerializedName("booked_time")
+        public String booked_time;
+        @SerializedName("role")
+        public String role;
+        @SerializedName("role_id")
+        public String role_id;
     }
 
 }

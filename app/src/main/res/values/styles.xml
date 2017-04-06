@@ -45,6 +45,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorBottomNavigationAccent</item>
         <item name="colorControlNormal">@color/colorGrey600</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -144,7 +145,7 @@
         <item name="android:textColorHint">@color/text_light_gray</item>
     </style>
 
-    <style name="Button.Udacity.Blue" parent="@android:style/Widget.Holo.Button">
+    <style name="Button.evd.Blue" parent="@android:style/Widget.Holo.Button">
         <item name="android:textSize">12.0sp</item>
         <item name="android:textColor">#ffffffff</item>
         <item name="android:background">@color/button_color</item>

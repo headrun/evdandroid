@@ -25,11 +25,21 @@ public interface SelectionDiscussionView {
 
     public void displaySoltsData(Date date, LinkedHashMap<String, String> list);
 
-    public void setBookedSlot(String slot);
+    public void setBookedSlot(LinkedHashMap<String, SelectDiscussionData.Booked_slots> slots);
 
     public void hideBookedslot();
 
     public void ShowBookedSlot();
+
+    public void hideProgressBar();
+
+    public void showProgressBar();
+
+    public void hideCalProgressBar();
+
+    public void showCalProgressBar();
+
+    public void viewBookedSlots();
 
 
 }

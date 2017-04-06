@@ -6,6 +6,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.headrun.evidyaloka.R;
-import com.headrun.evidyaloka.activity.auth.AuthActivity;
+import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.demands.DemandFragment;
 import com.headrun.evidyaloka.activity.auth.ProfileFragment;
@@ -48,7 +49,7 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
 
     private static final int REQ_START_STANDALONE_PLAYER = 1;
     private static final int REQ_RESOLVE_SERVICE_MISSING = 2;
-
+    boolean doubleBackToExitPressedOnce = false;
 
     private BottomNavigationView bottom_nav;
     ViewPager view_pager;
@@ -89,6 +90,7 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
             mHomePresenter = new HomePresenter(this, this);
         mHomePresenter.setSession();
 
+        this.doubleBackToExitPressedOnce = false;
     }
 
     @Override
@@ -186,8 +188,7 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
         bottom_nav.setOnNavigationItemSelectedListener(this);
 
         Constants.ISNOTIFICATION = false;
-
-
+        hideGallery();
         getFilerData();
         showFavoriteMoviesFragment();
     }
@@ -211,12 +212,16 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
     }
 
     private void setSelectedDotColor(int position) {
-        for (int i = 0; i < mDotsCount; i++) {
-            mDotsText[i].setTextColor(getApplicationContext().getResources().getColor(
-                    R.color.dark_grey));
+        try {
+            for (int i = 0; i < mDotsCount; i++) {
+                mDotsText[i].setTextColor(getApplicationContext().getResources().getColor(
+                        R.color.dark_grey));
+            }
+            mDotsText[position].setTextColor(getApplicationContext().getResources().getColor(
+                    R.color.magenta));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        mDotsText[position].setTextColor(getApplicationContext().getResources().getColor(
-                R.color.magenta));
     }
 
     private void showFavoriteMoviesFragment() {
@@ -249,16 +254,23 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        /*Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-        System.exit(0);*/
 
-        android.os.Process.killProcess(android.os.Process.myPid());
-        super.onDestroy();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            doubleBackToExitPressedOnce = false;
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+            System.exit(0);
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(getBaseContext(),
+                "Press once again to exit!", Toast.LENGTH_SHORT)
+                .show();
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -288,7 +300,7 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
                 if (utils.userSession.getIsLogin())
                     replaceFragment(new ProfileFragment());
                 else
-                    startActivity(new Intent(this, AuthActivity.class)
+                    startActivity(new Intent(this, LoginActivity.class)
                             .putExtra(Constants.TYPE, true)
                             .putExtra(Constants.REDIRECT_TO, "home_page"));
                 break;
@@ -342,7 +354,7 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
                     if (utils.userSession.getIsLogin())
                         startActivity(new Intent(HomeActivity.this, ProfileUpdate.class));
                     else
-                        startActivity(new Intent(HomeActivity.this, AuthActivity.class)
+                        startActivity(new Intent(HomeActivity.this, LoginActivity.class)
                                 .putExtra(Constants.TYPE, true)
                                 .putExtra(Constants.REDIRECT_TO, Constants.PROFILE_TYPE));
                 }

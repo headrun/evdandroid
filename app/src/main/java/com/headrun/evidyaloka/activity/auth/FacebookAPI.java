@@ -3,6 +3,8 @@ package com.headrun.evidyaloka.activity.auth;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +13,7 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -27,12 +30,10 @@ public class FacebookAPI extends Activity {
 
     protected String TAG = FacebookAPI.class.getSimpleName();
     protected CallbackManager callbackManager;
-    protected AccessTokenTracker accessTokenTracker;
-    protected AccessToken accessToken;
-    private Context mContext;
 
-    public FacebookAPI(Context mContext) {
+    private Activity mContext;
 
+    public FacebookAPI(Activity mContext) {
         this.mContext = mContext;
 
         callbackManager = CallbackManager.Factory.create();
@@ -52,7 +53,7 @@ public class FacebookAPI extends Activity {
             @Override
             public void onCancel() {
                 // App code
-                // Log.i(TAG, "cancel the sign in");
+                Log.i(TAG, "cancel the sign in");
             }
 
             @Override
@@ -65,7 +66,7 @@ public class FacebookAPI extends Activity {
 
         if (AccessToken.getCurrentAccessToken() == null && Profile.getCurrentProfile() == null) {
 
-            LoginManager.getInstance().logInWithReadPermissions((Activity) mContext, Arrays.asList("email", "user_status", "user_about_me", "user_birthday",
+            LoginManager.getInstance().logInWithReadPermissions(mContext, Arrays.asList("email", "user_status", "user_about_me", "user_birthday",
                     "user_videos", "user_events", "public_profile"));
             //LoginManager.getInstance().logInWithPublishPermissions(LoginActivity.this, Arrays.asList("rsvp_event", "publish_actions"));
 
@@ -87,17 +88,17 @@ public class FacebookAPI extends Activity {
         else
             Toast.makeText(this, " Facebook Login fail ", Toast.LENGTH_LONG).show();
 
+        return;
     }
 
     public void fbAccesToken(AccessToken fbtoken) {
 
-        if (fbtoken != null)
-            if (fbtoken.getToken() != null) {
-                HashMap<String, String> params = new HashMap<>();
-                params.put("backend", "facebook");
-                params.put("access_token", fbtoken.getToken());
-                new AuthPresenter.AuthNetworkCall(mContext, params, Constants.LOGIN);
-            }
+        if (fbtoken != null && fbtoken.getToken() != null) {
+            HashMap<String, String> params = new HashMap<>();
+            params.put("backend", "facebook");
+            params.put("access_token", fbtoken.getToken());
+            new AuthPresenter.AuthNetworkCall(mContext, params, Constants.LOGIN);
+        }
     }
 
 }

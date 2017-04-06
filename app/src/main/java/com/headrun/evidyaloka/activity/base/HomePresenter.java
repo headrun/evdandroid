@@ -44,6 +44,11 @@ public class HomePresenter {
         utils = new Utils(mContext);
     }
 
+    public HomePresenter(Context mContext) {
+        this.mContext = mContext;
+        utils = new Utils(mContext);
+    }
+
     public void setSession() {
 
         if (utils.userSession.getIsLogin())
@@ -56,53 +61,55 @@ public class HomePresenter {
 
         LinkedHashMap<String, Drawable> gallery_img = new LinkedHashMap<>();
         Constants.SELF_VAL_ONBOARD.clear();
+
         if (utils.userSession.getIsLogin()) {
 
             LoginResponse.userData userdata = utils.userSession.getUserData().data;
             if (userdata != null) {
 
-                if (userdata.profile_completion_status != null && userdata.profile_completion_status == false) {
-                    gallery_img.put(Constants.PROFILE_UPDATE, getDrawable(R.drawable.update_profile));
-                }
+                if (userdata.profile_completion_status != null) {
+                    if (userdata.profile_completion_status == false) {
+                        gallery_img.put(Constants.PROFILE_UPDATE, getDrawable(R.drawable.update_profiledata));
+                    } else {
+                        if (userdata.evd_rep != null && userdata.evd_rep == false)
+                            gallery_img.put(Constants.ORIENTAION, getDrawable(R.drawable.orientaionn2));
 
-                if (userdata.evd_rep != null && userdata.evd_rep == false)
-                    gallery_img.put(Constants.ORIENTAION, getDrawable(R.drawable.orientaionn2));
+                        List<LoginResponse.Role> user_roles = utils.getUserRoles();
+                        if (user_roles.size() > 0) {
+                            for (LoginResponse.Role entry : user_roles) {
 
-                List<LoginResponse.Role> user_roles = utils.getUserRoles();
-                if (user_roles.size() > 0) {
-                    for (LoginResponse.Role entry : user_roles) {
+                                if (entry.self_eval_status != null && entry.self_eval_status == false) {
+                                    gallery_img.put(Constants.SE, getDrawable(R.drawable.se));
+                                    if (Constants.SELF_VAL_ONBOARD.containsKey(Constants.SE)) {
+                                        LinkedList<String> values = Constants.SELF_VAL_ONBOARD.get(Constants.SE);
+                                        values.add(entry.role);
+                                        Constants.SELF_VAL_ONBOARD.put(Constants.SE, values);
+                                    } else {
+                                        LinkedList<String> list_val = new LinkedList<>();
+                                        list_val.add(entry.role);
+                                        Constants.SELF_VAL_ONBOARD.put(Constants.SE, list_val);
+                                    }
+                                }
 
-                        if (entry.self_eval_status != null && entry.self_eval_status == false) {
-                            gallery_img.put(Constants.SE, getDrawable(R.drawable.se));
-                            if (Constants.SELF_VAL_ONBOARD.containsKey(Constants.SE)) {
-                                LinkedList<String> values = Constants.SELF_VAL_ONBOARD.get(Constants.SE);
-                                values.add(entry.role);
-                                Constants.SELF_VAL_ONBOARD.put(Constants.SE, values);
-                            } else {
-                                LinkedList<String> list_val = new LinkedList<>();
-                                list_val.add(entry.role);
-                                Constants.SELF_VAL_ONBOARD.put(Constants.SE, list_val);
-                            }
-                        }
+                                if (entry.tsd_status != null && entry.tsd_status == false) {
+                                    gallery_img.put(Constants.TSD, getDrawable(R.drawable.tsd));
 
-                        if (entry.tsd_status != null && entry.tsd_status == false) {
-                            gallery_img.put(Constants.TSD, getDrawable(R.drawable.tsd));
-
-                            if (Constants.SELF_VAL_ONBOARD.containsKey(Constants.TSD)) {
-                                LinkedList<String> values = Constants.SELF_VAL_ONBOARD.get(Constants.TSD);
-                                values.add(entry.role);
-                                Constants.SELF_VAL_ONBOARD.put(Constants.TSD, values);
-                            } else {
-                                LinkedList<String> list_val = new LinkedList<>();
-                                list_val.add(entry.role);
-                                Constants.SELF_VAL_ONBOARD.put(Constants.TSD, list_val);
+                                    if (Constants.SELF_VAL_ONBOARD.containsKey(Constants.TSD)) {
+                                        LinkedList<String> values = Constants.SELF_VAL_ONBOARD.get(Constants.TSD);
+                                        values.add(entry.role);
+                                        Constants.SELF_VAL_ONBOARD.put(Constants.TSD, values);
+                                    } else {
+                                        LinkedList<String> list_val = new LinkedList<>();
+                                        list_val.add(entry.role);
+                                        Constants.SELF_VAL_ONBOARD.put(Constants.TSD, list_val);
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
-
         return gallery_img;
     }
 
@@ -116,21 +123,15 @@ public class HomePresenter {
         if (utils.userSession.getIsLogin()) {
             if (Constants.PROFILE_UPDATE.toLowerCase().equals(value)) {
                 mContext.startActivity(new Intent(mContext, ProfileUpdate.class));
-                ((Activity) mContext).finish();
             } else if (Constants.ORIENTAION.toLowerCase().equals(value)) {
                 mHomeView.inflateVideoPlayer("DhmVpNCEWOo");
             } else if (Constants.SE.toLowerCase().equals(value)) {
-                List<String> list = utils.LinkedListTOArrayList(Constants.SELF_VAL_ONBOARD.get(Constants.SE));
-                mContext.startActivity(new Intent(mContext, SelfEvaluationActivity.class).
-                        putStringArrayListExtra("role_type", (ArrayList<String>) list));
-
-                ((Activity) mContext).finish();
+                mContext.startActivity(new Intent(mContext, SelfEvaluationActivity.class));
             } else if (Constants.TSD.toLowerCase().equals(value)) {
                 mContext.startActivity(new Intent(mContext, SelectionDiscussionActivity.class));
             }
 
         } else {
-
             mContext.startActivity(new Intent(mContext, LoginActivity.class));
             ((Activity) mContext).finish();
         }

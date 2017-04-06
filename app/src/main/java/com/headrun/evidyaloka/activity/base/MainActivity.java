@@ -15,10 +15,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.headrun.evidyaloka.activity.auth.AuthActivity;
+import com.headrun.evidyaloka.activity.SelectionDiscussion.SelectionDiscussionActivity;
+import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
+import com.headrun.evidyaloka.activity.self_evaluation.SelfEvaluationActivity;
 import com.headrun.evidyaloka.activity.sessionDetails.SessionDetails;
 import com.headrun.evidyaloka.config.ApiEndpoints;
 import com.headrun.evidyaloka.config.Constants;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
     public String TAG = MainActivity.class.getSimpleName();
     ProgressBar progress_bar;
     Utils utils;
+    int sample = 1;
+    boolean onstart = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,49 +69,79 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
         Inteview();
 
-        // getData();
     }
 
+
     private void getData() {
+
         Bundle bundle = getIntent().getExtras();
+
         if (bundle != null) {
-            if (utils.userSession.getIsLogin()) {
-                HashMap<String, String> key_map = new HashMap<>();
-                for (String key : bundle.keySet()) {
-                    Object value = bundle.get(key);
-                    key_map.put(key, value.toString());
-                    Log.d(TAG, "Key: " + key + " Value: " + value.toString());
-
-                }
-
-                if (key_map.containsKey("type")) {
-                    Constants.ISNOTIFICATION = true;
-                    if (key_map.get("type").toString().toLowerCase().equals("session")) {
-                        startActivity(new Intent(this, SessionDetails.class).putExtra("session_id", key_map.get("id").toString()));
-                    } else if (key_map.get("type").toString().toLowerCase().equals("profile")) {
-                        startActivity(new Intent(this, ProfileUpdate.class));
-                    } else if (key_map.get("type").toString().toLowerCase().equals("latest_demands")) {
-
-                        String medium = utils.userSession.getUserData().data.pref_medium;
-
-                        if (medium != null && !medium.trim().isEmpty()) {
-                            utils.userSession.setSelLangFilter(Arrays.asList(medium.trim()).toString());
-                            utils.userSession.setSelStateFilter(Arrays.asList("").toString());
-                        }
-                        startActivity(new Intent(this, HomeActivity.class));
-                    } else {
-                        LoginChecking();
-                    }
-
-                } else {
-                    LoginChecking();
-                }
-            } else {
-                startActivity(new Intent(this, AuthActivity.class));
-            }
+            navigateBundleData(bundle);
         } else {
+            Log.i(TAG, "extras getting null");
             LoginChecking();
         }
+    }
+
+    private void navigateBundleData(Bundle bundle) {
+        Intent intent = getIntent();
+        String key_map = "";
+        String id = "";
+        new HomePresenter(this).setGalleryImages();
+        Log.i(TAG, "bundle has data ");
+        if (utils.userSession.getIsLogin()) {
+            //new HomePresenter(this).setGalleryImages();
+            Log.i(TAG, "user hass login ");
+            if (intent.hasExtra("type"))
+                key_map = bundle.getString("type").toLowerCase().trim();
+
+            if (intent.hasExtra("id"))
+                id = bundle.getString("id").toLowerCase().trim();
+
+            Log.i(TAG, "notify type is " + key_map);
+            Log.i(TAG, "notify id is  " + key_map);
+
+            if (!key_map.isEmpty()) {
+                Constants.ISNOTIFICATION = true;
+                if (key_map.equals("session") && !id.isEmpty()) {
+                    startActivity(new Intent(this, SessionDetails.class).putExtra("session_id", id));
+                } else if (key_map.equals("profile")) {
+                    startActivity(new Intent(this, ProfileUpdate.class));
+                } else if (key_map.equals("latest_demands")) {
+                    String medium = utils.userSession.getUserData().data.pref_medium;
+                    if (medium != null && !medium.trim().isEmpty()) {
+                        utils.userSession.setSelLangFilter(Arrays.asList(medium.trim()).toString());
+                        utils.userSession.setSelStateFilter(Arrays.asList("").toString());
+                    }
+                    startActivity(new Intent(this, HomeActivity.class));
+                } else if (key_map.equals("self_eval") && checkSE()) {
+                    startActivity(new Intent(this, SelfEvaluationActivity.class));
+                    finish();
+                } else if (key_map.equals("tsd")) {
+                    startActivity(new Intent(this, SelectionDiscussionActivity.class));
+                    finish();
+                } else {
+                    Log.i(TAG, "kee map is differ ");
+                    LoginChecking();
+                }
+
+            } else {
+                Log.i(TAG, "kee map is empty ");
+                LoginChecking();
+            }
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+    }
+
+    private boolean checkSE() {
+        boolean check_se_val = false;
+        if (Constants.SELF_VAL_ONBOARD.containsKey(Constants.SE) && Constants.SELF_VAL_ONBOARD.get(Constants.SE).size() > 0)
+            check_se_val = true;
+
+        Log.i(TAG, "check se is " + check_se_val);
+        return check_se_val;
     }
 
     private void Inteview() {
@@ -116,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
     @Override
     protected void onStart() {
         super.onStart();
+        onstart = true;
+        Log.i(TAG, "start onstrat " + onstart);
         splash();
     }
 
@@ -140,6 +177,13 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
             getToken();
         else
             loginactivty();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "resume onstrat " + onstart);
+
     }
 
     private void getToken() {
@@ -190,6 +234,19 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "pause onstrat " + onstart);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        onstart = false;
+        Log.i(TAG, "stop onstrat " + onstart);
+    }
+
+    @Override
     public void onResponse(IntialHandShakeResponse response) {
         // Log.i(TAG, "fb id " + response.keys.fb_id + "google id " + response.keys.google_id);
 
@@ -210,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
         if (utils.userSession.getIsLogin() == false && utils.userSession.getLoginFirst().equals("0")) {
             utils.userSession.setLogin_first("1");
-            startActivity(new Intent(this, AuthActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
             getApplicationContext().startService(new Intent(getApplicationContext(), ChangeSessionStatusService.class)
                     .putExtra("request_type", "fcm"));
             finish();
@@ -231,8 +288,6 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
             return false;
         }
     }
-
-
 
 
 }

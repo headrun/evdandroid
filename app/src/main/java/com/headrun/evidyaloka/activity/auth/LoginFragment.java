@@ -1,6 +1,7 @@
 package com.headrun.evidyaloka.activity.auth;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.demands.BaseEVDFragment;
 
@@ -128,11 +132,18 @@ public class LoginFragment extends BaseEVDFragment implements AuthView, View.OnC
                 break;
 
             case R.id.btn_sign_in_with_facebook:
-                mAuthPresenter.signFacebook();
+                mAuthPresenter.signFacebook(getActivity());
                 break;
 
         }
     }
+
+    /*@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mAuthPresenter.callbackManager != null)
+            mAuthPresenter.callbackManager.onActivityResult(requestCode, resultCode, data);
+    }*/
 
     @Override
     public void redirectActivity() {
