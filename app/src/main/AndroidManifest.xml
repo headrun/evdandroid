@@ -9,7 +9,7 @@
 
     <application
         android:name=".EvdApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/evd_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"

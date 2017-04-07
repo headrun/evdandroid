@@ -1,12 +1,14 @@
 package com.headrun.evidyaloka.config;
 
+import com.headrun.evidyaloka.BuildConfig;
+
 /**
  * Created by HP-HP on 27-03-2016.
  */
 
 public class ApiEndpoints {
     public static final String BASE_URL1 = "http://www.evidyaloka.org/";
-    public static final String BASE_URL = "http://dev.evidyaloka.org:9090/";
+    public static final String BASE_URL = BuildConfig.SERVER_ENDPOINT;
 
     public static final String GET_DEMANDS = BASE_URL + "get_demand/";
     public static final String GET_FILTERS = BASE_URL + "get_filters_api/";
@@ -29,7 +31,6 @@ public class ApiEndpoints {
     public static final String ORIENTAITON_STATUS = BASE_URL + "save_step/";
     public static final String GET_AVAILABLE_TSD_SLOTS = BASE_URL + "api/get_avalilable_tsd_slots/";
     public static final String BOOK_RELASE_TSD_SLOTS = BASE_URL + "book_or_release_sd_slot/";
-
 
     public static final String GETLOC_DATA = "http://lab.iamrohit.in/php_ajax_country_state_city_dropdown/apiv1.php";
 
