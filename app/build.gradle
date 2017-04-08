@@ -38,7 +38,7 @@ android {
     }
 
     productFlavors {
-
+AP
         beta {
             versionCode 11
             versionName "1.11"
