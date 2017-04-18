@@ -65,6 +65,7 @@ public class BaseRequest<T> extends Request<T> {
 
             if (!new Utils(mContext).userSession.getIsLogin())
                 new Utils().setHeaders(mContext, networkResponse);
+
             jsonResponse = new String(networkResponse.data,
                     HttpHeaderParser.parseCharset(networkResponse.headers));
 

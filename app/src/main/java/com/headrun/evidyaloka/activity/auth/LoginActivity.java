@@ -432,6 +432,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
 
+
+
             }
         });
 

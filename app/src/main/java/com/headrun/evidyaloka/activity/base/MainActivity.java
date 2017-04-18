@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
         utils = new Utils(this);
 
+        Log.i(TAG, " 1 csrf token is " + utils.userSession.getCsrf());
+
         if (!utils.getCookieValue(this, "sessionid").isEmpty())
             utils.userSession.setIsLoign(true);
         else
@@ -70,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
         Inteview();
 
     }
-
 
     private void getData() {
 
@@ -84,12 +85,26 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
         }
     }
 
+    private void cehckCsrf() {
+
+        if (utils.userSession.getCsrf().trim().isEmpty()) {
+            Log.i(TAG, "2 csrf is empty" + utils.userSession.getCsrf());
+            getToken();
+        } else {
+            getData();
+        }
+    }
+
     private void navigateBundleData(Bundle bundle) {
         Intent intent = getIntent();
         String key_map = "";
         String id = "";
         new HomePresenter(this).setGalleryImages();
-        Log.i(TAG, "bundle has data ");
+
+        for (String value : bundle.keySet()) {
+            Log.i(TAG, "bundle has kay " + value + " value " + bundle.get(value));
+        }
+
         if (utils.userSession.getIsLogin()) {
             //new HomePresenter(this).setGalleryImages();
             Log.i(TAG, "user hass login ");
@@ -151,8 +166,6 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
     @Override
     protected void onStart() {
         super.onStart();
-        onstart = true;
-        Log.i(TAG, "start onstrat " + onstart);
         splash();
     }
 
@@ -164,7 +177,8 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    getData();
+                    cehckCsrf();
+                    //getData();
                 }
             }
         };
@@ -173,16 +187,20 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
     private void LoginChecking() {
 
-        if (utils.getCookieValue(this, "sessionid").isEmpty())
+        Log.i(TAG, "LoginChecking() 2 csrf is " + utils.userSession.getCsrf());
+        if (utils.userSession.getCsrf().trim().isEmpty()) {
+            Log.i(TAG, "2 csrf is empty" + utils.userSession.getCsrf());
             getToken();
-        else
+        } else {
+            Log.i(TAG, "csrf isn't empty " + utils.userSession.getCsrf());
             loginactivty();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "resume onstrat " + onstart);
+
 
     }
 
@@ -194,7 +212,9 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
                     @Override
                     public void onResponse(String response) {
 
-                        loginactivty();
+                        Log.i(TAG, "get the csf");
+                        getData();
+                        //loginactivty();
 
                         //callIntialhandShake();
                     }
@@ -229,21 +249,20 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
     public void onErrorResponse(VolleyError error) {
 
         // utils.showProgressBar(false, progress_bar);
-        startActivity(new Intent(this, HomeActivity.class));
+        //startActivity(new Intent(this, HomeActivity.class));
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(TAG, "pause onstrat " + onstart);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        onstart = false;
-        Log.i(TAG, "stop onstrat " + onstart);
+
     }
 
     @Override
@@ -264,6 +283,8 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
     private void loginactivty() {
 
         // PackageInfo pinfo = utils.getPackageInfo();
+
+        Log.i(TAG, "csrf in loginActivity " + utils.userSession.getCsrf());
 
         if (utils.userSession.getIsLogin() == false && utils.userSession.getLoginFirst().equals("0")) {
             utils.userSession.setLogin_first("1");

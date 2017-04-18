@@ -2,6 +2,7 @@ package com.headrun.evidyaloka.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.headrun.evidyaloka.model.LoginResponse;
@@ -142,6 +143,7 @@ public class UserSession {
     public void SetCsrf(String csrf) {
         editor.putString(CSRF, csrf);
         editor.commit();
+        Log.i(TAG, "csrf token is " + pref.getString(CSRF, ""));
     }
 
     public String getCsrf() {

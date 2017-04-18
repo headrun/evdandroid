@@ -43,6 +43,7 @@ public class Utils {
     private static int screenHeight = 0;
     public Context mContext;
     public UserSession userSession;
+    public String TAG = Utils.class.getSimpleName();
 
     public Utils(Context mContext) {
         this.mContext = mContext;
@@ -101,9 +102,11 @@ public class Utils {
             }
 
             String csrf = getCookieValue(mContext, "csrftoken");
-            if (!csrf.isEmpty())
+            Log.i(TAG, "csrf token is" + csrf);
+            if (!csrf.isEmpty()) {
                 userSession.SetCsrf(csrf);
 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
