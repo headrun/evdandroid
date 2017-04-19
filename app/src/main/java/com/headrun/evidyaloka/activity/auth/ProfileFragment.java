@@ -20,6 +20,7 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.headrun.evidyaloka.EvdApplication;
 import com.headrun.evidyaloka.R;
+import com.headrun.evidyaloka.activity.base.BaseActivity;
 import com.headrun.evidyaloka.activity.demands.BaseEVDFragment;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.config.ApiEndpoints;
@@ -140,6 +141,11 @@ public class ProfileFragment extends BaseEVDFragment {
                         hideProgressDialog();
                         setProfile();
                         removeData();
+                        if (utils.userSession.getSelLoginType().equals("google"))
+                            BaseActivity.googleSingOut();
+                        else if (utils.userSession.getSelLoginType().equals("fb"))
+                            BaseActivity.fblogout();
+
                         startActivity(new Intent(getActivity(), LoginActivity.class)
                                 .putExtra(Constants.TYPE, true)
                                 .putExtra(Constants.REDIRECT_TO, "home_page"));
@@ -190,4 +196,5 @@ public class ProfileFragment extends BaseEVDFragment {
         Constants.LIST_DEMANDS.clear();
 
     }
+
 }

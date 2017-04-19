@@ -121,7 +121,7 @@ public class EVDNetowrkServices extends BaseService {
         params.put("old_key", prev_toekn);
         params.put("new_key", token);
 
-       // Log.i(TAG, "fcm key is " + token);
+        // Log.i(TAG, "fcm key is " + token);
 
         params.put(PLATFORM, ANDROID);
         addCsrfparam(context, params);

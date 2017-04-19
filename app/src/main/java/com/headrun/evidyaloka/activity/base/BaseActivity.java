@@ -27,17 +27,21 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.utils.NetworkUtils;
 import com.headrun.evidyaloka.utils.UserSession;
 import com.headrun.evidyaloka.utils.Utils;
 
+import java.security.spec.ECField;
+
 public class BaseActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    public String TAG = BaseActivity.class.getSimpleName();
+    public static String TAG = BaseActivity.class.getSimpleName();
     public Toolbar toolbar;
     //TabLayout tab_layout;
     CoordinatorLayout coordinatorLayout;
@@ -48,7 +52,7 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
     protected AccessTokenTracker accessTokenTracker;
     protected AccessToken accessToken;
     protected GoogleSignInOptions gso;
-    protected GoogleApiClient mGoogleApiClient;
+    protected static GoogleApiClient mGoogleApiClient;
     protected ProfileTracker profileTracker;
     protected static final int RC_SIGN_IN = 9001;
 
@@ -95,6 +99,7 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
 
     protected void googleSettings() {
         if (mGoogleApiClient != null) {
+            mGoogleApiClient.stopAutoManage(this);
             mGoogleApiClient.disconnect();
         }
 
@@ -354,6 +359,26 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
 
     protected void hiderrormessage() {
         no_result_lay.setVisibility(View.GONE);
+    }
+
+    public static void googleSingOut() {
+        if (mGoogleApiClient != null) {
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+                            Log.i(TAG, "google session close");
+                        }
+                    });
+        }
+    }
+
+    public static void fblogout() {
+        try {
+            LoginManager.getInstance().logOut();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

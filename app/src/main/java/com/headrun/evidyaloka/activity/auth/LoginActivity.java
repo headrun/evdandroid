@@ -433,7 +433,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 dialog.cancel();
 
 
-
             }
         });
 
@@ -467,8 +466,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             //googleSignInResult(result);
-            GoogleSignInAccount account = result.getSignInAccount();
-            firebaseAuthWithGoogle(account);
+            if (result.isSuccess()) {
+                GoogleSignInAccount account = result.getSignInAccount();
+                firebaseAuthWithGoogle(account);
+            } else {
+                Log.i(TAG, "login error " + result.getStatus());
+            }
 
         }
     }
@@ -519,10 +522,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
-
+        Log.d(TAG, "firebaseAuthWithGoogle: " + acct.getId() + "token is " + acct.getIdToken());
+        if (acct != null && acct.getIdToken() != null) {
+            Log.d(TAG, "google name " + acct.getDisplayName());
+            Log.d(TAG, "google email " + acct.getEmail());
+            Log.d(TAG, "google given name " + acct.getGivenName());
+            Log.d(TAG, "google server auth code " + acct.getServerAuthCode());
+            userSession.setSelLoginType("google");
+            getFilerData("", "", "", acct.getIdToken());
+        }
     }
+
+
 }
 
 

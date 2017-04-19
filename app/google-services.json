@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1036396520342-1o07qeq48aohtakkm67obd30sfv31el6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.headrun.evidyaloka",
+            "certificate_hash": "1e0ecc2a63ba56012faf1f0261aef86c4d95715b"
+          }
+        },
+        {
           "client_id": "1036396520342-62324jl78fm9kc7p5cudcht3vla6kbc5.apps.googleusercontent.com",
           "client_type": 3
         }
