@@ -248,7 +248,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             fbLoginRegister();
             if (AccessToken.getCurrentAccessToken() == null && Profile.getCurrentProfile() == null) {
 
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email", "user_status", "user_about_me", "user_birthday",
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email", "user_status", "public_profile", "user_birthday",
                         "user_videos", "user_events", "public_profile"));
                 // LoginManager.getInstance().logInWithPublishPermissions(LoginActivity.this, Arrays.asList("rsvp_event", "publish_actions"));
 
