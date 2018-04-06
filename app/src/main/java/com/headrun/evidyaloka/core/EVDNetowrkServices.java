@@ -29,9 +29,11 @@ import com.headrun.evidyaloka.model.SelfEval;
 import com.headrun.evidyaloka.model.SessionDetails;
 import com.headrun.evidyaloka.utils.UserSession;
 import com.headrun.evidyaloka.utils.Utils;
+import com.headrun.evidyaloka.BuildConfig;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * Created by sujith on 10/1/17.
@@ -279,6 +281,8 @@ public class EVDNetowrkServices extends BaseService {
         String cookie = new UserSession(context).getCookie();
 
         HashMap<String, String> headersValue = new HashMap<>();
+
+        headersValue.put("Referer", BuildConfig.SERVER_ENDPOINT) ;
 
         if (!cookie.isEmpty()) {
             boolean iscookie_value = false;

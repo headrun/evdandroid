@@ -1,9 +1,9 @@
 package com.headrun.evidyaloka.utils;
 
 import android.content.Context;
-import android.support.compat.BuildConfig;
 import android.util.Log;
 import android.widget.Toast;
+import com.headrun.evidyaloka.BuildConfig;
 
 
 public class ViewUtils {

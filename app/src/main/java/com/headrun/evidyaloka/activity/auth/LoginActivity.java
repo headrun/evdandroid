@@ -353,7 +353,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void redirctToAtivty() {
 
-        if (REDIRECT_TO.isEmpty()) {
+        if (REDIRECT_TO == null || REDIRECT_TO.isEmpty()) {
             startActivity(new Intent(this, HomeActivity.class));
         } else if (REDIRECT_TO.equals(Constants.SLOTS_TYPE)) {
 

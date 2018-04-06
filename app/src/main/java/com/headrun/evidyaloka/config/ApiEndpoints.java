@@ -10,7 +10,7 @@ public class ApiEndpoints {
     public static final String BASE_URL1 = "http://www.evidyaloka.org/";
     public static final String BASE_URL = BuildConfig.SERVER_ENDPOINT;
 
-    public static final String GET_DEMANDS = BASE_URL + "get_demand/";
+    public static final String GET_DEMANDS = BASE_URL + "v2/get_demand/";
     public static final String GET_FILTERS = BASE_URL + "get_filters_api/";
     public static final String GET_DEMAND_DEATILS = BASE_URL + "demand_details_api/";
     public static final String BLOCAK_DEMANDS = BASE_URL + "block_demand/";

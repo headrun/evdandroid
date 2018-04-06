@@ -131,7 +131,8 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
                 LoginChecking();
             }
         } else {
-            startActivity(new Intent(this, LoginActivity.class));
+            LoginChecking() ;
+            //    startActivity(new Intent(this, LoginActivity.class));
         }
     }
 
