@@ -9,6 +9,7 @@ android {
             storePassword 'evidyaloka123'
         }
     }
+    flavorDimensions "default"
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.headrun.evidyaloka"
@@ -26,27 +27,24 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            buildConfigField "String", "SERVER_ENDPOINT", '"https://www.evidyaloka.org/"'
+
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            buildConfigField "String", "SERVER_ENDPOINT", '"https://dev.evidyaloka.org/"'
+
         }
     }
 
-    flavorDimensions "beta", "prod"
-
     productFlavors {
-
         beta {
-            dimension "beta"
+            buildConfigField "String", "SERVER_ENDPOINT", '"https://dev.evidyaloka.org/"'
             versionCode 12
             versionName "1.12"
         }
         prod {
-            dimension "prod"
+            buildConfigField "String", "SERVER_ENDPOINT", '"https://www.evidyaloka.org/"'
             versionCode 12
             versionName "1.12"
         }
