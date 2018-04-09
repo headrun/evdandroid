@@ -1,4 +1,18 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 android {
     signingConfigs {
@@ -47,6 +61,7 @@ android {
             buildConfigField "String", "SERVER_ENDPOINT", '"https://www.evidyaloka.org/"'
             versionCode 12
             versionName "1.12"
+
         }
     }
 }
@@ -58,12 +73,12 @@ dependencies {
     compile project(':chipcloud')
 
     compile 'com.android.support:appcompat-v7:27.0.2'
-    compile ('com.android.support:design:27.0.2') {
+    compile('com.android.support:design:27.0.2') {
         exclude module: 'appcompat-v7'
     }
     compile 'com.android.support:recyclerview-v7:27.0.2'
     compile 'com.android.support:cardview-v7:27.0.2'
-    compile ('com.android.support:support-vector-drawable:27.0.2') {
+    compile('com.android.support:support-vector-drawable:27.0.2') {
         exclude module: 'appcompat-v7'
         exclude group: 'com.android.support'
     }
@@ -87,7 +102,8 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-auth:10.2.1'
     compile 'com.github.sundeepk:compact-calendar-view:1.9.2-beta'
-
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+        transitive = true;
+    }
 }
-
 apply plugin: 'com.google.gms.google-services'

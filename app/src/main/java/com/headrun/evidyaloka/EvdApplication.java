@@ -5,8 +5,12 @@ import android.app.Application;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.headrun.evidyaloka.core.OkHttpStack;
+import io.fabric.sdk.android.Fabric;
+
 
 /**
  * Created by HP-HP on 27-03-2016.
@@ -22,6 +26,8 @@ public class EvdApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
+
 
         Fresco.initialize(this);
 
