@@ -63,14 +63,23 @@ android {
             versionName "1.12"
 
         }
+        uat {
+            //buildConfigField "String", "SERVER_ENDPOINT", '"http://106.51.126.221:7777/"'
+          // buildConfigField "String", "SERVER_ENDPOINT", '"http://172.16.0.16:8000/"'
+          buildConfigField "String", "SERVER_ENDPOINT", '"http://172.16.0.66:9087/"'
+            versionCode 12
+            versionName "1.12"
+
+        }
+
     }
 }
 
 dependencies {
-
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(':chipcloud')
+
 
     compile 'com.android.support:appcompat-v7:27.0.2'
     compile('com.android.support:design:27.0.2') {

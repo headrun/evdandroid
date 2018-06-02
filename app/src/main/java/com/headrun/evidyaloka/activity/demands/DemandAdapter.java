@@ -67,8 +67,8 @@ public class DemandAdapter extends RecyclerView.Adapter<DemandAdapter.DemandView
                 ImageLoadingUtils.load(holder.schoolImage, mDemand.image);
 
             // Log.i(TAG, mDemand.title + " image is " + mDemand.image);
-            holder.schoolTextView.setText(mDemand.title);
-            holder.schooldemand.setText(Arrays.toString(mDemand.tags.subjects).replaceAll("\\[|\\]", ""));
+            holder.schoolTextView.setText("Available For Grades:" +mDemand.title+"th");
+            holder.schooldemand.setText(mDemand.subject);
             holder.teachers_teaching.setText(mDemand.running_courses + " " + context.getString(R.string.teacher_teaching));
             holder.more_need.setText(mDemand.pending_courses + " " + context.getString(R.string.teacher_need));
 

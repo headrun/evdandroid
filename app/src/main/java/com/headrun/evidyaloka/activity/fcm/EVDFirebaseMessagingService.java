@@ -1,6 +1,7 @@
-package com.headrun.evidyaloka.activity.fcm;
+    package com.headrun.evidyaloka.activity.fcm;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
@@ -45,6 +47,7 @@ public class EVDFirebaseMessagingService extends FirebaseMessagingService {
 
         if (remoteMessage.getNotification() != null) {
             RemoteMessage.Notification notify = remoteMessage.getNotification();
+
 
             Map<String, String> data = remoteMessage.getData();
 
@@ -81,7 +84,10 @@ public class EVDFirebaseMessagingService extends FirebaseMessagingService {
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.evidyalogo);
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+
+      String channelId = getString(R.string.default_notification_channel_id);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,channelId)
                 .setSmallIcon(R.drawable.evidyalogo)
                 .setContentTitle(title)
                 .setLargeIcon(bitmap)
@@ -97,6 +103,14 @@ public class EVDFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+      // Since android Oreo notification channel is needed.
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        NotificationChannel channel = new NotificationChannel(channelId,
+            "EVD",
+            NotificationManager.IMPORTANCE_DEFAULT);
+        notificationManager.createNotificationChannel(channel);
+      }
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
 

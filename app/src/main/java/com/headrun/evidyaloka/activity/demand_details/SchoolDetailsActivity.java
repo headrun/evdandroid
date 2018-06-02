@@ -155,7 +155,7 @@ public class SchoolDetailsActivity extends AppCompatActivity implements Response
             ImageLoadingUtils.load(posterImage, mdemands.image);
             school_title.setText(mdemands.title);
             txt_over_view.setText(mdemands.description);
-            school_demand.setText(Arrays.toString(mdemands.tags.subjects).replaceAll("\\[|\\]", ""));
+            school_demand.setText(mdemands.subject);
 
             teach_btn.setOnClickListener(new View.OnClickListener() {
                 @Override

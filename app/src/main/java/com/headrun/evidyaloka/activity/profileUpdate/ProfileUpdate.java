@@ -615,6 +615,8 @@ public class ProfileUpdate extends BaseActivity implements ProfileUpdateView, Re
             if (response.status.equals("0")) {
                 Toast.makeText(this, "profile update Sucessfully", Toast.LENGTH_SHORT).show();
                 mprofileUpdate_presenter.CallUserData();
+                startActivity(new Intent(this,HomeActivity.class));
+                finish();
 
             } else {
                 String message = "profile update faild";

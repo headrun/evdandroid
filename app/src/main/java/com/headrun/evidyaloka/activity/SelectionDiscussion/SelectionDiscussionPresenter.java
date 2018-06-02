@@ -159,6 +159,7 @@ public class SelectionDiscussionPresenter {
         @Override
         public void onErrorResponse(VolleyError error) {
             mSelectionDiscussionView.hideProgressBar();
+            Toast.makeText(mContenxt, "Booking is not confirmed", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -167,6 +168,7 @@ public class SelectionDiscussionPresenter {
 
             if (response.status == 0) {
                 callSlotsData(sel_date);
+                Toast.makeText(mContenxt, response.message, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(mContenxt, response.message, Toast.LENGTH_LONG).show();
             }

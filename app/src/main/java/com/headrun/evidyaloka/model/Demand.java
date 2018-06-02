@@ -15,7 +15,7 @@ public class Demand implements Parcelable {
 
     @SerializedName("description")
     public String description;
-    @SerializedName("id")
+    @SerializedName("course_id")
     public String id;
     @SerializedName("image")
     public String image;
@@ -23,10 +23,12 @@ public class Demand implements Parcelable {
     public int pending_courses;
     @SerializedName("running_courses")
     public int running_courses;
-    @SerializedName("title")
+    @SerializedName("grades")
     public String title;
     @SerializedName("tags")
     public Tags tags;
+    @SerializedName("subject")
+    public String subject;
     public SchoolDetails Scholle_deatils;
 
     public static class Tags implements Parcelable {
@@ -40,6 +42,17 @@ public class Demand implements Parcelable {
             subjects = in.createStringArray();
         }
 
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeStringArray(months);
+            dest.writeStringArray(subjects);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
         public static final Creator<Tags> CREATOR = new Creator<Tags>() {
             @Override
             public Tags createFromParcel(Parcel in) {
@@ -51,17 +64,31 @@ public class Demand implements Parcelable {
                 return new Tags[size];
             }
         };
+    }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
+    protected Demand(Parcel in) {
+        description = in.readString();
+        id = in.readString();
+        image = in.readString();
+        pending_courses = in.readInt();
+        running_courses = in.readInt();
+        title = in.readString();
+        tags = in.readParcelable(Tags.class.getClassLoader());
+        subject = in.readString();
+        Scholle_deatils = in.readParcelable(SchoolDetails.class.getClassLoader());
+    }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeStringArray(months);
-            dest.writeStringArray(subjects);
-        }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(description);
+        dest.writeString(id);
+        dest.writeString(image);
+        dest.writeInt(pending_courses);
+        dest.writeInt(running_courses);
+        dest.writeString(title);
+        dest.writeParcelable(tags, flags);
+        dest.writeString(subject);
+        dest.writeParcelable(Scholle_deatils, flags);
     }
 
     @Override
@@ -69,36 +96,10 @@ public class Demand implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.description);
-        dest.writeString(this.id);
-        dest.writeString(this.image);
-        dest.writeInt(this.pending_courses);
-        dest.writeInt(this.running_courses);
-        dest.writeString(this.title);
-        dest.writeParcelable(this.tags, flags);
-        dest.writeParcelable(this.Scholle_deatils, flags);
-    }
-
-    public Demand() {
-    }
-
-    protected Demand(Parcel in) {
-        this.description = in.readString();
-        this.id = in.readString();
-        this.image = in.readString();
-        this.pending_courses = in.readInt();
-        this.running_courses = in.readInt();
-        this.title = in.readString();
-        this.tags = in.readParcelable(Tags.class.getClassLoader());
-        this.Scholle_deatils = in.readParcelable(SchoolDetails.class.getClassLoader());
-    }
-
     public static final Creator<Demand> CREATOR = new Creator<Demand>() {
         @Override
-        public Demand createFromParcel(Parcel source) {
-            return new Demand(source);
+        public Demand createFromParcel(Parcel in) {
+            return new Demand(in);
         }
 
         @Override

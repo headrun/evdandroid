@@ -139,6 +139,7 @@ public class SelfEvaluationPresenter {
             if (response.status == 0) {
                 mContext.startActivity(new Intent(mContext, HomeActivity.class));
                 ((Activity) mContext).finish();
+                Toast.makeText(mContext, response.message, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(mContext, response.message, Toast.LENGTH_SHORT).show();
             }
