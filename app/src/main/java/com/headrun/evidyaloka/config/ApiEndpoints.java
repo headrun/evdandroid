@@ -13,7 +13,7 @@ public class ApiEndpoints {
     public static final String GET_DEMANDS = BASE_URL + "v2/get_demand/";
     public static final String GET_FILTERS = BASE_URL + "get_filters_api/";
     public static final String GET_DEMAND_DEATILS = BASE_URL + "demand_details_api/";
-    public static final String BLOCAK_DEMANDS = BASE_URL + "block_demand/";
+    public static final String BLOCAK_DEMANDS = BASE_URL + "v2/save_demand/";
     public static final String RELEASE_DEMANDS = BASE_URL + "release_demand/";
     public static final String CSRFTOKEN = BASE_URL + "rest_authentication/csrf";
     public static final String UPDATE_FCMTOKEN = BASE_URL + "api/fcm_key/";
