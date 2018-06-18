@@ -99,6 +99,7 @@ public class EVDFirebaseMessagingService extends FirebaseMessagingService {
                 .setVibrate(new long[]{Notification.DEFAULT_SOUND})
                 .setLights(Color.RED, 3000, 3000)
                 .setDefaults(Notification.PRIORITY_MAX)
+                .setChannelId(channelId)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
