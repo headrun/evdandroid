@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.headrun.evidyaloka.R;
@@ -280,7 +281,6 @@ public class TimeSlotsFragment extends BaseEVDFragment implements TimeSlotAdapte
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-
                     }
                 });
 
@@ -340,12 +340,13 @@ public class TimeSlotsFragment extends BaseEVDFragment implements TimeSlotAdapte
             if (response.message.toLowerCase().contains("success")) {
                 mSchoolDeatils.slot_details = null;
                 menuConfirmevent.menuChangeTitle(getActivity().getString(R.string.confirm));
+                Toast.makeText(getActivity(),"slot released successfully",Toast.LENGTH_SHORT).show();
             } else {
                 new Utils(getActivity()).showAlertDialog(response.message);
             }
         } else {
             if (response.status == 0) {
-
+                Toast.makeText(getActivity(),"slot confirmed successfully",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), HomeActivity.class)
                         .putExtra(Constants.REDIRECT_TO, true)
                         .putExtra(Constants.TYPE, "session_page"));

@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.NetworkError;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.headrun.evidyaloka.activity.sessionDetails.SessionDetails;
 import com.headrun.evidyaloka.config.Constants;
@@ -191,7 +192,7 @@ public class SessionTypeFrament extends BaseEVDFragment implements ResponseListe
         processionData(data);*/
 
         //utils.volleyError(error, getActivity());
-        if (error instanceof NetworkError) {
+        if (error instanceof NetworkError ||error instanceof ServerError) {
             if (Constants.LIST_SESSIONS.get(mSessionType).size() == 0)
                 seterror_display(R.drawable.connection_error, "");
         }

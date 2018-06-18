@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements ResponseListener<
 
                 utils.showProgressBar(false, progress_bar);
                 if (error instanceof NetworkError) {
-                    utils.showAlertDialog(getResources().getString(R.string.no_internet));
+                    utils.showAlertDialog(getResources().getString(R.string.network_error_response));
                 } else {
                     utils.showAlertDialog(getResources().getString(R.string.faceing_issue));
                 }

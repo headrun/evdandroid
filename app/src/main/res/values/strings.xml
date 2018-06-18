@@ -262,10 +262,11 @@
     <string name="content_se_5">Are you comfortable to prepare worksheets and assessments based on textbook material ?</string>
     <string name="content_se_6">Can you transliterate the list of important terms for the topics ?</string>
     <string name="content_se_7">How many hours a week can you contribute towards contentresearch ? </string>
-  <string name="default_notification_channel_id">com.headrun.evidyaloka.activity.fcm</string>
+    <string name="default_notification_channel_id">com.headrun.evidyaloka.activity.fcm</string>
+    <string name="network_error_response">Did not connected to server</string>
 
 
-  <string-array name="scenario_one_opt">
+    <string-array name="scenario_one_opt">
         <item>Plan to spend 2 more sessions to teach again.</item>
         <item>Report this to coordinator and ask for help.</item>
         <item>Look for other approaches to teach the topic again.</item>

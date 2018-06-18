@@ -168,7 +168,7 @@ public class SelectionDiscussionPresenter {
 
             if (response.status == 0) {
                 callSlotsData(sel_date);
-                Toast.makeText(mContenxt, response.message, Toast.LENGTH_LONG).show();
+                Toast.makeText(mContenxt, "TSD Booked successfully", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(mContenxt, response.message, Toast.LENGTH_LONG).show();
             }
