@@ -32,4 +32,11 @@
         android:title="@string/profile"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/home"
+        app:showAsAction="always" />
+
 </menu>

@@ -264,6 +264,11 @@
     <string name="content_se_7">How many hours a week can you contribute towards contentresearch ? </string>
     <string name="default_notification_channel_id">com.headrun.evidyaloka.activity.fcm</string>
     <string name="network_error_response">Did not connected to server</string>
+    <string name="home">Home</string>
+    <string name="about_us_invite">Inviting passionate volunteers from across the globe to impart quality education to children in remote villages of India via live online classes. Sign Up to help build an educated rural India.</string>
+    <string name="about_us_volunteer">Volunteer from the comforts of your home/office</string>
+    <string name="enroll">enroll</string>
+    <string name="enter_valid_email">Enter valid email</string>
 
 
     <string-array name="scenario_one_opt">

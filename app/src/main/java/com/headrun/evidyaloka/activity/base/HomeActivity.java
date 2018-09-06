@@ -1,5 +1,6 @@
 package com.headrun.evidyaloka.activity.base;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
@@ -8,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -27,6 +30,7 @@ import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.auth.LoginActivity;
 import com.headrun.evidyaloka.activity.demands.DemandFragment;
 import com.headrun.evidyaloka.activity.auth.ProfileFragment;
+import com.headrun.evidyaloka.activity.homePage.HomePageActivity;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.activity.self_evaluation.SelfEvaluationActivity;
 import com.headrun.evidyaloka.activity.sessions.SessionsTabFragment;
@@ -37,6 +41,7 @@ import com.headrun.evidyaloka.dto.FiltersDataResponse;
 import com.headrun.evidyaloka.evdservices.ChangeSessionStatusService;
 import com.headrun.evidyaloka.model.FiltersData;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -199,7 +204,31 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
         mDotsLayout = (LinearLayout) findViewById(R.id.image_count);
         NavMenu = bottom_nav.getMenu();
         view_pager.addOnPageChangeListener(this);
+        disableShiftMode(bottom_nav);
 
+    }
+
+    @SuppressLint("RestrictedApi")
+    public static void disableShiftMode(BottomNavigationView view) {
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
+        try {
+            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+            shiftingMode.setAccessible(true);
+            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setAccessible(false);
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
+                //noinspection RestrictedApi
+                item.setShiftingMode(false);
+                // set once again checked value, so view will be updated
+                //noinspection RestrictedApi
+                item.setChecked(item.getItemData().isChecked());
+            }
+        } catch (NoSuchFieldException e) {
+            Log.e("BNVHelper", "Unable to get shift mode field", e);
+        } catch (IllegalAccessException e) {
+            Log.e("BNVHelper", "Unable to change value of shift mode", e);
+        }
     }
 
     private void getintentData() {
@@ -303,6 +332,11 @@ public class HomeActivity extends BaseActivity implements HomeView, ImageAdapter
                     startActivity(new Intent(this, LoginActivity.class)
                             .putExtra(Constants.TYPE, true)
                             .putExtra(Constants.REDIRECT_TO, "home_page"));
+                break;
+            case R.id.action_home:
+                hideGallery();
+                disableVolunteer();
+                startActivity(new Intent(this,HomePageActivity.class));
                 break;
         }
 

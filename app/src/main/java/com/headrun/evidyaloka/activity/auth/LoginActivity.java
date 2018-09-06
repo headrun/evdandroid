@@ -73,6 +73,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private RelativeLayout loginButton;
     private com.google.android.gms.common.SignInButton google_login_button;
     private Toolbar toolbar;
+    public  int VISIBILITY_SIGN_UP;
 
 
     @Override
@@ -95,8 +96,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 Skip_enable = data.getBoolean(Constants.TYPE);
                 REDIRECT_TO = data.getString(Constants.REDIRECT_TO);
                 demand_id = data.getString(Constants.ID);
+                VISIBILITY_SIGN_UP=data.getInt("signUp",0);
                 hideSkip();
             }
+        }
+        if(VISIBILITY_SIGN_UP==Constants.SIGNUP){
+            signupVisible();
+        }else{
+            loginVisible();
         }
     }
 
@@ -146,8 +153,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         title_type.setOnClickListener(this);
         loginButton.setOnClickListener(this);
         google_login_button.setOnClickListener(this);
-
-        loginVisible();
 
     }
 
@@ -326,9 +331,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         switch (item.getItemId()) {
 
             case R.id.action_skip:
-                startActivity(new Intent(this, HomeActivity.class));
             case android.R.id.home:
-                startActivity(new Intent(this, HomeActivity.class));
+                if(Constants.SIGNUP==VISIBILITY_SIGN_UP){
+                    finish();
+                }else {
+                    startActivity(new Intent(this, HomeActivity.class));
+                }
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -504,7 +514,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (REDIRECT_TO.contains("home_page") || Constants.ISNOTIFICATION) {
+        if(VISIBILITY_SIGN_UP==2){
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        } else if (REDIRECT_TO.contains("home_page") || Constants.ISNOTIFICATION) {
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
