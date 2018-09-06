@@ -18,6 +18,7 @@ public class ApiEndpoints {
     public static final String CSRFTOKEN = BASE_URL + "rest_authentication/csrf";
     public static final String UPDATE_FCMTOKEN = BASE_URL + "api/fcm_key/";
     public static final String REST_AUTH = BASE_URL + "rest_authentication/login/";
+    public static final String ENROLL_INFLUENCER = BASE_URL + "api/send_mail/";
     public static final String SIGNUP = BASE_URL + "rest_authentication/signup/";
     public static final String SIGNOUT = BASE_URL + "rest_authentication/logout/";
     public static final String UPCOMING_SESSIONS1 = BASE_URL + "api/get_upcom_sess/";

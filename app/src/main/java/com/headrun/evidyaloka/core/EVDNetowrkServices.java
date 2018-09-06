@@ -172,6 +172,7 @@ public class EVDNetowrkServices extends BaseService {
         }, listener);
     }
 
+
     public void get_avalilable_tsd_slots(Context context, ResponseListener<SelectDiscussionData> listener, String mnth, String year) {
 
         HashMap<String, String> params = new HashMap<>();
@@ -319,5 +320,10 @@ public class EVDNetowrkServices extends BaseService {
 
     }
 
+    public void enrollInFluencer(Context context, ResponseListener<LoginResponse> listener, HashMap<String, String> params) {
+
+        executePostRequest(context, ApiEndpoints.ENROLL_INFLUENCER, getSessionHeaders(context), params, new TypeToken<LoginResponse>() {
+        }, listener);
+    }
 
 }

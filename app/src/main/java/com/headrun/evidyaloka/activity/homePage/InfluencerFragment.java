@@ -10,12 +10,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.headrun.evidyaloka.EvdApplication;
 import com.headrun.evidyaloka.R;
 import com.headrun.evidyaloka.activity.demands.BaseEVDFragment;
+import com.headrun.evidyaloka.core.EVDNetowrkServices;
+import com.headrun.evidyaloka.core.ResponseListener;
+import com.headrun.evidyaloka.model.LoginResponse;
 import com.headrun.evidyaloka.utils.NetworkUtils;
 import com.squareup.okhttp.internal.Util;
 
-public class InfluencerFragment extends BaseEVDFragment implements View.OnClickListener {
+import java.util.HashMap;
+
+public class InfluencerFragment extends BaseEVDFragment implements View.OnClickListener,
+        ResponseListener<LoginResponse> {
 
     private TextInputEditText email;
     private TextInputEditText mobile;
@@ -40,22 +48,45 @@ public class InfluencerFragment extends BaseEVDFragment implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.enroll:
-                String enteredEmail=email.getText().toString();
-                String enteredMobile=mobile.getText().toString();
+                String enteredEmail = email.getText().toString();
+                String enteredMobile = mobile.getText().toString();
 
-                if(!android.util.Patterns.EMAIL_ADDRESS.matcher(enteredEmail).matches()){
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(enteredEmail).matches()) {
                     email.setError(getString(R.string.enter_valid_email));
-                }else if(enteredMobile.length()!=10){
+                } else if (enteredMobile.length() != 10) {
                     mobile.setError("Enter valid mobile no.");
-                }else {
-                    if(NetworkUtils.isNetworkConnected(getActivity().getApplicationContext())){
+                } else {
+                    if (NetworkUtils.isNetworkConnected(getActivity().getApplicationContext())) {
                         //TODO api to send email and mobile
-                    }else{
-                        Toast.makeText(getActivity().getApplicationContext(),getString(R.string.no_internet),Toast.LENGTH_SHORT).show();
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("email", enteredEmail);
+                        params.put("phone", enteredMobile);
+                        showProgressDialog();
+                        new EVDNetowrkServices().enrollInFluencer(getActivity(), this, params);
+
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
             default:
         }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        hideProgressDialog();
+        Toast.makeText(EvdApplication.getInstance(), getString(R.string.network_error_response), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResponse(LoginResponse response) {
+        hideProgressDialog();
+        if (response != null) {
+            Toast.makeText(EvdApplication.getInstance(), response.message, Toast.LENGTH_SHORT).show();
+
+        }
+
+
     }
 }
