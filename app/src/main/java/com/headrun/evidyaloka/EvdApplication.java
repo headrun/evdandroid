@@ -26,10 +26,10 @@ public class EvdApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-       /* Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics());
 
 
-        Fresco.initialize(this);*/
+        Fresco.initialize(this);
 
         _instance = this;
     }
