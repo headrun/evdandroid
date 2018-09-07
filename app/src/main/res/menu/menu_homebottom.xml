@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_demands"
         android:enabled="true"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_demand"
         android:title="@string/demand"
         app:showAsAction="always" />
 
