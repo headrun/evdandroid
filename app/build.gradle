@@ -54,26 +54,26 @@ android {
     productFlavors {
         local {
             buildConfigField "String", "SERVER_ENDPOINT", '"http://192.168.43.175:9003/"'
-            versionCode 12
-            versionName "1.12"
+            versionCode 13
+            versionName "1.13"
         }
         beta {
             buildConfigField "String", "SERVER_ENDPOINT", '"https://dev.evidyaloka.org/"'
-            versionCode 12
-            versionName "1.12"
+            versionCode 13
+            versionName "1.13"
         }
         prod {
             buildConfigField "String", "SERVER_ENDPOINT", '"https://www.evidyaloka.org/"'
-            versionCode 12
-            versionName "1.12"
+            versionCode 13
+            versionName "1.13"
 
         }
         uat {
             //buildConfigField "String", "SERVER_ENDPOINT", '"http://106.51.126.221:7777/"'
             // buildConfigField "String", "SERVER_ENDPOINT", '"http://172.16.0.16:8000/"'
             buildConfigField "String", "SERVER_ENDPOINT", '"http://172.16.0.66:9087/"'
-            versionCode 12
-            versionName "1.12"
+            versionCode 13
+            versionName "1.13"
 
         }
 

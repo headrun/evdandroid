@@ -55,3 +55,6 @@
 -dontwarn com.android.volley.toolbox.**
 -dontwarn com.facebook.**
 
+-keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
+    boolean mShiftingMode;
+}
