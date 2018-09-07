@@ -16,7 +16,7 @@ public class HomePageActivity extends BaseActivity implements TabLayout.OnTabSel
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private String[] tabTitles={"About Us","inFluencer"};
+    private String[] tabTitles={"About Us","Influencer"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

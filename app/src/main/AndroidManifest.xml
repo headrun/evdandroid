@@ -33,22 +33,22 @@
             android:name=".activity.auth.AuthActivity"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppLoginTheme"></activity>
+            android:theme="@style/AppLoginTheme" />
         <activity
             android:name=".activity.SelectionDiscussion.SelectionDiscussionActivity"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.self_evaluation.SelfEvaluationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/App.NoActionBar"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.auth.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppLoginTheme"></activity>
+            android:theme="@style/AppLoginTheme" />
         <activity
             android:name=".activity.base.HomeActivity"
             android:label="@string/app_name"
@@ -133,10 +133,16 @@
             android:name="io.fabric.ApiKey"
             android:value="7322e955c31796c921ab937d3ed5b58c8ebc1789" />
 
-        <activity android:name=".activity.homePage.HomePageActivity"
+        <activity
+            android:name=".activity.homePage.HomePageActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme1"></activity>
+            android:theme="@style/AppTheme1"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity android:name=".activity.homePage.InfluencerEnrollmentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme1"/>
+
     </application>
 
 </manifest>

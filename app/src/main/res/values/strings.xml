@@ -330,4 +330,6 @@
         <item>8-10 hours</item>
     </string-array>
 
+    <string name="enfluencer_enrollment_title">eNFLUENCER Enrollment</string>
+
 </resources>
