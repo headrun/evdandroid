@@ -143,6 +143,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"/>
 
+        <activity android:name=".activity.homePage.PrivacyPolicyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme1"/>
+
     </application>
 
 </manifest>

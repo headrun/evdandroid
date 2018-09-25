@@ -238,6 +238,17 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <TextView
+                    android:layout_margin="10dp"
+                    android:id="@+id/privacy_policy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBottomNavigationAccent"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/privacy_policy" />
+
+                <TextView
                     android:id="@+id/error_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

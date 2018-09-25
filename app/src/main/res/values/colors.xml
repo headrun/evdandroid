@@ -45,6 +45,7 @@
     <color name="demand_teaching_color">#23527c</color>
     <color name="demand_more_needed_color">#34cc67</color>
     <color name="teach_now">#ff167ffc</color>
+    <color name="privacy_policy">#ff167ffc</color>
     <color name="profile_bg">#d3d6db</color>
 
     <color name="demand_slot_background">#ff8de1c1</color>

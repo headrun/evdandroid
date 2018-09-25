@@ -36,6 +36,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 
 import com.headrun.evidyaloka.activity.demand_slots.DemandSlotActivity;
+import com.headrun.evidyaloka.activity.homePage.PrivacyPolicyActivity;
 import com.headrun.evidyaloka.activity.profileUpdate.ProfileUpdate;
 import com.headrun.evidyaloka.config.Constants;
 import com.headrun.evidyaloka.core.EVDNetowrkServices;
@@ -62,6 +63,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private TextView title_question, title_type, title_txt, error_status;
     private TextInputLayout txt_confirm_pass;
     private LinearLayout signup_lay1;
+    private TextView privacyPolicy;
 
     private String demand_id = "";
     private TextInputEditText input_username, input_pass, input_confirm_pass, input_firtst_name, input_last_name;
@@ -141,6 +143,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         signup_lay1 = (LinearLayout) findViewById(R.id.signup_lay1);
         google_login_button = (com.google.android.gms.common.SignInButton) findViewById(R.id.google_login_button);
         google_login_button.setSize(SignInButton.SIZE_STANDARD);
+        privacyPolicy= findViewById(R.id.privacy_policy);
+
         //google_login_button.setVisibility(View.GONE);
         setActivityTitle("");
         setSupportActionBar(toolbar);
@@ -153,6 +157,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         title_type.setOnClickListener(this);
         loginButton.setOnClickListener(this);
         google_login_button.setOnClickListener(this);
+        privacyPolicy.setOnClickListener(this);
 
     }
 
@@ -266,6 +271,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         } else if (id == R.id.google_login_button) {
             googleSettings();
             googleSignIn();
+        } else if (id == R.id.privacy_policy) {
+            startActivity(new Intent(LoginActivity.this, PrivacyPolicyActivity.class));
         }
 
     }
